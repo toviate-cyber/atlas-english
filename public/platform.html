@@ -11,20 +11,21 @@
   .logo{text-align:center;padding:30px 0 20px}
   .logo h1{font-size:2.4em;font-weight:800;background:linear-gradient(90deg,#0f3460,#1e5a96);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
   .logo p{color:#5a7fa6;margin-top:5px;font-size:1em}
-  .card{background:#f8fafc;border:2px solid #e0e8f0;padding:30px;border-radius:20px;margin-bottom:20px;box-shadow:0 2px 8px rgba(15,52,96,0.08)}
+  .card{background:#f8fafc;border:2px solid #e0e8f0;padding:30px;border-radius:20px;margin-bottom:20px;box-shadow:0 2px 8px rgba(15,52,96,0.08);animation:fadeIn 0.4s ease}
   .card h2{font-size:1.5em;margin-bottom:20px;color:#0f3460}
   input{padding:14px 16px;width:100%;margin-bottom:14px;border-radius:10px;border:2px solid #d4dce8;background:#fff;color:#0f3460;font-size:1em;outline:none;transition:border 0.3s}
   input::placeholder{color:#8a9db0}
   input:focus{border-color:#0f3460;box-shadow:0 0 0 3px rgba(15,52,96,0.1)}
   .btn{background:linear-gradient(90deg,#0f3460,#1e5a96);color:#fff;border:none;padding:14px 24px;border-radius:10px;cursor:pointer;font-size:1em;font-weight:700;transition:all 0.3s;margin-top:5px}
-  .btn:hover{opacity:0.85;transform:translateY(-2px)}
+  .btn:hover{opacity:0.85;transform:translateY(-2px);box-shadow:0 4px 12px rgba(15,52,96,0.2)}
   .btn-outline{background:transparent;border:2px solid #0f3460;color:#0f3460;padding:10px 20px;border-radius:10px;cursor:pointer;font-size:0.9em;font-weight:600;transition:all 0.3s;margin-top:10px}
   .btn-outline:hover{background:#0f3460;color:#fff}
   .btn-sm{padding:8px 16px;font-size:0.85em;width:auto}
   .btn.primary{width:100%}
   .badge{display:inline-block;background:linear-gradient(90deg,#0f3460,#1e5a96);padding:4px 12px;border-radius:20px;font-size:0.8em;font-weight:700;margin-left:10px;color:#fff}
+  .badge.points{background:linear-gradient(90deg,#f59e0b,#ec4899);margin-left:10px}
   .progress-bar-wrap{background:#e0e8f0;border-radius:10px;overflow:hidden;height:8px;margin-bottom:10px}
-  .progress-bar-fill{height:8px;background:linear-gradient(90deg,#0f3460,#1e5a96);transition:width 0.5s ease}
+  .progress-bar-fill{height:8px;background:linear-gradient(90deg,#0f3460,#1e5a96);transition:width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1)}
   .progress-text{color:#5a7fa6;font-size:0.9em;text-align:right;margin-bottom:20px}
   .question-text{font-size:1.2em;margin-bottom:20px;line-height:1.6;color:#0f3460}
   .options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
@@ -40,6 +41,11 @@
   .result-big .emoji{font-size:4em;margin-bottom:15px;animation:bounce 0.6s ease}
   .result-big h3{font-size:2em;margin:10px 0;background:linear-gradient(90deg,#0f3460,#1e5a96);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
   .result-big p{color:#5a7fa6;font-size:1em;margin-bottom:20px}
+  .reward-box{background:linear-gradient(135deg,#f59e0b,#ec4899);border-radius:15px;padding:30px;text-align:center;color:#fff;margin:20px 0;animation:slideUp 0.5s ease}
+  .reward-box .emoji{font-size:3em;margin-bottom:10px}
+  .reward-box h4{font-size:1.5em;font-weight:800;margin-bottom:10px}
+  .reward-box p{font-size:0.9em;opacity:0.9;margin-bottom:15px}
+  .countdown{font-size:1.2em;font-weight:700;margin-top:15px}
   .hidden{display:none}
   .welcome-msg{font-size:2em;font-weight:700;color:#0f3460;margin-bottom:10px}
   .info-text{color:#5a7fa6;margin-bottom:15px;line-height:1.6}
@@ -69,7 +75,10 @@
   .feedback{margin-top:10px;font-size:0.9em;font-weight:600}
   .button-group{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center}
   .button-group .btn{flex:1;min-width:150px}
+  .daily-message{background:linear-gradient(135deg,#0f3460,#1e5a96);color:#fff;border-radius:12px;padding:15px;margin-bottom:20px;text-align:center;font-weight:600}
   @keyframes bounce{0%,100%{transform:scale(1)} 50%{transform:scale(1.1)}}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)}}
+  @keyframes slideUp{from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)}}
   @media(max-width:600px){.options{grid-template-columns:1fr}.button-group{flex-direction:column}.button-group .btn{width:100%}}
 </style>
 </head>
@@ -124,9 +133,13 @@
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
       <div>
         <div class="welcome-msg">Welcome, <span id="dash-name">Student</span>! 👋</div>
-        <div class="info-text">Level: <span class="badge" id="dash-level">Not Tested</span></div>
+        <div class="info-text">Level: <span class="badge" id="dash-level">Not Tested</span> | Points: <span class="badge points" id="dash-points">0</span></div>
       </div>
       <button class="btn-outline btn-sm" onclick="doLogout()">Sign Out</button>
+    </div>
+
+    <div class="daily-message">
+      💡 Continue today and improve your English!
     </div>
 
     <div style="background:linear-gradient(135deg,#0f3460,#1e5a96);border-radius:15px;padding:20px;color:#fff;margin-bottom:20px">
@@ -135,8 +148,8 @@
       <p style="margin-top:10px;font-size:0.9em"><strong id="dash-completed">0</strong> of 72 lessons completed</p>
     </div>
 
-    <button class="btn primary" id="btn-continue" onclick="continueProgress()" style="margin-bottom:20px;padding:16px;font-size:1.05em;display:none">▶️ Continue My Progress</button>
-    <button class="btn primary" id="btn-placement" onclick="startTest()" style="margin-bottom:20px;padding:16px;font-size:1.05em;display:none">📋 Take Your Level Test</button>
+    <button class="btn primary" id="btn-continue" onclick="continueProgress()" style="margin-bottom:15px;padding:16px;font-size:1.1em;font-weight:800;display:none">▶️ Continue Learning</button>
+    <button class="btn primary" id="btn-placement" onclick="startTest()" style="margin-bottom:15px;padding:16px;font-size:1.1em;font-weight:800;display:none">📋 Take Your Level Test</button>
 
     <h3 style="margin-top:25px;margin-bottom:15px;color:#0f3460">Your Learning Path</h3>
     <div id="lessons-container"></div>
@@ -159,13 +172,16 @@
     <h2 id="lesson-title"></h2>
     <p id="lesson-grammar" style="color:#5a7fa6;margin-bottom:20px;line-height:1.6"></p>
     <div id="lesson-exercises"></div>
-    <div id="lesson-result" class="hidden result-big">
-      <div class="emoji">🎉</div>
-      <h3>Lesson Completed!</h3>
-      <p id="lesson-result-sub" style="color:#5a7fa6;font-size:1em;margin:15px 0"></p>
+    <div id="lesson-result" class="hidden">
+      <div class="reward-box">
+        <div class="emoji">🔥</div>
+        <h4>Lesson Completed!</h4>
+        <p id="lesson-result-sub">Great work!</p>
+        <div class="countdown" id="countdown-timer"></div>
+      </div>
       <div class="button-group">
         <button class="btn" onclick="nextLesson()" style="flex:2">▶️ Next Lesson</button>
-        <button class="btn-outline" onclick="goBack()">↩️ Back to Dashboard</button>
+        <button class="btn-outline" onclick="goBack()">↩️ Dashboard</button>
       </div>
     </div>
   </div>
@@ -254,7 +270,7 @@ function buildLessons(){
 }
 
 let currentUser=null, currentLevel=null, currentLevelIndex=-1, currentPage="landing", currentLessonId=-1, lastLessonId=-1;
-let qIndex=0, testScore=0, selectedOption=null;
+let qIndex=0, testScore=0, selectedOption=null, countdownInterval=null;
 
 function showScreen(id){
   ['screen-landing','screen-test','screen-result','screen-dashboard','screen-calendar','screen-lesson'].forEach(s=>{
@@ -275,7 +291,7 @@ window.startPlacement=function(){
   
   let saved=localStorage.getItem('atlasUser');
   if(!saved){
-    localStorage.setItem('atlasUser',JSON.stringify({name,email,level:null,levelIndex:-1,completed:[],lastLessonId:-1}));
+    localStorage.setItem('atlasUser',JSON.stringify({name,email,level:null,levelIndex:-1,completed:[],lastLessonId:-1,points:0}));
     showScreen('screen-dashboard');
     renderDashboard();
   }else{
@@ -283,7 +299,7 @@ window.startPlacement=function(){
     currentUser={name:user.name,email:user.email};
     currentLevel=user.level;
     currentLevelIndex=user.levelIndex;
-    lastLessonId=user.lastLessonId||-(1);
+    lastLessonId=user.lastLessonId||0;
     showScreen('screen-dashboard');
     renderDashboard();
   }
@@ -365,6 +381,10 @@ function renderDashboard(){
   document.getElementById('dash-name').textContent=currentUser.name;
   document.getElementById('dash-level').textContent=currentLevel||'Not Tested';
   
+  const user=JSON.parse(localStorage.getItem('atlasUser')||'{}');
+  const points=user.points||0;
+  document.getElementById('dash-points').textContent=points;
+  
   const btnPlacement=document.getElementById('btn-placement');
   const btnContinue=document.getElementById('btn-continue');
   
@@ -376,7 +396,6 @@ function renderDashboard(){
     btnContinue.style.display='block';
   }
   
-  const user=JSON.parse(localStorage.getItem('atlasUser')||'{}');
   const completed=user.completed||[];
   const progress=Math.round((completed.length/LESSONS.length)*100);
   document.getElementById('dash-progress').style.width=`${progress}%`;
@@ -423,7 +442,7 @@ window.continueProgress=function(){
   let nextLessonId=1;
   
   if(user.lastLessonId&&user.lastLessonId>0){
-    nextLessonId=user.lastLessonId+1;
+    nextLessonId=Math.min(user.lastLessonId+1,72);
   }
   
   openLesson(nextLessonId);
@@ -523,11 +542,30 @@ function showLessonResult(correct,total){
   const pct=Math.round(correct/total*100);
   const res=document.getElementById('lesson-result');
   res.classList.remove('hidden');
-  document.getElementById('lesson-result-sub').textContent=`You got ${correct}/${total} correct (${pct}%)`;
-  res.querySelector('.emoji').textContent=pct>=70?'🎉':'💪';
+  document.getElementById('lesson-result-sub').textContent=`${correct}/${total} correct (${pct}%)`;
+  res.querySelector('.emoji').textContent=pct>=70?'🔥':'💪';
+  startCountdown();
+}
+
+function startCountdown(){
+  let count=3;
+  const timer=document.getElementById('countdown-timer');
+  timer.textContent=`Continuing in ${count}s...`;
+  
+  if(countdownInterval)clearInterval(countdownInterval);
+  countdownInterval=setInterval(()=>{
+    count--;
+    if(count>0){
+      timer.textContent=`Continuing in ${count}s...`;
+    }else{
+      clearInterval(countdownInterval);
+      nextLesson();
+    }
+  },1000);
 }
 
 window.nextLesson=function(){
+  if(countdownInterval)clearInterval(countdownInterval);
   completeLesson();
   if(currentLessonId<LESSONS.length){
     openLesson(currentLessonId+1);
@@ -541,6 +579,7 @@ function completeLesson(){
   if(!user.completed)user.completed=[];
   if(!user.completed.includes(currentLessonId)){
     user.completed.push(currentLessonId);
+    user.points=(user.points||0)+10;
   }
   user.lastLessonId=currentLessonId;
   localStorage.setItem('atlasUser',JSON.stringify(user));
@@ -551,6 +590,7 @@ window.goToCalendar=function(){
 }
 
 window.goBack=function(){
+  if(countdownInterval)clearInterval(countdownInterval);
   if(currentPage==='screen-lesson'){
     showScreen('screen-dashboard');
     renderDashboard();
