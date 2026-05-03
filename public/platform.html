@@ -489,49 +489,107 @@ window.openLesson=function(lessonId){
   lesson.exercises.forEach((ex,idx)=>{
     const parts=ex.q.split('___');
     const correctWord=ex.a[ex.c];
-    const div=document.createElement('div');
-    div.className='exercise';
     
-    let sentenceHTML=`<p style="margin-bottom:8px;color:#8a9db0;font-size:0.85em">Exercise ${idx+1}</p><div class="drag-sentence">`;
+    // Crear ejercicio
+    const exerciseDiv=document.createElement('div');
+    exerciseDiv.className='exercise';
+    
+    // Párrafo
+    const p=document.createElement('p');
+    p.style.cssText='margin-bottom:8px;color:#8a9db0;font-size:0.85em';
+    p.textContent=`Exercise ${idx+1}`;
+    exerciseDiv.appendChild(p);
+    
+    // Sentencia con drop zones
+    const sentenceDiv=document.createElement('div');
+    sentenceDiv.className='drag-sentence';
     parts.forEach((part,pi)=>{
-      sentenceHTML+=`<span>${part}</span>`;
+      const span=document.createElement('span');
+      span.textContent=part;
+      sentenceDiv.appendChild(span);
+      
       if(pi<parts.length-1){
-        sentenceHTML+=`<span class="drop-zone" id="dz-${idx}">___</span>`;
+        const dz=document.createElement('span');
+        dz.className='drop-zone';
+        dz.id=`dz-${idx}`;
+        dz.textContent='___';
+        sentenceDiv.appendChild(dz);
       }
     });
-    sentenceHTML+=`</div>`;
+    exerciseDiv.appendChild(sentenceDiv);
     
+    // Palabras arrastrables
     const shuffled=[...ex.a].sort(()=>Math.random()-0.5);
-    sentenceHTML+=`<div class="drag-words" id="dw-${idx}">`;
+    const wordsDiv=document.createElement('div');
+    wordsDiv.className='drag-words';
+    
     shuffled.forEach(word=>{
-      sentenceHTML+=`<div class="drag-word" draggable="true" data-word="${word}">${word}</div>`;
+      const wordBtn=document.createElement('div');
+      wordBtn.className='drag-word';
+      wordBtn.draggable=true;
+      wordBtn.textContent=word;
+      wordBtn.dataset.word=word;
+      
+      wordBtn.addEventListener('dragstart',e=>{
+        e.dataTransfer.effectAllowed='copy';
+        e.dataTransfer.setData('text/plain',word);
+        wordBtn.style.opacity='0.5';
+      });
+      
+      wordBtn.addEventListener('dragend',e=>{
+        wordBtn.style.opacity='1';
+      });
+      
+      wordBtn.addEventListener('touchstart',e=>{
+        wordBtn.style.opacity='0.5';
+        wordBtn._touchWord=word;
+      },{passive:true});
+      
+      wordBtn.addEventListener('touchend',e=>{
+        wordBtn.style.opacity='1';
+      });
+      
+      wordsDiv.appendChild(wordBtn);
     });
-    sentenceHTML+=`</div><div class="feedback" id="fb-${idx}"></div>`;
+    exerciseDiv.appendChild(wordsDiv);
     
-    div.innerHTML=sentenceHTML;
-    container.appendChild(div);
-    
-    const dz=document.getElementById(`dz-${idx}`);
+    // Drop zone listeners
+    const dz=exerciseDiv.querySelector(`#dz-${idx}`);
     let draggedWord=null;
     
-    div.querySelectorAll('.drag-word').forEach(w=>{
-      w.addEventListener('dragstart',e=>{draggedWord=w.dataset.word;e.dataTransfer.setData('text/plain',draggedWord);w.style.opacity='0.5';});
-      w.addEventListener('dragend',e=>{w.style.opacity='1';});
+    dz.addEventListener('dragover',e=>{
+      e.preventDefault();
+      e.dataTransfer.dropEffect='copy';
+      dz.classList.add('over');
     });
     
-    dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over');});
-    dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
+    dz.addEventListener('dragleave',()=>{
+      dz.classList.remove('over');
+    });
+    
     dz.addEventListener('drop',e=>{
       e.preventDefault();
-      const word=e.dataTransfer.getData('text/plain')||draggedWord;
+      dz.classList.remove('over');
+      
+      let word=e.dataTransfer.getData('text/plain');
+      if(!word)word=draggedWord;
+      
       if(dz.classList.contains('filled'))return;
+      
       dropAnswer(idx,word,correctWord,()=>{
         answeredCount++;
         if(word===correctWord)correctCount++;
         if(answeredCount===totalEx)showLessonResult(correctCount,totalEx);
       });
-      dz.classList.remove('over');
     });
+    
+    // Feedback
+    const feedbackDiv=document.createElement('div');
+    feedbackDiv.id=`fb-${idx}`;
+    feedbackDiv.className='feedback';
+    exerciseDiv.appendChild(feedbackDiv);
+    
+    container.appendChild(exerciseDiv);
   });
   
   showScreen('screen-lesson');
@@ -558,8 +616,16 @@ function showLessonResult(correct,total){
   const pct=Math.round(correct/total*100);
   const res=document.getElementById('lesson-result');
   res.classList.remove('hidden');
-  document.getElementById('lesson-result-sub').textContent=`${correct}/${total} correct (${pct}%)`;
+  
+  const messages=['Excelente trabajo','Vas muy bien','Sigue así','Increíble progreso'];
+  const randomMsg=messages[Math.floor(Math.random()*messages.length)];
+  
+  document.getElementById('lesson-result-sub').textContent=`${correct}/${total} correct (${pct}%)\n${randomMsg}`;
   res.querySelector('.emoji').textContent=pct>=70?'🔥':'💪';
+  
+  // Scroll to result
+  res.scrollIntoView({behavior:'smooth'});
+  
   startCountdown();
 }
 
