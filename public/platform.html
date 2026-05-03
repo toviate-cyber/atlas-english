@@ -388,11 +388,12 @@ function renderDashboard(){
   const btnPlacement=document.getElementById('btn-placement');
   const btnContinue=document.getElementById('btn-continue');
   
+  // Siempre mostrar botón de test + continuar si tiene nivel
+  btnPlacement.style.display='block';
+  
   if(!currentLevel){
-    btnPlacement.style.display='block';
     btnContinue.style.display='none';
   }else{
-    btnPlacement.style.display='none';
     btnContinue.style.display='block';
   }
   
@@ -410,24 +411,39 @@ function renderLessonsGrid(completed){
   
   let grid='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px">';
   
+  // Si no tiene nivel aún, mostrar mensaje
+  if(!currentLevel){
+    container.innerHTML='<p style="color:#5a7fa6;text-align:center;padding:20px;grid-column:1/-1">Take the placement test to see your personalized learning path.</p>';
+    return;
+  }
+  
+  // Calcular inicio y fin de lecciones según nivel
+  // A1 (0): lecciones 1-18
+  // A2 (4): lecciones 19-36
+  // B1 (7): lecciones 37-54
+  // B2 (9): lecciones 55-72
+  const levelStartMap={0:1, 4:19, 7:37, 9:55};
+  const levelStart=levelStartMap[currentLevelIndex]||1;
+  const levelEnd=Math.min(levelStart+17,72);
+  
   LESSONS.forEach((lesson,idx)=>{
-    const isCompleted=completed.includes(lesson.id);
-    const isRecommended=(idx+1<=20);
-    const isLocked=(idx+1>40);
+    const lessonNum=lesson.id;
+    
+    // Solo mostrar lecciones del nivel actual en adelante
+    if(lessonNum<levelStart)return;
+    
+    const isCompleted=completed.includes(lessonNum);
+    const isNextRecommended=(lessonNum===levelStart||lessonNum===(lastLessonId+1));
     
     let badge='';
     if(isCompleted)badge='✔️';
-    else if(isLocked)badge='🔒';
-    else if(isRecommended)badge='▶️';
+    else if(isNextRecommended)badge='▶️';
     
     let classes='lesson-card';
     if(isCompleted)classes+=' completed';
-    if(isLocked)classes+=' locked';
     
-    let onclick=isLocked?'':'onclick="openLesson('+lesson.id+')"';
-    
-    grid+=`<div class="${classes}" ${onclick}>
-      <div class="lesson-num">${lesson.id}</div>
+    grid+=`<div class="${classes}" onclick="openLesson(${lessonNum})">
+      <div class="lesson-num">${lessonNum}</div>
       <div class="lesson-title">${lesson.title.split(': ')[1]?.substring(0,15)||'Lesson'}</div>
       <div class="lesson-badge">${badge}</div>
     </div>`;
