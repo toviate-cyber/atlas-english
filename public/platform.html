@@ -133,6 +133,8 @@
       <button class="btn-outline btn-sm" onclick="doLogout()">Sign Out</button>
     </div>
 
+    <button class="btn" id="btn-placement" onclick="startTest()" style="width:100%;margin-bottom:20px;display:none">📋 Take Your Level Test</button>
+
     <div class="level-card">
       <h3>Your Progress</h3>
       <div style="margin:20px 0">
@@ -274,12 +276,21 @@ window.startPlacement=function(){
   
   currentUser={name,email};
   
-  qIndex=0;
-  testScore=0;
-  selectedOption=null;
-  
-  showScreen('screen-test');
-  renderQuestion();
+  // Check if user already has a level
+  let saved=localStorage.getItem('atlasUser');
+  if(!saved){
+    // First time user - go to dashboard and show test as option
+    localStorage.setItem('atlasUser',JSON.stringify({name,email,level:null,levelIndex:-1,completed:[]}));
+    showScreen('screen-dashboard');
+    renderDashboard();
+  }else{
+    const user=JSON.parse(saved);
+    currentUser={name:user.name,email:user.email};
+    currentLevel=user.level;
+    currentLevelIndex=user.levelIndex;
+    showScreen('screen-dashboard');
+    renderDashboard();
+  }
 }
 
 function renderQuestion(){
@@ -303,7 +314,7 @@ function renderQuestion(){
 }
 
 function selectOption(i,btn){
-  document.querySelectorAll('.option').forEach(b=>{b.classList.remove('selected');b.onclick=null;});
+  document.querySelectorAll('.option').forEach(b=>b.classList.remove('selected'));
   btn.classList.add('selected');
   selectedOption=i;
   document.getElementById('btn-next').disabled=false;
@@ -354,7 +365,15 @@ window.goToDashboard=function(){
 
 function renderDashboard(){
   document.getElementById('dash-name').textContent=currentUser.name;
-  document.getElementById('dash-level').textContent=currentLevel;
+  document.getElementById('dash-level').textContent=currentLevel||'Not Tested';
+  
+  // Show placement test button if no level yet
+  const btnPlacement=document.getElementById('btn-placement');
+  if(!currentLevel){
+    btnPlacement.style.display='block';
+  }else{
+    btnPlacement.style.display='none';
+  }
   
   const completed=JSON.parse(localStorage.getItem('atlasUser')||'{}').completed||[];
   const progress=Math.round((completed.length/LESSONS.length)*100);
@@ -362,6 +381,14 @@ function renderDashboard(){
   document.getElementById('dash-completed').textContent=completed.length;
   
   renderLessonsGrid(completed);
+}
+
+window.startTest=function(){
+  qIndex=0;
+  testScore=0;
+  selectedOption=null;
+  showScreen('screen-test');
+  renderQuestion();
 }
 
 function renderLessonsGrid(completed){
