@@ -16,64 +16,61 @@
   input{padding:14px 16px;width:100%;margin-bottom:14px;border-radius:10px;border:2px solid #d4dce8;background:#fff;color:#0f3460;font-size:1em;outline:none;transition:border 0.3s}
   input::placeholder{color:#8a9db0}
   input:focus{border-color:#0f3460;box-shadow:0 0 0 3px rgba(15,52,96,0.1)}
-  .btn{background:linear-gradient(90deg,#0f3460,#1e5a96);color:#fff;border:none;padding:14px 24px;border-radius:10px;cursor:pointer;font-size:1em;font-weight:700;width:100%;transition:opacity 0.2s;margin-top:5px}
-  .btn:hover{opacity:0.85}
-  .btn-outline{background:transparent;border:2px solid #0f3460;color:#0f3460;padding:10px 20px;border-radius:10px;cursor:pointer;font-size:0.9em;font-weight:600;transition:all 0.2s;margin-top:10px}
+  .btn{background:linear-gradient(90deg,#0f3460,#1e5a96);color:#fff;border:none;padding:14px 24px;border-radius:10px;cursor:pointer;font-size:1em;font-weight:700;transition:all 0.3s;margin-top:5px}
+  .btn:hover{opacity:0.85;transform:translateY(-2px)}
+  .btn-outline{background:transparent;border:2px solid #0f3460;color:#0f3460;padding:10px 20px;border-radius:10px;cursor:pointer;font-size:0.9em;font-weight:600;transition:all 0.3s;margin-top:10px}
   .btn-outline:hover{background:#0f3460;color:#fff}
   .btn-sm{padding:8px 16px;font-size:0.85em;width:auto}
+  .btn.primary{width:100%}
   .badge{display:inline-block;background:linear-gradient(90deg,#0f3460,#1e5a96);padding:4px 12px;border-radius:20px;font-size:0.8em;font-weight:700;margin-left:10px;color:#fff}
-  .progress-wrap{background:#e0e8f0;border-radius:10px;overflow:hidden;height:8px;margin-bottom:25px}
-  .progress-fill{height:8px;background:linear-gradient(90deg,#0f3460,#1e5a96);transition:width 0.4s}
+  .progress-bar-wrap{background:#e0e8f0;border-radius:10px;overflow:hidden;height:8px;margin-bottom:10px}
+  .progress-bar-fill{height:8px;background:linear-gradient(90deg,#0f3460,#1e5a96);transition:width 0.5s ease}
+  .progress-text{color:#5a7fa6;font-size:0.9em;text-align:right;margin-bottom:20px}
   .question-text{font-size:1.2em;margin-bottom:20px;line-height:1.6;color:#0f3460}
   .options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
-  .option{background:#fff;border:2px solid #d4dce8;padding:14px 18px;border-radius:12px;cursor:pointer;font-size:0.95em;transition:all 0.2s;color:#0f3460;text-align:left}
-  .option:hover{border-color:#0f3460;background:#f0f5fa}
-  .option.selected{border-color:#0f3460;background:#e8f0fa}
+  .option{background:#fff;border:2px solid #d4dce8;padding:14px 18px;border-radius:12px;cursor:pointer;font-size:0.95em;transition:all 0.3s;color:#0f3460;text-align:left}
+  .option:hover{border-color:#0f3460;background:#f0f5fa;transform:translateY(-2px)}
+  .option.selected{border-color:#0f3460;background:#e8f0fa;font-weight:600}
   .option.correct-answer{border-color:#22c55e;background:#f0fdf4;color:#16a34a}
   .option.wrong-answer{border-color:#ef4444;background:#fef2f2;color:#dc2626}
   .level-card{background:linear-gradient(135deg,#0f3460,#1e5a96);border-radius:15px;padding:25px;text-align:center;margin-bottom:20px;color:#fff}
   .level-card h3{font-size:0.9em;opacity:0.9;text-transform:uppercase;letter-spacing:2px}
   .level-card .level-name{font-size:2.5em;font-weight:800;margin:15px 0}
-  .level-card .score{font-size:0.9em;opacity:0.9}
-  .result-big{text-align:center;padding:20px 0}
-  .result-big .emoji{font-size:3em;margin-bottom:10px}
-  .result-big h3{font-size:1.8em;margin:10px 0;background:linear-gradient(90deg,#0f3460,#1e5a96);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .result-big{text-align:center;padding:40px 20px}
+  .result-big .emoji{font-size:4em;margin-bottom:15px;animation:bounce 0.6s ease}
+  .result-big h3{font-size:2em;margin:10px 0;background:linear-gradient(90deg,#0f3460,#1e5a96);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
   .result-big p{color:#5a7fa6;font-size:1em;margin-bottom:20px}
   .hidden{display:none}
-  .welcome-msg{font-size:2em;font-weight:700;color:#0f3460;margin-bottom:20px}
+  .welcome-msg{font-size:2em;font-weight:700;color:#0f3460;margin-bottom:10px}
   .info-text{color:#5a7fa6;margin-bottom:15px;line-height:1.6}
   .landing{text-align:center;padding:60px 20px}
   .landing h2{font-size:2.5em;font-weight:800;color:#0f3460;margin-bottom:20px}
   .landing p{font-size:1.1em;color:#5a7fa6;margin-bottom:30px}
-  .landing .btn{width:auto;padding:18px 50px;font-size:1.2em;margin:20px auto}
-  .nav{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
-  .nav-btn{background:#fff;border:2px solid #d4dce8;color:#0f3460;padding:8px 18px;border-radius:20px;cursor:pointer;font-size:0.85em;transition:all 0.2s;font-weight:600}
-  .nav-btn:hover,.nav-btn.active{background:linear-gradient(90deg,#0f3460,#1e5a96);border-color:transparent;color:#fff}
-  .lessons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;margin-top:20px}
-  .lesson-card{background:#fff;border:2px solid #d4dce8;border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative}
-  .lesson-card:hover:not(.locked){border-color:#0f3460;background:#f0f5fa;transform:translateY(-2px)}
+  .landing .btn{width:auto;padding:18px 50px;font-size:1.2em;margin:20px auto;display:block;max-width:300px}
+  .lesson-card{background:#fff;border:2px solid #d4dce8;border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all 0.3s;position:relative}
+  .lesson-card:hover:not(.locked){border-color:#0f3460;background:#f0f5fa;transform:translateY(-4px);box-shadow:0 4px 12px rgba(15,52,96,0.15)}
   .lesson-card.locked{opacity:0.5;cursor:not-allowed}
-  .lesson-card.completed{border-color:#22c55e}
+  .lesson-card.completed{border-color:#22c55e;background:#f0fdf4}
   .lesson-num{font-size:2em;font-weight:800;color:#0f3460;margin-bottom:5px}
   .lesson-title{font-size:0.8em;color:#5a7fa6}
-  .lesson-status{font-size:0.7em;margin-top:5px;padding-top:5px;border-top:1px solid #e0e8f0}
-  .lesson-status.completed{color:#22c55e}
-  .lesson-status.available{color:#0f3460}
-  .lesson-status.locked{color:#8a9db0}
+  .lesson-badge{font-size:1.2em;margin-top:8px}
   .test-counter{color:#8a9db0;font-size:0.9em}
+  .exercise{background:#f8fafc;border:1px solid #e0e8f0;border-radius:12px;padding:20px;margin-bottom:15px}
+  .exercise p{margin-bottom:12px;font-size:1em;line-height:1.5;color:#0f3460}
   .drag-sentence{font-size:1.1em;line-height:2.2;margin-bottom:14px;color:#0f3460}
-  .drop-zone{display:inline-block;min-width:90px;height:34px;border-bottom:2px dashed #0f3460;vertical-align:middle;text-align:center;line-height:32px;padding:0 8px;border-radius:4px;margin:0 4px;color:#0f3460;font-weight:700;cursor:default;transition:all 0.2s}
+  .drop-zone{display:inline-block;min-width:90px;height:34px;border-bottom:2px dashed #0f3460;vertical-align:middle;text-align:center;line-height:32px;padding:0 8px;border-radius:4px;margin:0 4px;color:#0f3460;font-weight:700;cursor:default;transition:all 0.3s}
   .drop-zone.over{background:#e8f0fa;border-style:solid;border-color:#0f3460}
   .drop-zone.filled{border-color:#22c55e;color:#16a34a;border-style:solid;background:#f0fdf4}
   .drop-zone.wrong-drop{border-color:#ef4444;color:#dc2626;background:#fef2f2}
   .drag-words{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-  .drag-word{background:#e8f0fa;border:2px solid #0f3460;padding:8px 16px;border-radius:8px;cursor:grab;font-size:0.95em;color:#0f3460;font-weight:600;transition:all 0.2s;user-select:none}
+  .drag-word{background:#e8f0fa;border:2px solid #0f3460;padding:8px 16px;border-radius:8px;cursor:grab;font-size:0.95em;color:#0f3460;font-weight:600;transition:all 0.3s;user-select:none}
   .drag-word:active{cursor:grabbing;opacity:0.7}
   .drag-word.used{opacity:0.3;cursor:not-allowed;pointer-events:none}
-  .exercise{background:#f8fafc;border:1px solid #e0e8f0;border-radius:12px;padding:20px;margin-bottom:15px}
-  .exercise p{margin-bottom:12px;font-size:1em;line-height:1.5;color:#0f3460}
   .feedback{margin-top:10px;font-size:0.9em;font-weight:600}
-  @media(max-width:600px){.options,.lessons-grid{grid-template-columns:1fr}.landing h2{font-size:1.8em}.landing .btn{width:100%;padding:14px 20px;font-size:1em}}
+  .button-group{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center}
+  .button-group .btn{flex:1;min-width:150px}
+  @keyframes bounce{0%,100%{transform:scale(1)} 50%{transform:scale(1.1)}}
+  @media(max-width:600px){.options{grid-template-columns:1fr}.button-group{flex-direction:column}.button-group .btn{width:100%}}
 </style>
 </head>
 <body>
@@ -88,9 +85,9 @@
     <div class="landing">
       <h2>Welcome to Atlas English</h2>
       <p>Learn English at your own pace with our personalized learning path</p>
-      <input id="signin-name" placeholder="Your Full Name" autocomplete="name" style="width:60%;margin:20px auto">
-      <input id="signin-email" type="email" placeholder="Your Email" autocomplete="email" style="width:60%;margin:0 auto 20px">
-      <button class="btn" onclick="startPlacement()" style="width:auto;padding:18px 50px;font-size:1.2em">Start Learning →</button>
+      <input id="signin-name" placeholder="Your Full Name" autocomplete="name" style="width:60%;margin:20px auto;display:block">
+      <input id="signin-email" type="email" placeholder="Your Email" autocomplete="email" style="width:60%;margin:0 auto 20px;display:block">
+      <button class="btn" onclick="startPlacement()">Start Learning →</button>
     </div>
   </div>
 
@@ -98,15 +95,14 @@
   <div id="screen-test" class="card hidden">
     <button class="btn-outline" onclick="goBack()" style="margin-bottom:20px">← Back</button>
     <h2>📋 English Level Test</h2>
-    <p class="info-text">Answer 30 questions to discover your English level. This helps us create a personalized learning path for you.</p>
+    <p class="info-text">Answer 30 questions to discover your English level.</p>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
       <span id="test-counter" class="test-counter">Question 1 of 30</span>
-      <span id="test-score-live" style="color:#0f3460;font-size:0.85em;font-weight:600"></span>
     </div>
-    <div class="progress-wrap"><div class="progress-fill" id="test-progress" style="width:0%"></div></div>
+    <div class="progress-bar-wrap"><div class="progress-bar-fill" id="test-progress" style="width:0%"></div></div>
     <div id="test-question" class="question-text"></div>
     <div id="test-options" class="options"></div>
-    <button class="btn" id="btn-next" onclick="nextQ()" disabled style="opacity:0.4">Next →</button>
+    <button class="btn primary" id="btn-next" onclick="nextQ()" disabled style="opacity:0.4">Next →</button>
   </div>
 
   <!-- TEST RESULT -->
@@ -118,37 +114,35 @@
         <div class="level-name" id="result-level">—</div>
         <p id="result-description" style="margin-top:10px;font-size:0.9em;opacity:0.9">Loading...</p>
       </div>
-      <p id="result-score" style="color:#5a7fa6;margin:15px 0"></p>
-      <button class="btn" onclick="goToDashboard()" style="width:auto;padding:14px 40px;margin-top:20px">View My Learning Path →</button>
+      <p id="result-recommendation" style="color:#5a7fa6;margin:15px 0;font-size:1em"></p>
+      <button class="btn primary" onclick="goToDashboard()" style="padding:14px 40px">View My Learning Path →</button>
     </div>
   </div>
 
   <!-- DASHBOARD -->
   <div id="screen-dashboard" class="card hidden">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:15px">
       <div>
         <div class="welcome-msg">Welcome, <span id="dash-name">Student</span>! 👋</div>
-        <div class="info-text">Your current level: <span class="badge" id="dash-level">—</span></div>
+        <div class="info-text">Level: <span class="badge" id="dash-level">Not Tested</span></div>
       </div>
       <button class="btn-outline btn-sm" onclick="doLogout()">Sign Out</button>
     </div>
 
-    <button class="btn" id="btn-placement" onclick="startTest()" style="width:100%;margin-bottom:20px;display:none">📋 Take Your Level Test</button>
-
-    <div class="level-card">
-      <h3>Your Progress</h3>
-      <div style="margin:20px 0">
-        <div class="progress-wrap"><div class="progress-fill" id="dash-progress" style="width:0%"></div></div>
-        <p style="margin-top:10px;font-size:0.9em"><span id="dash-completed">0</span> lessons completed</p>
-      </div>
+    <div style="background:linear-gradient(135deg,#0f3460,#1e5a96);border-radius:15px;padding:20px;color:#fff;margin-bottom:20px">
+      <p style="margin-bottom:10px;opacity:0.9">Your Progress</p>
+      <div class="progress-bar-wrap"><div class="progress-bar-fill" id="dash-progress" style="width:0%;background:rgba(255,255,255,0.8)"></div></div>
+      <p style="margin-top:10px;font-size:0.9em"><strong id="dash-completed">0</strong> of 72 lessons completed</p>
     </div>
 
-    <h3 style="margin-top:30px;color:#0f3460;margin-bottom:15px">Your Learning Path</h3>
+    <button class="btn primary" id="btn-continue" onclick="continueProgress()" style="margin-bottom:20px;padding:16px;font-size:1.05em;display:none">▶️ Continue My Progress</button>
+    <button class="btn primary" id="btn-placement" onclick="startTest()" style="margin-bottom:20px;padding:16px;font-size:1.05em;display:none">📋 Take Your Level Test</button>
+
+    <h3 style="margin-top:25px;margin-bottom:15px;color:#0f3460">Your Learning Path</h3>
     <div id="lessons-container"></div>
 
-    <div style="margin-top:30px;text-align:center">
-      <button class="btn-outline" onclick="goToCalendar()">📅 View Classes</button>
-      <button class="btn-outline" onclick="doLogout()" style="margin-left:10px">Sign Out</button>
+    <div style="margin-top:25px;text-align:center">
+      <button class="btn-outline" onclick="goToCalendar()" style="margin-right:10px">📅 View Classes</button>
     </div>
   </div>
 
@@ -161,15 +155,18 @@
 
   <!-- LESSON DETAIL -->
   <div id="screen-lesson" class="card hidden">
-    <button class="btn-outline" onclick="goBack()" style="margin-bottom:20px">← Back</button>
+    <button class="btn-outline" onclick="goBack()" style="margin-bottom:20px">← Back to Lessons</button>
     <h2 id="lesson-title"></h2>
     <p id="lesson-grammar" style="color:#5a7fa6;margin-bottom:20px;line-height:1.6"></p>
     <div id="lesson-exercises"></div>
     <div id="lesson-result" class="hidden result-big">
       <div class="emoji">🎉</div>
-      <h3 id="lesson-result-text"></h3>
-      <p id="lesson-result-sub"></p>
-      <button class="btn" onclick="completeLesson()" style="margin-top:20px;width:auto;padding:12px 30px">Mark Complete & Continue →</button>
+      <h3>Lesson Completed!</h3>
+      <p id="lesson-result-sub" style="color:#5a7fa6;font-size:1em;margin:15px 0"></p>
+      <div class="button-group">
+        <button class="btn" onclick="nextLesson()" style="flex:2">▶️ Next Lesson</button>
+        <button class="btn-outline" onclick="goBack()">↩️ Back to Dashboard</button>
+      </div>
     </div>
   </div>
 
@@ -256,8 +253,8 @@ function buildLessons(){
   return lessons;
 }
 
-let currentUser=null, currentLevel=null, currentLevelIndex=-1, currentPage="landing";
-let qIndex=0, testScore=0, selectedOption=null, currentLessonId=-1;
+let currentUser=null, currentLevel=null, currentLevelIndex=-1, currentPage="landing", currentLessonId=-1, lastLessonId=-1;
+let qIndex=0, testScore=0, selectedOption=null;
 
 function showScreen(id){
   ['screen-landing','screen-test','screen-result','screen-dashboard','screen-calendar','screen-lesson'].forEach(s=>{
@@ -276,11 +273,9 @@ window.startPlacement=function(){
   
   currentUser={name,email};
   
-  // Check if user already has a level
   let saved=localStorage.getItem('atlasUser');
   if(!saved){
-    // First time user - go to dashboard and show test as option
-    localStorage.setItem('atlasUser',JSON.stringify({name,email,level:null,levelIndex:-1,completed:[]}));
+    localStorage.setItem('atlasUser',JSON.stringify({name,email,level:null,levelIndex:-1,completed:[],lastLessonId:-1}));
     showScreen('screen-dashboard');
     renderDashboard();
   }else{
@@ -288,6 +283,7 @@ window.startPlacement=function(){
     currentUser={name:user.name,email:user.email};
     currentLevel=user.level;
     currentLevelIndex=user.levelIndex;
+    lastLessonId=user.lastLessonId||-(1);
     showScreen('screen-dashboard');
     renderDashboard();
   }
@@ -340,8 +336,7 @@ window.nextQ=function(){
 }
 
 function finishTest(){
-  // Calculate level: 0-3 = A1, 4-6 = A2, 7-8 = B1, 9-10 = B2
-  const levelScore=Math.floor(testScore/3); // 0-10
+  const levelScore=Math.floor(testScore/3);
   let level='A1';
   if(levelScore>=4&&levelScore<=6)level='A2';
   else if(levelScore>=7&&levelScore<=8)level='B1';
@@ -350,12 +345,15 @@ function finishTest(){
   currentLevel=level;
   currentLevelIndex=levelScore;
   
-  localStorage.setItem('atlasUser',JSON.stringify({name:currentUser.name,email:currentUser.email,level,levelIndex:levelScore,completed:[]}));
+  const user=JSON.parse(localStorage.getItem('atlasUser')||'{}');
+  user.level=level;
+  user.levelIndex=levelScore;
+  localStorage.setItem('atlasUser',JSON.stringify(user));
   
   showScreen('screen-result');
   document.getElementById('result-level').textContent=level;
   document.getElementById('result-description').textContent=LEVELS[level].desc;
-  document.getElementById('result-score').textContent=`You got ${testScore} out of ${QUESTIONS.length} questions correct.`;
+  document.getElementById('result-recommendation').textContent=`We recommend starting with Lesson 1. You're ready!`;
 }
 
 window.goToDashboard=function(){
@@ -367,20 +365,68 @@ function renderDashboard(){
   document.getElementById('dash-name').textContent=currentUser.name;
   document.getElementById('dash-level').textContent=currentLevel||'Not Tested';
   
-  // Show placement test button if no level yet
   const btnPlacement=document.getElementById('btn-placement');
+  const btnContinue=document.getElementById('btn-continue');
+  
   if(!currentLevel){
     btnPlacement.style.display='block';
+    btnContinue.style.display='none';
   }else{
     btnPlacement.style.display='none';
+    btnContinue.style.display='block';
   }
   
-  const completed=JSON.parse(localStorage.getItem('atlasUser')||'{}').completed||[];
+  const user=JSON.parse(localStorage.getItem('atlasUser')||'{}');
+  const completed=user.completed||[];
   const progress=Math.round((completed.length/LESSONS.length)*100);
   document.getElementById('dash-progress').style.width=`${progress}%`;
   document.getElementById('dash-completed').textContent=completed.length;
   
   renderLessonsGrid(completed);
+}
+
+function renderLessonsGrid(completed){
+  const container=document.getElementById('lessons-container');
+  container.innerHTML='';
+  
+  let grid='<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px">';
+  
+  LESSONS.forEach((lesson,idx)=>{
+    const isCompleted=completed.includes(lesson.id);
+    const isRecommended=(idx+1<=20);
+    const isLocked=(idx+1>40);
+    
+    let badge='';
+    if(isCompleted)badge='✔️';
+    else if(isLocked)badge='🔒';
+    else if(isRecommended)badge='▶️';
+    
+    let classes='lesson-card';
+    if(isCompleted)classes+=' completed';
+    if(isLocked)classes+=' locked';
+    
+    let onclick=isLocked?'':'onclick="openLesson('+lesson.id+')"';
+    
+    grid+=`<div class="${classes}" ${onclick}>
+      <div class="lesson-num">${lesson.id}</div>
+      <div class="lesson-title">${lesson.title.split(': ')[1]?.substring(0,15)||'Lesson'}</div>
+      <div class="lesson-badge">${badge}</div>
+    </div>`;
+  });
+  
+  grid+='</div>';
+  container.innerHTML=grid;
+}
+
+window.continueProgress=function(){
+  const user=JSON.parse(localStorage.getItem('atlasUser')||'{}');
+  let nextLessonId=1;
+  
+  if(user.lastLessonId&&user.lastLessonId>0){
+    nextLessonId=user.lastLessonId+1;
+  }
+  
+  openLesson(nextLessonId);
 }
 
 window.startTest=function(){
@@ -389,36 +435,6 @@ window.startTest=function(){
   selectedOption=null;
   showScreen('screen-test');
   renderQuestion();
-}
-
-function renderLessonsGrid(completed){
-  const container=document.getElementById('lessons-container');
-  container.innerHTML='';
-  
-  LESSONS.forEach((lesson,idx)=>{
-    const isCompleted=completed.includes(lesson.id);
-    const isRecommended=(idx+1<=20); // First 20 recommended based on level
-    const isLocked=(idx+1>40); // Last 32 locked for now
-    
-    const card=document.createElement('div');
-    card.className='lesson-card';
-    if(isCompleted)card.classList.add('completed');
-    if(isLocked)card.classList.add('locked');
-    
-    card.innerHTML=`
-      <div class="lesson-num">${lesson.id}</div>
-      <div class="lesson-title">${lesson.title.split(': ')[1]?.substring(0,15)||'Lesson'}</div>
-      <div class="lesson-status ${isCompleted?'completed':isLocked?'locked':'available'}">
-        ${isCompleted?'✓ Done':isLocked?'🔒 Advanced':isRecommended?'→ Start':''}
-      </div>
-    `;
-    
-    if(!isLocked){
-      card.onclick=()=>openLesson(lesson.id);
-    }
-    
-    container.appendChild(card);
-  });
 }
 
 window.openLesson=function(lessonId){
@@ -507,19 +523,27 @@ function showLessonResult(correct,total){
   const pct=Math.round(correct/total*100);
   const res=document.getElementById('lesson-result');
   res.classList.remove('hidden');
-  document.getElementById('lesson-result-text').textContent=pct>=70?'Great Work!':'Almost There!';
-  document.getElementById('lesson-result-sub').textContent=`${correct}/${total} correct (${pct}%)`;
+  document.getElementById('lesson-result-sub').textContent=`You got ${correct}/${total} correct (${pct}%)`;
   res.querySelector('.emoji').textContent=pct>=70?'🎉':'💪';
 }
 
-window.completeLesson=function(){
+window.nextLesson=function(){
+  completeLesson();
+  if(currentLessonId<LESSONS.length){
+    openLesson(currentLessonId+1);
+  }else{
+    goBack();
+  }
+}
+
+function completeLesson(){
   const user=JSON.parse(localStorage.getItem('atlasUser')||'{}');
   if(!user.completed)user.completed=[];
   if(!user.completed.includes(currentLessonId)){
     user.completed.push(currentLessonId);
-    localStorage.setItem('atlasUser',JSON.stringify(user));
   }
-  goBack();
+  user.lastLessonId=currentLessonId;
+  localStorage.setItem('atlasUser',JSON.stringify(user));
 }
 
 window.goToCalendar=function(){
@@ -544,7 +568,6 @@ window.doLogout=function(){
   document.getElementById('signin-email').value='';
 }
 
-// Load user if already signed in
 window.addEventListener('load',()=>{
   const saved=localStorage.getItem('atlasUser');
   if(saved){
@@ -552,6 +575,7 @@ window.addEventListener('load',()=>{
     currentUser={name:user.name,email:user.email};
     currentLevel=user.level;
     currentLevelIndex=user.levelIndex;
+    lastLessonId=user.lastLessonId||0;
     showScreen('screen-dashboard');
     renderDashboard();
   }else{
