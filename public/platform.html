@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Victor English Academy</title>
+<title>Atlas English Academy</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0}
   body{font-family:'Segoe UI',Arial,sans-serif;background:#fff;min-height:100vh;color:#0f3460}
@@ -20,8 +20,8 @@
   .btn:hover{opacity:0.85}
   .btn-outline{background:transparent;border:2px solid #0f3460;color:#0f3460;padding:10px 20px;border-radius:10px;cursor:pointer;font-size:0.9em;font-weight:600;transition:all 0.2s;margin-top:10px}
   .btn-outline:hover{background:#0f3460;color:#fff}
+  .btn-sm{padding:8px 16px;font-size:0.85em;width:auto}
   .badge{display:inline-block;background:linear-gradient(90deg,#0f3460,#1e5a96);padding:4px 12px;border-radius:20px;font-size:0.8em;font-weight:700;margin-left:10px;color:#fff}
-  .test-counter{color:#8a9db0;font-size:0.9em}
   .progress-wrap{background:#e0e8f0;border-radius:10px;overflow:hidden;height:8px;margin-bottom:25px}
   .progress-fill{height:8px;background:linear-gradient(90deg,#0f3460,#1e5a96);transition:width 0.4s}
   .question-text{font-size:1.2em;margin-bottom:20px;line-height:1.6;color:#0f3460}
@@ -33,27 +33,34 @@
   .option.wrong-answer{border-color:#ef4444;background:#fef2f2;color:#dc2626}
   .level-card{background:linear-gradient(135deg,#0f3460,#1e5a96);border-radius:15px;padding:25px;text-align:center;margin-bottom:20px;color:#fff}
   .level-card h3{font-size:0.9em;opacity:0.9;text-transform:uppercase;letter-spacing:2px}
-  .level-card .level-name{font-size:2em;font-weight:800;margin:8px 0}
+  .level-card .level-name{font-size:2.5em;font-weight:800;margin:15px 0}
   .level-card .score{font-size:0.9em;opacity:0.9}
-  .levels-grid{display:flex;flex-direction:column;gap:15px}
-  .level-title{font-size:1em;color:#0f3460;font-weight:700;margin-bottom:10px;text-transform:uppercase;letter-spacing:1px}
-  .lessons-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  .lesson-card{background:#fff;border:2px solid #d4dce8;border-radius:12px;padding:14px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative}
+  .result-big{text-align:center;padding:20px 0}
+  .result-big .emoji{font-size:3em;margin-bottom:10px}
+  .result-big h3{font-size:1.8em;margin:10px 0;background:linear-gradient(90deg,#0f3460,#1e5a96);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+  .result-big p{color:#5a7fa6;font-size:1em;margin-bottom:20px}
+  .hidden{display:none}
+  .welcome-msg{font-size:2em;font-weight:700;color:#0f3460;margin-bottom:20px}
+  .info-text{color:#5a7fa6;margin-bottom:15px;line-height:1.6}
+  .landing{text-align:center;padding:60px 20px}
+  .landing h2{font-size:2.5em;font-weight:800;color:#0f3460;margin-bottom:20px}
+  .landing p{font-size:1.1em;color:#5a7fa6;margin-bottom:30px}
+  .landing .btn{width:auto;padding:18px 50px;font-size:1.2em;margin:20px auto}
+  .nav{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
+  .nav-btn{background:#fff;border:2px solid #d4dce8;color:#0f3460;padding:8px 18px;border-radius:20px;cursor:pointer;font-size:0.85em;transition:all 0.2s;font-weight:600}
+  .nav-btn:hover,.nav-btn.active{background:linear-gradient(90deg,#0f3460,#1e5a96);border-color:transparent;color:#fff}
+  .lessons-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:15px;margin-top:20px}
+  .lesson-card{background:#fff;border:2px solid #d4dce8;border-radius:12px;padding:20px;text-align:center;cursor:pointer;transition:all 0.2s;position:relative}
   .lesson-card:hover:not(.locked){border-color:#0f3460;background:#f0f5fa;transform:translateY(-2px)}
   .lesson-card.locked{opacity:0.5;cursor:not-allowed}
   .lesson-card.completed{border-color:#22c55e}
-  .lesson-card .lesson-num{font-size:1.4em;font-weight:800;color:#0f3460}
-  .lesson-card.locked .lesson-num{color:#b0b8c4}
-  .lesson-card p{font-size:0.75em;color:#5a7fa6;margin-top:4px}
-  .lesson-exercises{margin-top:20px}
-  .exercise{background:#f8fafc;border:1px solid #e0e8f0;border-radius:12px;padding:20px;margin-bottom:15px}
-  .exercise p{margin-bottom:12px;font-size:1em;line-height:1.5;color:#0f3460}
-  .ex-options{display:flex;flex-wrap:wrap;gap:10px}
-  .ex-opt{background:#fff;border:2px solid #d4dce8;padding:10px 18px;border-radius:8px;cursor:pointer;font-size:0.9em;color:#0f3460;transition:all 0.2s}
-  .ex-opt:hover{border-color:#0f3460;background:#f0f5fa}
-  .ex-opt.selected{border-color:#0f3460;background:#e8f0fa}
-  .ex-opt.correct{border-color:#22c55e!important;background:#f0fdf4!important;color:#16a34a}
-  .ex-opt.wrong{border-color:#ef4444!important;background:#fef2f2!important;color:#dc2626}
+  .lesson-num{font-size:2em;font-weight:800;color:#0f3460;margin-bottom:5px}
+  .lesson-title{font-size:0.8em;color:#5a7fa6}
+  .lesson-status{font-size:0.7em;margin-top:5px;padding-top:5px;border-top:1px solid #e0e8f0}
+  .lesson-status.completed{color:#22c55e}
+  .lesson-status.available{color:#0f3460}
+  .lesson-status.locked{color:#8a9db0}
+  .test-counter{color:#8a9db0;font-size:0.9em}
   .drag-sentence{font-size:1.1em;line-height:2.2;margin-bottom:14px;color:#0f3460}
   .drop-zone{display:inline-block;min-width:90px;height:34px;border-bottom:2px dashed #0f3460;vertical-align:middle;text-align:center;line-height:32px;padding:0 8px;border-radius:4px;margin:0 4px;color:#0f3460;font-weight:700;cursor:default;transition:all 0.2s}
   .drop-zone.over{background:#e8f0fa;border-style:solid;border-color:#0f3460}
@@ -63,83 +70,38 @@
   .drag-word{background:#e8f0fa;border:2px solid #0f3460;padding:8px 16px;border-radius:8px;cursor:grab;font-size:0.95em;color:#0f3460;font-weight:600;transition:all 0.2s;user-select:none}
   .drag-word:active{cursor:grabbing;opacity:0.7}
   .drag-word.used{opacity:0.3;cursor:not-allowed;pointer-events:none}
-  .student-row{display:flex;justify-content:space-between;align-items:center;padding:14px;background:#f8fafc;border:1px solid #e0e8f0;border-radius:10px;margin-bottom:8px}
-  .student-info strong{display:block;font-size:1em;color:#0f3460}
-  .student-info span{font-size:0.8em;color:#5a7fa6}
-  .nav{display:flex;gap:10px;margin-bottom:20px;flex-wrap:wrap}
-  .nav-btn{background:#fff;border:2px solid #d4dce8;color:#0f3460;padding:8px 18px;border-radius:20px;cursor:pointer;font-size:0.85em;transition:all 0.2s;font-weight:600}
-  .nav-btn:hover,.nav-btn.active{background:linear-gradient(90deg,#0f3460,#1e5a96);border-color:transparent;color:#fff}
-  .result-big{text-align:center;padding:20px 0}
-  .result-big .emoji{font-size:3em}
-  .result-big h3{font-size:1.8em;margin:10px 0;background:linear-gradient(90deg,#0f3460,#1e5a96);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-  .result-big p{color:#5a7fa6;font-size:1em}
-  .hidden{display:none}
-  .welcome-msg{font-size:2em;font-weight:700;color:#0f3460;margin-bottom:20px}
-  .info-text{color:#5a7fa6;margin-bottom:15px;line-height:1.6}
-  @media(max-width:600px){.options,.lessons-row{grid-template-columns:1fr 1fr}}
+  .exercise{background:#f8fafc;border:1px solid #e0e8f0;border-radius:12px;padding:20px;margin-bottom:15px}
+  .exercise p{margin-bottom:12px;font-size:1em;line-height:1.5;color:#0f3460}
+  .feedback{margin-top:10px;font-size:0.9em;font-weight:600}
+  @media(max-width:600px){.options,.lessons-grid{grid-template-columns:1fr}.landing h2{font-size:1.8em}.landing .btn{width:100%;padding:14px 20px;font-size:1em}}
 </style>
 </head>
 <body>
 <div class="container">
   <div class="logo">
-    <h1>⚡ Victor English</h1>
+    <h1>⚡ Atlas English</h1>
     <p>Academy — Learn English for Real</p>
   </div>
 
-  <!-- LOGIN SCREEN -->
-  <div id="screen-login" class="card">
-    <h2>Sign In</h2>
-    <p class="info-text">Welcome! Enter your information to continue.</p>
-    <input id="login-name" placeholder="Your Full Name" autocomplete="name">
-    <input id="login-email" type="email" placeholder="Your Email" autocomplete="email">
-    <button class="btn" onclick="doLogin()">Sign In →</button>
-    <p style="text-align:right;margin-top:10px;font-size:0.8em"><span style="color:#0f3460;cursor:pointer" onclick="showAdminLogin()">Teacher Access</span></p>
-  </div>
-
-  <!-- DASHBOARD -->
-  <div id="screen-dashboard" class="card hidden">
-    <div class="welcome-msg">Welcome, <span id="user-welcome-name">Student</span>! 👋</div>
-    <p class="info-text">You're ready to start your English learning journey. Take the placement test to find your level, or continue with your lessons.</p>
-    
-    <div id="dashboard-content">
-      <button class="btn" onclick="goToTest()" style="margin-bottom:10px">📋 Take Placement Test</button>
-      <button class="btn-outline" onclick="loadLessonsView()" style="width:100%;margin-top:0">📚 My Lessons</button>
-      <button class="btn-outline" onclick="doLogout()" style="width:100%;margin-top:10px">Sign Out</button>
-    </div>
-
-    <div id="lessons-section" class="hidden">
-      <div class="nav">
-        <button class="nav-btn active" onclick="showTab('tab-lessons',this)">📚 Lessons</button>
-        <button class="nav-btn" onclick="showTab('tab-calendar',this)">📅 Classes</button>
-        <button class="nav-btn" onclick="doLogout()">Sign Out</button>
-      </div>
-
-      <div id="level-display" class="level-card">
-        <h3>Your Current Level</h3>
-        <div class="level-name" id="disp-level">Not Tested Yet</div>
-        <div class="score" id="disp-score"></div>
-      </div>
-
-      <div id="tab-lessons">
-        <div id="levels-container" class="levels-grid"></div>
-      </div>
-
-      <div id="tab-calendar" class="hidden">
-        <div class="card">
-          <h2>📅 Upcoming Classes</h2>
-          <iframe src="https://calendar.google.com/calendar/embed?src=0953e03bc139064f6ebeeb639c8287a195f54377a83f9ddfb5f2af9659febed0%40group.calendar.google.com&ctz=America%2FPanama&showTitle=0&showNav=1&showDate=1&showPrint=0&showTabs=0&showCalendars=0&mode=AGENDA" frameborder="0" scrolling="no" style="border-radius:12px;border:none;width:100%;height:320px"></iframe>
-        </div>
-      </div>
+  <!-- LANDING -->
+  <div id="screen-landing" class="card hidden">
+    <div class="landing">
+      <h2>Welcome to Atlas English</h2>
+      <p>Learn English at your own pace with our personalized learning path</p>
+      <input id="signin-name" placeholder="Your Full Name" autocomplete="name" style="width:60%;margin:20px auto">
+      <input id="signin-email" type="email" placeholder="Your Email" autocomplete="email" style="width:60%;margin:0 auto 20px">
+      <button class="btn" onclick="startPlacement()" style="width:auto;padding:18px 50px;font-size:1.2em">Start Learning →</button>
     </div>
   </div>
 
   <!-- PLACEMENT TEST -->
   <div id="screen-test" class="card hidden">
-    <button class="btn-outline" onclick="backToDashboard()" style="margin-bottom:20px">← Back</button>
-    <h2>📋 English Placement Test</h2>
-    <p class="info-text">Answer these questions to determine your English level. This test takes about 5 minutes.</p>
-    <div class="test-header">
+    <button class="btn-outline" onclick="goBack()" style="margin-bottom:20px">← Back</button>
+    <h2>📋 English Level Test</h2>
+    <p class="info-text">Answer 30 questions to discover your English level. This helps us create a personalized learning path for you.</p>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
       <span id="test-counter" class="test-counter">Question 1 of 30</span>
+      <span id="test-score-live" style="color:#0f3460;font-size:0.85em;font-weight:600"></span>
     </div>
     <div class="progress-wrap"><div class="progress-fill" id="test-progress" style="width:0%"></div></div>
     <div id="test-question" class="question-text"></div>
@@ -147,45 +109,80 @@
     <button class="btn" id="btn-next" onclick="nextQ()" disabled style="opacity:0.4">Next →</button>
   </div>
 
+  <!-- TEST RESULT -->
+  <div id="screen-result" class="card hidden">
+    <div class="result-big">
+      <div class="emoji">🎉</div>
+      <h3>Your English Level</h3>
+      <div class="level-card" style="margin:20px 0">
+        <div class="level-name" id="result-level">—</div>
+        <p id="result-description" style="margin-top:10px;font-size:0.9em;opacity:0.9">Loading...</p>
+      </div>
+      <p id="result-score" style="color:#5a7fa6;margin:15px 0"></p>
+      <button class="btn" onclick="goToDashboard()" style="width:auto;padding:14px 40px;margin-top:20px">View My Learning Path →</button>
+    </div>
+  </div>
+
+  <!-- DASHBOARD -->
+  <div id="screen-dashboard" class="card hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <div>
+        <div class="welcome-msg">Welcome, <span id="dash-name">Student</span>! 👋</div>
+        <div class="info-text">Your current level: <span class="badge" id="dash-level">—</span></div>
+      </div>
+      <button class="btn-outline btn-sm" onclick="doLogout()">Sign Out</button>
+    </div>
+
+    <div class="level-card">
+      <h3>Your Progress</h3>
+      <div style="margin:20px 0">
+        <div class="progress-wrap"><div class="progress-fill" id="dash-progress" style="width:0%"></div></div>
+        <p style="margin-top:10px;font-size:0.9em"><span id="dash-completed">0</span> lessons completed</p>
+      </div>
+    </div>
+
+    <h3 style="margin-top:30px;color:#0f3460;margin-bottom:15px">Your Learning Path</h3>
+    <div id="lessons-container"></div>
+
+    <div style="margin-top:30px;text-align:center">
+      <button class="btn-outline" onclick="goToCalendar()">📅 View Classes</button>
+      <button class="btn-outline" onclick="doLogout()" style="margin-left:10px">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- CALENDAR -->
+  <div id="screen-calendar" class="card hidden">
+    <button class="btn-outline" onclick="goBack()" style="margin-bottom:20px">← Back</button>
+    <h2>📅 Upcoming Classes</h2>
+    <iframe src="https://calendar.google.com/calendar/embed?src=0953e03bc139064f6ebeeb639c8287a195f54377a83f9ddfb5f2af9659febed0%40group.calendar.google.com&ctz=America%2FPanama" frameborder="0" scrolling="no" style="border-radius:12px;border:none;width:100%;height:320px"></iframe>
+  </div>
+
   <!-- LESSON DETAIL -->
   <div id="screen-lesson" class="card hidden">
-    <button class="btn-outline" onclick="backToDashboard()" style="margin-bottom:20px">← Back</button>
+    <button class="btn-outline" onclick="goBack()" style="margin-bottom:20px">← Back</button>
     <h2 id="lesson-title"></h2>
     <p id="lesson-grammar" style="color:#5a7fa6;margin-bottom:20px;line-height:1.6"></p>
-    <div id="lesson-exercises" class="lesson-exercises"></div>
+    <div id="lesson-exercises"></div>
     <div id="lesson-result" class="hidden result-big">
       <div class="emoji">🎉</div>
       <h3 id="lesson-result-text"></h3>
       <p id="lesson-result-sub"></p>
-      <button class="btn" onclick="backToDashboard()" style="margin-top:20px;width:auto;padding:12px 30px">Continue →</button>
+      <button class="btn" onclick="completeLesson()" style="margin-top:20px;width:auto;padding:12px 30px">Mark Complete & Continue →</button>
     </div>
   </div>
 
-  <!-- ADMIN LOGIN -->
-  <div id="screen-admin-login" class="card hidden">
-    <h2>🔐 Teacher Access</h2>
-    <input id="inp-admin-pass" type="password" placeholder="Teacher Password">
-    <button class="btn" onclick="doAdminLogin()">Enter</button>
-    <button class="btn-outline" onclick="showScreen('screen-login')" style="margin-top:10px">← Back</button>
-  </div>
-
-  <!-- ADMIN PANEL -->
-  <div id="screen-admin" class="card hidden">
-    <h2>📊 Teacher Dashboard</h2>
-    <div id="admin-students"></div>
-    <button class="btn-outline" onclick="doLogout()" style="margin-top:20px">Sign Out</button>
-  </div>
 </div>
 
 <script type="module">
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 const sb = createClient("https://uxpqtlppygdheimjtmkl.supabase.co","sb_publishable_TKRzrwXWgWSlPKqN5UbS2g_q2chB7oo");
 
-const LEVELS=["Beginner","Elementary","Pre-Intermediate","Intermediate","Upper-Intermediate","Advanced","Expert","Master","Fluent"];
-const ADMIN_PASS="victor2024";
-
-let currentUser=null, currentLevelIndex=0, sessionId=null;
-let qIndex=0, testScore=0, selectedOption=null;
+const LEVELS = {
+  "A1": { min: 0, max: 3, desc: "Beginner — You're just starting!" },
+  "A2": { min: 4, max: 6, desc: "Elementary — Good foundation!" },
+  "B1": { min: 7, max: 8, desc: "Pre-Intermediate — Getting strong!" },
+  "B2": { min: 9, max: 10, desc: "Intermediate+ — Advanced learner!" }
+};
 
 const QUESTIONS=[
   {q:"I ___ a student.",a:["am","is","are","be"],c:0},
@@ -224,109 +221,63 @@ const LESSONS = buildLessons();
 
 function buildLessons(){
   const data=[
-    ["To Be: Present Simple","The verb 'to be' is the most basic verb in English. Use AM with I, IS with he/she/it, ARE with you/we/they. Example: I am happy. She is a doctor.",
+    ["To Be: Present Simple","The verb 'to be' is the most basic verb in English. Use AM with I, IS with he/she/it, ARE with you/we/they.",
      [{q:"I ___ a student.",a:["am","is","are"],c:0},{q:"He ___ from Panama.",a:["am","is","are"],c:1},{q:"We ___ friends.",a:["am","is","are"],c:2},{q:"She ___ a teacher.",a:["am","is","are"],c:1},{q:"They ___ at home.",a:["am","is","are"],c:2}]],
-    ["Numbers & Greetings","Basic English greetings: Hello, Good morning, Good afternoon, Good evening, Goodbye. Numbers 1-20 are essential for beginners.",
-     [{q:"'Good morning' is said:",a:["at night","in the morning","at 10 PM","never"],c:1},{q:"How do you say 'ten'?",a:["two","five","ten","twenty"],c:2},{q:"'Goodbye' means:",a:["hello","bye/see you later","good night","thanks"],c:1},{q:"'Please' means:",a:["thank you","excuse me","sorry","ok"],c:1},{q:"'Thank you' means:",a:["sorry","goodbye","thanks","no"],c:2}]],
-    ["Articles: A, An, The","Use 'a' before consonants (a book), 'an' before vowels (an apple), 'the' for specific things (the sun). Example: I have a cat. The cat is black.",
+    ["Numbers & Greetings","Basic English greetings and numbers 1-20.",
+     [{q:"'Good morning' is said:",a:["at night","in the morning","at 10 PM","never"],c:1},{q:"How do you say 'ten'?",a:["two","five","ten","twenty"],c:2},{q:"'Goodbye' means:",a:["hello","bye","good night","thanks"],c:1},{q:"'Please' means:",a:["thank you","excuse me","sorry","ok"],c:1},{q:"'Thank you' means:",a:["sorry","goodbye","thanks","no"],c:2}]],
+    ["Articles: A, An, The","Use 'a' before consonants, 'an' before vowels, 'the' for specific things.",
      [{q:"___ apple a day keeps the doctor away.",a:["A","An","The","—"],c:1},{q:"I want ___ sandwich.",a:["a","an","the","—"],c:0},{q:"___ sun rises in the east.",a:["A","An","The","—"],c:2},{q:"She is ___ engineer.",a:["a","an","the","—"],c:1},{q:"He ate ___ orange.",a:["a","an","the","—"],c:1}]],
-    ["Common Nouns","Nouns are words that name people, places, or things. Singular: cat, book, house. Plural: cats, books, houses (usually add -s).",
+    ["Common Nouns","Words that name people, places, or things.",
      [{q:"More than one 'book' is:",a:["books","bookes","booky","bookies"],c:0},{q:"'House' in English:",a:["horse","house","mouse","home"],c:1},{q:"Plural of 'child':",a:["childs","childes","children","childrens"],c:2},{q:"'Water' in English:",a:["fire","water","earth","air"],c:1},{q:"Plural of 'woman':",a:["womans","womens","women","womes"],c:2}]],
-    ["Present Simple – Habits","Use Present Simple for habits and routines. With he/she/it add -s/-es. I eat → She eats. I go → He goes. I watch → She watches.",
+    ["Present Simple – Habits","Use for habits and routines. With he/she/it add -s/-es.",
      [{q:"She ___ TV every evening.",a:["watch","watches","watching","watched"],c:1},{q:"They ___ coffee.",a:["drink","drinks","drinking","drank"],c:0},{q:"He ___ to work by bus.",a:["go","goes","going","went"],c:1},{q:"I ___ English every day.",a:["study","studies","studying","studied"],c:0},{q:"She ___ her teeth twice a day.",a:["brush","brushes","brushing","brushed"],c:1}]],
-    ["Colors & Adjectives","Adjectives describe nouns and always go BEFORE in English: a red car, a big house, a happy student. Common colors: red, blue, green, yellow, black, white.",
-     [{q:"'Red' in English:",a:["blue","green","red","yellow"],c:2},{q:"A ___ car (big car):",a:["big car","car big","bigs car","car bigs"],c:0},{q:"'Blue' in English:",a:["black","blue","brown","bright"],c:1},{q:"The ___ dog is friendly. (friendly dog)",a:["friendly dog","dog friendly","friendly the","—"],c:0},{q:"'Green' in English:",a:["grey","gold","green","glue"],c:2}]],
-    ["Have/Has – Possession","Use 'have' with I/you/we/they. Use 'has' with he/she/it. Example: I have a car. She has a cat. Do you have a pen? Does he have a sister?",
+    ["Colors & Adjectives","Adjectives describe nouns and go BEFORE the noun in English.",
+     [{q:"'Red' in English:",a:["blue","green","red","yellow"],c:2},{q:"A ___ car (big car):",a:["big car","car big","bigs car","car bigs"],c:0},{q:"'Blue' in English:",a:["black","blue","brown","bright"],c:1},{q:"The ___ dog is friendly.",a:["friendly dog","dog friendly","friendly the","—"],c:0},{q:"'Green' in English:",a:["grey","gold","green","glue"],c:2}]],
+    ["Have/Has – Possession","Use 'have' with I/you/we/they. Use 'has' with he/she/it.",
      [{q:"I ___ two brothers.",a:["have","has","had","having"],c:0},{q:"She ___ a new phone.",a:["have","has","had","having"],c:1},{q:"They ___ a big house.",a:["have","has","had","having"],c:0},{q:"He ___ blue eyes.",a:["have","has","had","having"],c:1},{q:"We ___ a meeting today.",a:["have","has","had","having"],c:0}]],
-    ["Days, Months & Time","Days: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday. Months: January...December. Time: It's 3 o'clock / half past 2 / quarter to 5.",
+    ["Days, Months & Time","Days, months, and how to tell time in English.",
      [{q:"'Monday' in English:",a:["Sunday","Monday","Friday","Tuesday"],c:1},{q:"'January' in English:",a:["June","July","January","March"],c:2},{q:"The day after Monday is:",a:["Sunday","Wednesday","Tuesday","Friday"],c:2},{q:"'Friday' in English:",a:["Thursday","Friday","Saturday","Monday"],c:1},{q:"'December' in English:",a:["November","December","October","September"],c:1}]],
-    ["Past Simple – Regular","Regular past verbs add -ed. Work → worked. Play → played. Watch → watched. Use for actions completed in the past.",
+    ["Past Simple – Regular","Regular past verbs add -ed. Work → worked.",
      [{q:"She ___ TV last night. (watch)",a:["watch","watches","watched","watching"],c:2},{q:"I ___ English yesterday. (study)",a:["study","studyed","studied","studying"],c:2},{q:"He ___ to music. (listen)",a:["listen","listened","listens","listening"],c:1},{q:"They ___ soccer. (play)",a:["play","plays","played","playing"],c:2},{q:"We ___ until midnight. (work)",a:["work","works","worked","working"],c:2}]]
   ];
   
-  const levels=[];
-  const perLevel=8;
-  const totalLessons=data.length;
-  for(let l=0;l<9;l++){
-    const levelLessons=[];
-    for(let i=0;i<perLevel;i++){
-      const dataIdx=(l*perLevel+i)%totalLessons;
-      levelLessons.push({
-        title:`Level ${l+1} — Lesson ${i+1}: ${data[dataIdx][0]}`,
-        grammar:data[dataIdx][1],
-        exercises:data[dataIdx][2]
-      });
-    }
-    levels.push(levelLessons);
+  const lessons=[];
+  for(let i=0;i<72;i++){
+    const dataIdx=i%data.length;
+    lessons.push({
+      id:i+1,
+      title:`Lesson ${i+1}: ${data[dataIdx][0]}`,
+      grammar:data[dataIdx][1],
+      exercises:data[dataIdx][2]
+    });
   }
-  return levels;
+  return lessons;
 }
 
+let currentUser=null, currentLevel=null, currentLevelIndex=-1, currentPage="landing";
+let qIndex=0, testScore=0, selectedOption=null, currentLessonId=-1;
+
 function showScreen(id){
-  ['screen-login','screen-dashboard','screen-test','screen-lesson','screen-admin-login','screen-admin'].forEach(s=>{
+  ['screen-landing','screen-test','screen-result','screen-dashboard','screen-calendar','screen-lesson'].forEach(s=>{
     document.getElementById(s).classList.add('hidden');
   });
   document.getElementById(id).classList.remove('hidden');
+  currentPage=id;
 }
 
-window.showAdminLogin=function(){showScreen('screen-admin-login');}
-
-window.showTab=function(tabId,btn){
-  ['tab-lessons','tab-calendar'].forEach(t=>document.getElementById(t).classList.add('hidden'));
-  document.getElementById(tabId).classList.remove('hidden');
-  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
-
-// LOGIN
-window.doLogin=async function(){
-  const name=document.getElementById('login-name').value.trim();
-  const email=document.getElementById('login-email').value.trim();
+window.startPlacement=function(){
+  const name=document.getElementById('signin-name').value.trim();
+  const email=document.getElementById('signin-email').value.trim();
   
   if(!name||!email){alert('Please enter your name and email.');return;}
   if(!email.includes('@')){alert('Please enter a valid email.');return;}
   
   currentUser={name,email};
-  sessionId=Math.random().toString(36).substr(2,9);
   
-  try{
-    await sb.from('students').insert({name,email,level_index:0,unlocked_levels:1,placement_score:0}).single();
-  }catch(e){
-    // Student already exists, that's fine
-  }
-  
-  document.getElementById('login-name').value='';
-  document.getElementById('login-email').value='';
-  showScreen('screen-dashboard');
-  document.getElementById('user-welcome-name').textContent=name;
-}
-
-// LOGOUT
-window.doLogout=function(){
-  currentUser=null;
-  sessionId=null;
-  showScreen('screen-login');
-}
-
-window.loadLessonsView=function(){
-  document.getElementById('dashboard-content').classList.add('hidden');
-  document.getElementById('lessons-section').classList.remove('hidden');
-  renderLessons(currentLevelIndex);
-}
-
-window.backToDashboard=function(){
-  if(currentUser){
-    document.getElementById('dashboard-content').classList.remove('hidden');
-    document.getElementById('lessons-section').classList.add('hidden');
-    showScreen('screen-dashboard');
-  }
-}
-
-// TEST
-window.goToTest=function(){
   qIndex=0;
   testScore=0;
   selectedOption=null;
+  
   showScreen('screen-test');
   renderQuestion();
 }
@@ -377,105 +328,119 @@ window.nextQ=function(){
   },600);
 }
 
-async function finishTest(){
-  const levelIndex=Math.min(Math.floor(testScore/3),8);
-  currentLevelIndex=levelIndex;
-  backToDashboard();
-  loadLessonsView();
-  showDashboard(levelIndex,testScore);
+function finishTest(){
+  // Calculate level: 0-3 = A1, 4-6 = A2, 7-8 = B1, 9-10 = B2
+  const levelScore=Math.floor(testScore/3); // 0-10
+  let level='A1';
+  if(levelScore>=4&&levelScore<=6)level='A2';
+  else if(levelScore>=7&&levelScore<=8)level='B1';
+  else if(levelScore>=9)level='B2';
+  
+  currentLevel=level;
+  currentLevelIndex=levelScore;
+  
+  localStorage.setItem('atlasUser',JSON.stringify({name:currentUser.name,email:currentUser.email,level,levelIndex:levelScore,completed:[]}));
+  
+  showScreen('screen-result');
+  document.getElementById('result-level').textContent=level;
+  document.getElementById('result-description').textContent=LEVELS[level].desc;
+  document.getElementById('result-score').textContent=`You got ${testScore} out of ${QUESTIONS.length} questions correct.`;
 }
 
-function showDashboard(levelIndex,score){
-  document.getElementById('disp-level').textContent=LEVELS[levelIndex];
-  document.getElementById('disp-score').textContent=`Score: ${score}/${QUESTIONS.length} • ${Math.round(score/QUESTIONS.length*100)}%`;
+window.goToDashboard=function(){
+  showScreen('screen-dashboard');
+  renderDashboard();
 }
 
-function renderLessons(unlockedLevel){
-  const container=document.getElementById('levels-container');
+function renderDashboard(){
+  document.getElementById('dash-name').textContent=currentUser.name;
+  document.getElementById('dash-level').textContent=currentLevel;
+  
+  const completed=JSON.parse(localStorage.getItem('atlasUser')||'{}').completed||[];
+  const progress=Math.round((completed.length/LESSONS.length)*100);
+  document.getElementById('dash-progress').style.width=`${progress}%`;
+  document.getElementById('dash-completed').textContent=completed.length;
+  
+  renderLessonsGrid(completed);
+}
+
+function renderLessonsGrid(completed){
+  const container=document.getElementById('lessons-container');
   container.innerHTML='';
-  LESSONS.forEach((levelLessons,l)=>{
-    const unlocked=l<=unlockedLevel;
-    const section=document.createElement('div');
-    section.className='level-section';
-    section.innerHTML=`<div class="level-title">${LEVELS[l]} ${unlocked?'':'🔒'}</div>`;
-    const row=document.createElement('div');
-    row.className='lessons-row';
-    levelLessons.forEach((lesson,i)=>{
-      const card=document.createElement('div');
-      card.className=`lesson-card ${unlocked?'':'locked'}`;
-      card.innerHTML=`<div class="lesson-num">${i+1}</div><p>${lesson.title.split(': ')[1]?.substring(0,20)||'Lesson '+(i+1)}</p>`;
-      if(unlocked){card.onclick=()=>openLesson(l,i);}
-      row.appendChild(card);
-    });
-    section.appendChild(row);
-    container.appendChild(section);
+  
+  LESSONS.forEach((lesson,idx)=>{
+    const isCompleted=completed.includes(lesson.id);
+    const isRecommended=(idx+1<=20); // First 20 recommended based on level
+    const isLocked=(idx+1>40); // Last 32 locked for now
+    
+    const card=document.createElement('div');
+    card.className='lesson-card';
+    if(isCompleted)card.classList.add('completed');
+    if(isLocked)card.classList.add('locked');
+    
+    card.innerHTML=`
+      <div class="lesson-num">${lesson.id}</div>
+      <div class="lesson-title">${lesson.title.split(': ')[1]?.substring(0,15)||'Lesson'}</div>
+      <div class="lesson-status ${isCompleted?'completed':isLocked?'locked':'available'}">
+        ${isCompleted?'✓ Done':isLocked?'🔒 Advanced':isRecommended?'→ Start':''}
+      </div>
+    `;
+    
+    if(!isLocked){
+      card.onclick=()=>openLesson(lesson.id);
+    }
+    
+    container.appendChild(card);
   });
 }
 
-window.openLesson=function(l,i){
-  const lesson=LESSONS[l][i];
+window.openLesson=function(lessonId){
+  currentLessonId=lessonId;
+  const lesson=LESSONS[lessonId-1];
+  
   document.getElementById('lesson-title').textContent=lesson.title;
   document.getElementById('lesson-grammar').textContent=lesson.grammar;
   const container=document.getElementById('lesson-exercises');
   container.innerHTML='';
   document.getElementById('lesson-result').classList.add('hidden');
-
+  
   let totalEx=lesson.exercises.length;
   let answeredCount=0;
   let correctCount=0;
-
+  
   lesson.exercises.forEach((ex,idx)=>{
     const parts=ex.q.split('___');
     const correctWord=ex.a[ex.c];
     const div=document.createElement('div');
     div.className='exercise';
-
-    let sentenceHTML=`<p style="margin-bottom:8px;color:#8a9db0;font-size:0.85em">Exercise ${idx+1} — Drag the correct answer to the blank</p><div class="drag-sentence">`;
+    
+    let sentenceHTML=`<p style="margin-bottom:8px;color:#8a9db0;font-size:0.85em">Exercise ${idx+1}</p><div class="drag-sentence">`;
     parts.forEach((part,pi)=>{
       sentenceHTML+=`<span>${part}</span>`;
       if(pi<parts.length-1){
-        sentenceHTML+=`<span class="drop-zone" id="dz-${idx}" data-idx="${idx}">___</span>`;
+        sentenceHTML+=`<span class="drop-zone" id="dz-${idx}">___</span>`;
       }
     });
     sentenceHTML+=`</div>`;
-
+    
     const shuffled=[...ex.a].sort(()=>Math.random()-0.5);
     sentenceHTML+=`<div class="drag-words" id="dw-${idx}">`;
     shuffled.forEach(word=>{
-      sentenceHTML+=`<div class="drag-word" draggable="true" data-word="${word}" data-exidx="${idx}">${word}</div>`;
+      sentenceHTML+=`<div class="drag-word" draggable="true" data-word="${word}">${word}</div>`;
     });
     sentenceHTML+=`</div><div class="feedback" id="fb-${idx}"></div>`;
-
+    
     div.innerHTML=sentenceHTML;
     container.appendChild(div);
-
+    
     const dz=document.getElementById(`dz-${idx}`);
     let draggedWord=null;
-
+    
     div.querySelectorAll('.drag-word').forEach(w=>{
-      w.addEventListener('dragstart',e=>{
-        draggedWord=w.dataset.word;
-        e.dataTransfer.setData('text/plain',draggedWord);
-        w.style.opacity='0.5';
-      });
+      w.addEventListener('dragstart',e=>{draggedWord=w.dataset.word;e.dataTransfer.setData('text/plain',draggedWord);w.style.opacity='0.5';});
       w.addEventListener('dragend',e=>{w.style.opacity='1';});
-
-      w.addEventListener('touchstart',e=>{draggedWord=w.dataset.word;w.style.opacity='0.5';},{passive:true});
-      w.addEventListener('touchend',e=>{
-        w.style.opacity='1';
-        const touch=e.changedTouches[0];
-        const el=document.elementFromPoint(touch.clientX,touch.clientY);
-        if(el&&el.classList.contains('drop-zone')&&el.dataset.idx==idx){
-          dropAnswer(idx,draggedWord,correctWord,()=>{
-            answeredCount++;
-            if(draggedWord===correctWord)correctCount++;
-            markWordUsed(idx,draggedWord);
-            if(answeredCount===totalEx)showLessonResult(correctCount,totalEx);
-          });
-        }
-      });
     });
-
+    
     dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over');});
     dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
     dz.addEventListener('drop',e=>{
@@ -485,13 +450,12 @@ window.openLesson=function(l,i){
       dropAnswer(idx,word,correctWord,()=>{
         answeredCount++;
         if(word===correctWord)correctCount++;
-        markWordUsed(idx,word);
         if(answeredCount===totalEx)showLessonResult(correctCount,totalEx);
       });
       dz.classList.remove('over');
     });
   });
-
+  
   showScreen('screen-lesson');
 }
 
@@ -503,58 +467,70 @@ function dropAnswer(idx,word,correct,callback){
   dz.classList.add('filled');
   if(word===correct){
     fb.innerHTML='<span style="color:#16a34a">✓ Correct!</span>';
-  } else {
+  }else{
     dz.classList.add('wrong-drop');
     dz.classList.remove('filled');
-    fb.innerHTML=`<span style="color:#dc2626">✗ Incorrect — The answer is: <strong style="color:#0f3460">${correct}</strong></span>`;
+    fb.innerHTML=`<span style="color:#dc2626">✗ Incorrect — Answer: <strong>${correct}</strong></span>`;
     setTimeout(()=>{dz.textContent=correct;dz.classList.add('filled');dz.classList.remove('wrong-drop');},800);
   }
   callback();
-}
-
-function markWordUsed(idx,word){
-  document.querySelectorAll(`#dw-${idx} .drag-word`).forEach(w=>{
-    if(w.dataset.word===word&&!w.classList.contains('used')){
-      w.classList.add('used');
-    }
-  });
 }
 
 function showLessonResult(correct,total){
   const pct=Math.round(correct/total*100);
   const res=document.getElementById('lesson-result');
   res.classList.remove('hidden');
-  document.getElementById('lesson-result-text').textContent=pct>=70?'Excellent!':'Keep Practicing';
-  document.getElementById('lesson-result-sub').textContent=`${correct}/${total} correct (${pct}%)${pct>=70?' — Lesson completed!':' — Try again to improve'}`;
+  document.getElementById('lesson-result-text').textContent=pct>=70?'Great Work!':'Almost There!';
+  document.getElementById('lesson-result-sub').textContent=`${correct}/${total} correct (${pct}%)`;
   res.querySelector('.emoji').textContent=pct>=70?'🎉':'💪';
-  res.scrollIntoView({behavior:'smooth'});
 }
 
-// ADMIN
-window.doAdminLogin=function(){
-  if(document.getElementById('inp-admin-pass').value===ADMIN_PASS){
-    document.getElementById('inp-admin-pass').value='';
-    showScreen('screen-admin');
-    loadStudents();
-  }else{alert('Incorrect password.');}
+window.completeLesson=function(){
+  const user=JSON.parse(localStorage.getItem('atlasUser')||'{}');
+  if(!user.completed)user.completed=[];
+  if(!user.completed.includes(currentLessonId)){
+    user.completed.push(currentLessonId);
+    localStorage.setItem('atlasUser',JSON.stringify(user));
+  }
+  goBack();
 }
 
-async function loadStudents(){
-  const {data,error}=await sb.from('students').select('*').order('created_at',{ascending:false});
-  const container=document.getElementById('admin-students');
-  if(error||!data||data.length===0){container.innerHTML='<p style="color:#8a9db0">No students registered yet.</p>';return;}
-  container.innerHTML=data.map(s=>`
-    <div class="student-row">
-      <div class="student-info">
-        <strong>${s.name}</strong>
-        <span>${s.email}</span>
-      </div>
-      <div style="text-align:right">
-        <span class="badge">${LEVELS[s.level_index]||'N/A'}</span>
-        <div style="font-size:0.75em;color:#5a7fa6;margin-top:4px">Score: ${s.placement_score||0}</div>
-      </div>
-    </div>`).join('');
+window.goToCalendar=function(){
+  showScreen('screen-calendar');
 }
+
+window.goBack=function(){
+  if(currentPage==='screen-lesson'){
+    showScreen('screen-dashboard');
+    renderDashboard();
+  }else if(currentPage==='screen-calendar'){
+    showScreen('screen-dashboard');
+  }
+}
+
+window.doLogout=function(){
+  currentUser=null;
+  currentLevel=null;
+  localStorage.removeItem('atlasUser');
+  showScreen('screen-landing');
+  document.getElementById('signin-name').value='';
+  document.getElementById('signin-email').value='';
+}
+
+// Load user if already signed in
+window.addEventListener('load',()=>{
+  const saved=localStorage.getItem('atlasUser');
+  if(saved){
+    const user=JSON.parse(saved);
+    currentUser={name:user.name,email:user.email};
+    currentLevel=user.level;
+    currentLevelIndex=user.levelIndex;
+    showScreen('screen-dashboard');
+    renderDashboard();
+  }else{
+    showScreen('screen-landing');
+  }
+});
 </script>
 </body>
 </html>
