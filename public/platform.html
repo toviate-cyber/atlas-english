@@ -13,25 +13,23 @@ body{font-family:'Segoe UI','Helvetica Neue',sans-serif;background:#f9fafb;color
 .header{background:#fff;border-bottom:1px solid #e5e7eb;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
 .logo{font-size:1.3em;font-weight:800;background:linear-gradient(90deg,#1e40af,#0369a1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
 .menu-btn{background:none;border:none;font-size:1.5em;cursor:pointer;padding:8px}
-.menu-btn:hover{opacity:0.7}
 
-/* SIDEBAR MENU */
+/* SIDEBAR */
 .sidebar{position:fixed;top:0;left:-300px;width:300px;height:100vh;background:#1f2937;color:#fff;padding:20px 0;transition:left 0.3s;z-index:99;overflow-y:auto}
 .sidebar.open{left:0}
 .sidebar-header{padding:20px;border-bottom:1px solid #374151;font-size:1.2em;font-weight:700}
 .sidebar-close{position:absolute;top:15px;right:15px;background:none;border:none;color:#fff;font-size:1.5em;cursor:pointer}
 .sidebar-nav{list-style:none;margin-top:10px}
-.sidebar-nav li{padding:0}
 .sidebar-nav a{display:block;padding:15px 20px;color:#e5e7eb;text-decoration:none;transition:all 0.3s;border-left:3px solid transparent}
 .sidebar-nav a:hover{background:#374151;border-left-color:#0ea5e9;color:#fff}
 .sidebar-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);display:none;z-index:98}
 .sidebar-overlay.open{display:block}
 
-/* MAIN CONTENT */
+/* CONTENT */
 .content{padding:30px 20px;max-width:900px;margin:auto}
 
 /* CARDS */
-.card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:24px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,0.1);animation:fadeIn 0.3s ease}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:24px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
 .card h2{font-size:1.4em;color:#1f2937;margin-bottom:15px}
 
 /* INPUTS */
@@ -40,72 +38,69 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 
 /* BUTTONS */
 .btn{background:linear-gradient(90deg,#1e40af,#0369a1);color:#fff;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;font-size:1em;font-weight:600;transition:all 0.3s;width:100%}
-.btn:hover{opacity:0.9;transform:translateY(-1px)}
+.btn:hover:not(:disabled){opacity:0.9;transform:translateY(-1px)}
 .btn:disabled{opacity:0.5;cursor:not-allowed}
 .btn-secondary{background:#e5e7eb;color:#1f2937}
-.btn-secondary:hover{background:#d1d5db}
+.btn-secondary:hover:not(:disabled){background:#d1d5db}
 .btn-ghost{background:transparent;border:2px solid #1e40af;color:#1e40af;width:auto;padding:10px 18px;margin:5px}
 .btn-ghost:hover{background:#eff6ff}
 
 /* BADGES */
 .badge{display:inline-block;background:#0ea5e9;color:#fff;padding:4px 12px;border-radius:20px;font-size:0.85em;font-weight:600;margin:0 5px}
-.badge-primary{background:linear-gradient(90deg,#1e40af,#0369a1)}
 .badge-success{background:#10b981}
 .badge-warning{background:#f59e0b}
+.badge-error{background:#ef4444}
 .badge-points{background:linear-gradient(90deg,#ec4899,#f472b6)}
 
 /* PROGRESS */
 .progress-bar{background:#e5e7eb;border-radius:8px;height:6px;overflow:hidden;margin:12px 0}
 .progress-fill{height:100%;background:linear-gradient(90deg,#1e40af,#0369a1);transition:width 0.5s ease}
-.progress-text{font-size:0.9em;color:#6b7280;margin-top:6px}
 
-/* DASHBOARD STATS */
+/* STATS */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:24px}
 .stat-card{background:linear-gradient(135deg,#f3f4f6,#fff);border:1px solid #e5e7eb;border-radius:12px;padding:16px;text-align:center}
 .stat-value{font-size:2em;font-weight:800;color:#1e40af}
 .stat-label{color:#6b7280;font-size:0.9em;margin-top:8px}
 
-/* LESSONS GRID */
+/* LESSONS */
 .lessons-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:12px}
-.lesson-btn{background:#fff;border:2px solid #e5e7eb;border-radius:10px;padding:16px 8px;cursor:pointer;transition:all 0.3s;text-align:center;position:relative}
+.lesson-btn{background:#fff;border:2px solid #e5e7eb;border-radius:10px;padding:16px 8px;cursor:pointer;transition:all 0.3s;text-align:center}
 .lesson-btn:hover:not(.locked){border-color:#0ea5e9;background:#eff6ff;transform:translateY(-2px)}
 .lesson-btn.locked{opacity:0.4;cursor:not-allowed}
 .lesson-btn.done{border-color:#10b981;background:#f0fdf4}
+.lesson-btn.failed{border-color:#ef4444;background:#fee2e2}
 .lesson-num{font-size:1.8em;font-weight:800;color:#1e40af}
 .lesson-badge{font-size:1.2em;margin-top:6px}
 
 /* EXERCISES */
 .exercise{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px;margin-bottom:16px}
-.exercise-q{color:#1f2937;font-size:1em;margin-bottom:12px;font-weight:600}
+.exercise-num{font-size:0.85em;color:#6b7280;margin-bottom:8px;font-weight:600}
+.exercise-q{color:#1f2937;font-size:1em;margin-bottom:12px}
 .option{background:#fff;border:2px solid #d1d5db;border-radius:8px;padding:12px;margin-bottom:8px;cursor:pointer;transition:all 0.3s;text-align:left}
 .option:hover{border-color:#0ea5e9;background:#eff6ff}
 .option.selected{border-color:#0ea5e9;background:#bfdbfe;font-weight:600}
 .option.correct{border-color:#10b981!important;background:#dcfce7!important;color:#166534}
 .option.wrong{border-color:#ef4444!important;background:#fee2e2!important;color:#991b1b}
 
-/* REWARD */
-.reward-box{background:linear-gradient(135deg,#ec4899,#f472b6);border-radius:12px;padding:24px;text-align:center;color:#fff;animation:slideUp 0.4s ease}
-.reward-emoji{font-size:3em;margin-bottom:12px}
-.reward-text{font-size:1.1em;font-weight:600;margin-bottom:8px}
-.reward-points{font-size:1.3em;font-weight:800;margin-bottom:15px}
+/* RESULT */
+.result-box{background:linear-gradient(135deg,#f3f4f6,#fff);border:2px solid #e5e7eb;border-radius:12px;padding:24px;text-align:center;margin:20px 0}
+.result-emoji{font-size:3em;margin-bottom:12px}
+.result-title{font-size:1.3em;font-weight:700;color:#1f2937;margin-bottom:8px}
+.result-score{font-size:1.5em;font-weight:800;color:#1e40af;margin-bottom:15px}
+.result-message{color:#6b7280;margin-bottom:15px;line-height:1.6}
 
-/* TEST SCREEN */
-.test-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
-.test-counter{color:#6b7280;font-size:0.9em}
-.test-question{color:#1f2937;font-size:1.1em;margin:20px 0;line-height:1.6}
+/* HIDDEN */
+.hidden{display:none}
 
 /* WELCOME */
 .welcome-box{background:linear-gradient(135deg,#1e40af,#0369a1);border-radius:12px;padding:24px;color:#fff;margin-bottom:24px}
 .welcome-text{font-size:1.3em;font-weight:700;margin-bottom:8px}
 .welcome-sub{font-size:0.9em;opacity:0.9}
 
-/* HIDDEN */
-.hidden{display:none}
-
-/* ANIMATIONS */
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)} to{opacity:1;transform:translateY(0)}}
-@keyframes slideUp{from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)}}
-@keyframes pulse{0%,100%{opacity:1} 50%{opacity:0.5}}
+/* TEST */
+.test-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.test-counter{color:#6b7280;font-size:0.9em;font-weight:600}
+.test-question{color:#1f2937;font-size:1.1em;margin:20px 0;line-height:1.6}
 
 @media(max-width:600px){
 .stats-grid{grid-template-columns:1fr 1fr}
@@ -127,22 +122,21 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 <button class="sidebar-close" onclick="closeMenu()">✕</button>
 <div class="sidebar-header">Menu</div>
 <ul class="sidebar-nav">
-<li><a href="#" onclick="showScreen('dashboard'); closeMenu()">📊 Dashboard</a></li>
+<li><a href="#" onclick="show('dashboard'); closeMenu()">📊 Dashboard</a></li>
+<li><a href="#" onclick="show('progress'); closeMenu()">📈 Progress</a></li>
 <li><a href="#" onclick="startTest(); closeMenu()">📋 Placement Test</a></li>
-<li><a href="#" onclick="showScreen('progress'); closeMenu()">📈 Progress</a></li>
-<li><a href="#" onclick="showScreen('calendar'); closeMenu()">📅 Calendario</a></li>
-<li><a href="#" onclick="showScreen('settings'); closeMenu()">⚙️ Configuración</a></li>
+<li><a href="#" onclick="show('calendar'); closeMenu()">📅 Calendar</a></li>
 <li><a href="#" onclick="doLogout(); closeMenu()" style="border-top:1px solid #374151;margin-top:10px;padding-top:15px;color:#f87171">🚪 Sign Out</a></li>
 </ul>
 </div>
 
-<!-- SCREENS -->
+<!-- CONTENT -->
 <div class="content">
 
 <!-- LANDING -->
 <div id="screen-landing" class="card hidden">
 <h2>Welcome to Atlas English Academy</h2>
-<p style="color:#6b7280;margin-bottom:20px">Learn English at your own pace with personalized lessons.</p>
+<p style="color:#6b7280;margin-bottom:20px">Learn English with real exercises and structured lessons.</p>
 <input id="name" placeholder="Full Name" autocomplete="name">
 <input id="email" type="email" placeholder="Email" autocomplete="email">
 <button class="btn" onclick="login()">Start Learning →</button>
@@ -152,7 +146,7 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 <div id="screen-dashboard" class="card hidden">
 <div class="welcome-box">
 <div class="welcome-text">Welcome, <span id="user-name">Student</span>! 👋</div>
-<div class="welcome-sub">Your learning continues here</div>
+<div class="welcome-sub">Your learning path</div>
 </div>
 
 <div class="stats-grid">
@@ -165,35 +159,65 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 <div class="stat-label">Points</div>
 </div>
 <div class="stat-card">
-<div class="stat-value" id="stat-progress">0%</div>
-<div class="stat-label">Done</div>
+<div class="stat-value" id="stat-passed">0</div>
+<div class="stat-label">Passed</div>
 </div>
-</div>
-
-<div style="margin-bottom:24px">
-<h3 style="color:#1f2937;margin-bottom:12px">Overall Progress</h3>
-<div class="progress-bar"><div class="progress-fill" id="overall-progress" style="width:0%"></div></div>
-<div class="progress-text" id="progress-text">0 lessons completed</div>
 </div>
 
 <div style="margin-bottom:24px">
 <h3 style="color:#1f2937;margin-bottom:12px">Continue Learning</h3>
-<button class="btn" id="continue-btn" onclick="continueLesson()" style="display:none">▶️ Resume from Lesson <span id="resume-num">1</span></button>
-<button class="btn" id="start-btn" onclick="startFirstLesson()" style="display:none">▶️ Start First Lesson</button>
-<p id="test-needed" style="color:#0ea5e9;margin-top:12px;display:none">👉 Take the placement test first to unlock lessons</p>
+<button class="btn" id="continue-btn" onclick="continueLesson()" style="display:none">▶️ Continue Lesson <span id="next-num">1</span></button>
+<p id="test-msg" style="color:#0ea5e9;display:none">👉 Take the placement test first</p>
 </div>
 
 <div>
-<h3 style="color:#1f2937;margin-bottom:12px">Your Lessons</h3>
+<h3 style="color:#1f2937;margin-bottom:12px">Lessons</h3>
 <div class="lessons-grid" id="lessons-container"></div>
+</div>
+</div>
+
+<!-- PROGRESS -->
+<div id="screen-progress" class="card hidden">
+<button class="btn-ghost" onclick="show('dashboard')">← Back</button>
+<h2>📈 Your Progress</h2>
+
+<div class="stats-grid">
+<div class="stat-card">
+<div class="stat-value" id="prog-level">—</div>
+<div class="stat-label">English Level</div>
+</div>
+<div class="stat-card">
+<div class="stat-value" id="prog-score">0</div>
+<div class="stat-label">Placement Score</div>
+</div>
+<div class="stat-card">
+<div class="stat-value" id="prog-points">0</div>
+<div class="stat-label">Total Points</div>
+</div>
+</div>
+
+<div style="margin-top:20px;background:#f9fafb;border-radius:10px;padding:16px">
+<p style="color:#1f2937;font-weight:600;margin-bottom:10px">Lessons Passed</p>
+<div class="progress-bar"><div class="progress-fill" id="prog-bar" style="width:0%"></div></div>
+<p style="color:#6b7280;font-size:0.9em;margin-top:8px" id="prog-text">0 of 10 lessons passed</p>
+</div>
+
+<div style="margin-top:20px;background:#f9fafb;border-radius:10px;padding:16px">
+<p style="color:#1f2937;font-weight:600;margin-bottom:10px">Last Completed</p>
+<p id="last-lesson" style="color:#6b7280">None yet</p>
+</div>
+
+<div style="margin-top:20px;background:#f9fafb;border-radius:10px;padding:16px">
+<p style="color:#1f2937;font-weight:600;margin-bottom:10px">Next Recommended</p>
+<p id="next-lesson" style="color:#6b7280">Take placement test</p>
 </div>
 </div>
 
 <!-- PLACEMENT TEST -->
 <div id="screen-test" class="card hidden">
-<button class="btn-ghost" onclick="showScreen('dashboard')" style="margin-bottom:20px">← Back</button>
+<button class="btn-ghost" onclick="show('dashboard')">← Back</button>
 <h2>📋 English Level Test</h2>
-<p style="color:#6b7280;margin-bottom:20px">Answer 30 questions to find your English level (5-10 min)</p>
+<p style="color:#6b7280;margin-bottom:20px">Answer 30 questions (5-10 min)</p>
 
 <div class="test-header">
 <span class="test-counter" id="q-counter">Q1/30</span>
@@ -216,51 +240,32 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 <p style="margin-top:12px;opacity:0.9" id="level-desc">Beginner</p>
 </div>
 <p style="color:#6b7280;margin:15px 0" id="level-advice">Start with Lesson 1</p>
-<button class="btn" onclick="showScreen('dashboard')">View Your Lessons →</button>
+<button class="btn" onclick="show('dashboard')">View Lessons →</button>
 </div>
 </div>
 
 <!-- LESSON -->
 <div id="screen-lesson" class="card hidden">
-<button class="btn-ghost" onclick="showScreen('dashboard')" style="margin-bottom:20px">← Back to Dashboard</button>
+<button class="btn-ghost" onclick="show('dashboard')">← Dashboard</button>
 <h2 id="lesson-title"></h2>
-<p id="lesson-desc" style="color:#6b7280;line-height:1.6;margin-bottom:20px"></p>
+<p id="lesson-desc" style="color:#6b7280;margin-bottom:20px"></p>
+<p style="color:#1e40af;font-weight:600;margin-bottom:20px">Complete at least 15 of 20 exercises to pass this lesson.</p>
 <div id="lesson-exercises"></div>
-<div id="lesson-complete" class="hidden">
-<div class="reward-box">
-<div class="reward-emoji">🔥</div>
-<div class="reward-text">Lesson Completed!</div>
-<div class="reward-points" id="points-earned">+10 Points</div>
-<p style="margin-bottom:15px;font-size:0.9em" id="completion-msg">Great work!</p>
-<div style="font-size:0.95em;color:#fce7f3" id="countdown-text"></div>
-</div>
+<button class="btn" id="submit-btn" onclick="submitLesson()" style="margin-top:20px">Submit Answers</button>
+<div id="lesson-result" class="hidden">
+<div class="result-box" id="result-content"></div>
 <div style="display:flex;gap:10px;margin-top:20px">
-<button class="btn" onclick="nextLesson()" style="flex:1">▶️ Next Lesson</button>
-<button class="btn-secondary" onclick="showScreen('dashboard')" style="flex:1">Dashboard</button>
+<button class="btn" id="continue-next" onclick="nextLesson()" style="display:none">▶️ Next Lesson</button>
+<button class="btn-secondary" id="retry-btn" onclick="retryLesson()" style="display:none">🔄 Try Again</button>
+<button class="btn-secondary" onclick="show('dashboard')">Dashboard</button>
 </div>
 </div>
 </div>
 
-<!-- PROGRESS -->
-<div id="screen-progress" class="card hidden">
-<button class="btn-ghost" onclick="showScreen('dashboard')" style="margin-bottom:20px">← Back</button>
-<h2>📈 Your Progress</h2>
-<p style="color:#6b7280;margin-bottom:20px">Track your learning journey</p>
-<div id="progress-detail"></div>
-</div>
-
-<!-- SETTINGS -->
-<div id="screen-settings" class="card hidden">
-<button class="btn-ghost" onclick="showScreen('dashboard')" style="margin-bottom:20px">← Back</button>
-<h2>⚙️ Settings</h2>
-<p style="color:#6b7280;margin-bottom:20px">Account & preferences</p>
-<div id="settings-content"></div>
-</div>
-
-<!-- CALENDAR (PLACEHOLDER) -->
+<!-- CALENDAR -->
 <div id="screen-calendar" class="card hidden">
-<button class="btn-ghost" onclick="showScreen('dashboard')" style="margin-bottom:20px">← Back</button>
-<h2>📅 Calendario de Clases</h2>
+<button class="btn-ghost" onclick="show('dashboard')">← Back</button>
+<h2>📅 Calendar</h2>
 <iframe src="https://calendar.google.com/calendar/embed?src=0953e03bc139064f6ebeeb639c8287a195f54377a83f9ddfb5f2af9659febed0%40group.calendar.google.com&ctz=America%2FPanama" style="width:100%;height:400px;border:none;border-radius:10px"></iframe>
 </div>
 
@@ -271,52 +276,55 @@ const LEVELS={'A1':{min:0,max:3,start:1,end:10},'A2':{min:4,max:6,start:11,end:2
 const QUESTIONS=[
 {q:"I ___ a student.",a:["am","is","are"],c:0},{q:"She ___ coffee every morning.",a:["like","likes","liking"],c:1},{q:"They ___ to school yesterday.",a:["go","went","goes"],c:1},{q:"We ___ English right now.",a:["study","studies","are studying"],c:2},{q:"He has already ___ his homework.",a:["do","did","done"],c:2},{q:"I will ___ you tomorrow.",a:["call","called","calling"],c:0},{q:"She is ___ than her sister.",a:["tall","taller","tallest"],c:1},{q:"This is ___ movie I've ever seen.",a:["good","better","best"],c:2},{q:"I ___ never been to Paris.",a:["have","has","had"],c:0},{q:"If I ___ rich, I would travel the world.",a:["am","was","were"],c:2},{q:"By the time she arrived, we ___ waiting for two hours.",a:["were","had been","have been"],c:1},{q:"She suggested ___ to the cinema.",a:["to go","going","go"],c:1},{q:"He ___ a book when I called him.",a:["read","was reading","reads"],c:1},{q:"The report must ___ by Friday.",a:["submit","submitting","be submitted"],c:2},{q:"Despite ___ tired, she finished the project.",a:["be","being","to be"],c:1},{q:"I'd rather you ___ tell anyone about this.",a:["don't","didn't","wouldn't"],c:0},{q:"It's high time we ___ a decision.",a:["make","made","making"],c:1},{q:"She ___ English for five years before moving abroad.",a:["studied","was studying","had studied"],c:2},{q:"Not only ___ he forget my birthday, he also ignored me.",a:["did","does","had"],c:0},{q:"The more you practice, ___ you become.",a:["good","the better","better"],c:1},{q:"I wish I ___ harder when I was young.",a:["study","studied","had studied"],c:2},{q:"She can swim, and ___ her brother.",a:["so can","so does","neither can"],c:0},{q:"He denied ___ the money.",a:["steal","to steal","stealing"],c:2},{q:"The task ___ completed by the team yesterday.",a:["was","is","has been"],c:0},{q:"No sooner ___ he arrived than it started raining.",a:["did","had","was"],c:1},{q:"You look as ___ you haven't slept in days.",a:["that","though","if"],c:1},{q:"I can't get used to ___ so early every day.",a:["wake","waking","woke"],c:1},{q:"Had she known, she ___ differently.",a:["acts","acted","would act"],c:2},{q:"The book, ___ I read last week, was fascinating.",a:["that","who","which"],c:2},{q:"She's been working here ___ over a decade.",a:["since","for","during"],c:1}
 ];
-const LESSONS=buildLessons();
+const LESSON_BANK=[
+["To Be: Present Simple","The verb 'to be' is the most basic in English. AM (I), IS (he/she/it), ARE (you/we/they).",[{q:"I ___ a student.",a:["am","is","are"],c:0},{q:"He ___ from Panama.",a:["am","is","are"],c:1},{q:"We ___ friends.",a:["am","is","are"],c:2},{q:"She ___ a teacher.",a:["am","is","are"],c:1},{q:"They ___ happy.",a:["am","is","are"],c:2},{q:"You ___ smart.",a:["am","is","are"],c:2},{q:"It ___ a cat.",a:["am","is","are"],c:1},{q:"I ___ not tired.",a:["am","is","are"],c:0},{q:"You ___ welcome.",a:["am","is","are"],c:2},{q:"She ___ excited.",a:["am","is","are"],c:1},{q:"We ___ late.",a:["am","is","are"],c:2},{q:"He ___ busy.",a:["am","is","are"],c:1},{q:"They ___ ready.",a:["am","is","are"],c:2},{q:"I ___ here.",a:["am","is","are"],c:0},{q:"You ___ wrong.",a:["am","is","are"],c:2},{q:"She ___ right.",a:["am","is","are"],c:1},{q:"It ___ broken.",a:["am","is","are"],c:1},{q:"We ___ together.",a:["am","is","are"],c:2},{q:"He ___ sick.",a:["am","is","are"],c:1},{q:"They ___ lost.",a:["am","is","are"],c:2}]],
+["Present Simple – Habits","Daily routines and habits. Add -s/-es with he/she/it.",[{q:"She ___ coffee every morning.",a:["like","likes","liking"],c:1},{q:"I ___ English every day.",a:["study","studies","studying"],c:0},{q:"He ___ to work by bus.",a:["go","goes","going"],c:1},{q:"They ___ TV in the evening.",a:["watch","watches","watching"],c:0},{q:"She ___ her teeth twice a day.",a:["brush","brushes","brushing"],c:1},{q:"We ___ lunch at noon.",a:["eat","eats","eating"],c:0},{q:"He ___ a lot of water.",a:["drink","drinks","drinking"],c:1},{q:"I ___ sports on weekends.",a:["play","plays","playing"],c:0},{q:"You ___ French fluently.",a:["speak","speaks","speaking"],c:0},{q:"She ___ in a hospital.",a:["work","works","working"],c:1},{q:"They ___ to the gym regularly.",a:["go","goes","going"],c:0},{q:"He ___ books every night.",a:["read","reads","reading"],c:1},{q:"We ___ music in the car.",a:["listen","listens","listening"],c:0},{q:"I ___ dogs very much.",a:["like","likes","liking"],c:0},{q:"You ___ lunch at home.",a:["eat","eats","eating"],c:0},{q:"She ___ her homework every day.",a:["do","does","doing"],c:1},{q:"He ___ a very fast car.",a:["drive","drives","driving"],c:1},{q:"They ___ three languages.",a:["speak","speaks","speaking"],c:0},{q:"I ___ up at 6 AM.",a:["wake","wakes","waking"],c:0},{q:"You ___ dinner at 7 PM.",a:["have","has","having"],c:0}]],
+["Articles: A, An, The","Use 'a' before consonants, 'an' before vowels, 'the' for specific things.",[{q:"___ apple a day keeps the doctor away.",a:["A","An","The"],c:1},{q:"I want ___ sandwich.",a:["a","an","the"],c:0},{q:"___ sun rises in the east.",a:["A","An","The"],c:2},{q:"She is ___ engineer.",a:["a","an","the"],c:1},{q:"He ate ___ orange.",a:["a","an","the"],c:1},{q:"___ cat is sleeping on ___ table.",a:["A","An"],c:0},{q:"I saw ___ elephant at ___ zoo.",a:["a","an"],c:1},{q:"There is ___ house on ___ hill.",a:["a","an"],c:0},{q:"She has ___ interview tomorrow.",a:["a","an"],c:0},{q:"___ moon is bright tonight.",a:["A","An","The"],c:2},{q:"I need ___ new pen.",a:["a","an","the"],c:0},{q:"He bought ___ expensive car.",a:["a","an","the"],c:0},{q:"___ birds are singing.",a:["A","An","The"],c:2},{q:"I have ___ idea!",a:["a","an","the"],c:1},{q:"She lives in ___ big city.",a:["a","an","the"],c:0},{q:"___ water is cold.",a:["A","An","The"],c:2},{q:"He is ___ doctor.",a:["a","an","the"],c:0},{q:"We ate ___ good meal.",a:["a","an","the"],c:0},{q:"___children are playing outside.",a:["A","An","The"],c:2},{q:"I found ___ lost dog.",a:["a","an","the"],c:0}]],
+["Past Simple – Regular","Regular past verbs add -ed. Work → worked.",[{q:"She ___ TV last night. (watch)",a:["watch","watches","watched"],c:2},{q:"I ___ English yesterday. (study)",a:["study","studyed","studied"],c:2},{q:"He ___ to music. (listen)",a:["listen","listened","listens"],c:1},{q:"They ___ soccer. (play)",a:["play","plays","played"],c:2},{q:"We ___ until midnight. (work)",a:["work","works","worked"],c:2},{q:"She ___ a letter. (type)",a:["type","types","typed"],c:2},{q:"I ___ the door. (open)",a:["open","opens","opened"],c:2},{q:"He ___ his car. (wash)",a:["wash","washes","washed"],c:2},{q:"You ___ at the party. (dance)",a:["dance","dances","danced"],c:2},{q:"They ___ a film. (watch)",a:["watch","watches","watched"],c:2},{q:"She ___ food in the kitchen. (prepare)",a:["prepare","prepares","prepared"],c:2},{q:"I ___ a cake. (bake)",a:["bake","bakes","baked"],c:2},{q:"He ___ the phone. (answer)",a:["answer","answers","answered"],c:2},{q:"We ___ in the park. (walk)",a:["walk","walks","walked"],c:2},{q:"You ___ the homework. (finish)",a:["finish","finishes","finished"],c:2},{q:"She ___ the room. (clean)",a:["clean","cleans","cleaned"],c:2},{q:"I ___ a friend. (call)",a:["call","calls","called"],c:2},{q:"He ___ the car. (park)",a:["park","parks","parked"],c:2},{q:"They ___ the house. (leave)",a:["leave","leaves","left"],c:2},{q:"We ___ all day. (wait)",a:["wait","waits","waited"],c:2}]],
+["Have/Has – Possession","Use 'have' with I/you/we/they. Use 'has' with he/she/it.",[{q:"I ___ two brothers.",a:["have","has","had"],c:0},{q:"She ___ a new phone.",a:["have","has","had"],c:1},{q:"They ___ a big house.",a:["have","has","had"],c:0},{q:"He ___ blue eyes.",a:["have","has","had"],c:1},{q:"We ___ a meeting today.",a:["have","has","had"],c:0},{q:"You ___ many friends.",a:["have","has","had"],c:0},{q:"It ___ a red door.",a:["have","has","had"],c:1},{q:"I ___ a car.",a:["have","has","had"],c:0},{q:"She ___ a cat.",a:["have","has","had"],c:1},{q:"You ___ three bags.",a:["have","has","had"],c:0},{q:"He ___ a laptop.",a:["have","has","had"],c:1},{q:"They ___ two dogs.",a:["have","has","had"],c:0},{q:"We ___ a garden.",a:["have","has","had"],c:0},{q:"She ___ long hair.",a:["have","has","had"],c:1},{q:"I ___ a pen.",a:["have","has","had"],c:0},{q:"You ___ glasses.",a:["have","has","had"],c:0},{q:"He ___ a ticket.",a:["have","has","had"],c:1},{q:"They ___ money.",a:["have","has","had"],c:0},{q:"We ___ time.",a:["have","has","had"],c:0},{q:"She ___ a book.",a:["have","has","had"],c:1}]],
+["Numbers 1-20","Learn basic numbers and counting.",[{q:"How many is 'five'?",a:["4","5","6"],c:1},{q:"'Ten' is written as:",a:["9","10","11"],c:1},{q:"'Three' in numbers:",a:["2","3","4"],c:1},{q:"'Twelve' is:",a:["11","12","13"],c:1},{q:"'One' = ___",a:["1","2","0"],c:0},{q:"'Eight' = ___",a:["7","8","9"],c:1},{q:"'Fourteen' = ___",a:["13","14","15"],c:1},{q:"'Six' = ___",a:["5","6","7"],c:1},{q:"'Nineteen' = ___",a:["18","19","20"],c:1},{q:"'Two' = ___",a:["1","2","3"],c:1},{q:"'Seven' = ___",a:["6","7","8"],c:1},{q:"'Fifteen' = ___",a:["14","15","16"],c:1},{q:"'Nine' = ___",a:["8","9","10"],c:1},{q:"'Eleven' = ___",a:["10","11","12"],c:1},{q:"'Twenty' = ___",a:["19","20","21"],c:1},{q:"'Four' = ___",a:["3","4","5"],c:1},{q:"'Thirteen' = ___",a:["12","13","14"],c:1},{q:"'Sixteen' = ___",a:["15","16","17"],c:1},{q:"'Ten' + 'Five' = ___",a:["14","15","16"],c:1},{q:"'One' + 'Nine' = ___",a:["9","10","11"],c:1}]]
+];
 
-function buildLessons(){const data=[["To Be: Present Simple","The verb 'to be' is the most basic in English.",[{q:"I ___ a student.",a:["am","is","are"],c:0},{q:"He ___ from Panama.",a:["am","is","are"],c:1},{q:"We ___ friends.",a:["am","is","are"],c:2}]],["Numbers & Greetings","Basic greetings and numbers 1-20.",[{q:"'Good morning' is said:",a:["at night","in the morning","at 10 PM"],c:1},{q:"How do you say 'ten'?",a:["two","five","ten"],c:2},{q:"'Goodbye' means:",a:["hello","bye","good night"],c:1}]],["Articles: A, An, The","Use 'a' before consonants, 'an' before vowels, 'the' for specific things.",[{q:"___ apple a day.",a:["A","An","The"],c:1},{q:"I want ___ sandwich.",a:["a","an","the"],c:0},{q:"___ sun rises in the east.",a:["A","An","The"],c:2}]],["Common Nouns","Words that name people, places, or things.",[{q:"More than one 'book' is:",a:["books","bookes","booky"],c:0},{q:"'House' in English:",a:["horse","house","mouse"],c:1},{q:"Plural of 'child':",a:["childs","childes","children"],c:2}]],["Present Simple – Habits","Use for habits and routines.",[{q:"She ___ TV every evening.",a:["watch","watches","watching"],c:1},{q:"They ___ coffee.",a:["drink","drinks","drinking"],c:0},{q:"He ___ to work by bus.",a:["go","goes","going"],c:1}]],["Colors & Adjectives","Adjectives describe nouns and go BEFORE the noun.",[{q:"'Red' in English:",a:["blue","green","red"],c:2},{q:"A ___ car:",a:["big car","car big","bigs car"],c:0},{q:"'Blue' in English:",a:["black","blue","brown"],c:1}]],["Have/Has – Possession","Use 'have' with I/you/we/they. Use 'has' with he/she/it.",[{q:"I ___ two brothers.",a:["have","has","had"],c:0},{q:"She ___ a new phone.",a:["have","has","had"],c:1},{q:"They ___ a big house.",a:["have","has","had"],c:0}]],["Days, Months & Time","Days, months, and how to tell time.",[{q:"'Monday' in English:",a:["Sunday","Monday","Friday"],c:1},{q:"'January' in English:",a:["June","July","January"],c:2},{q:"The day after Monday is:",a:["Sunday","Wednesday","Tuesday"],c:1}]],["Past Simple – Regular","Regular past verbs add -ed.",[{q:"She ___ TV last night. (watch)",a:["watch","watches","watched"],c:2},{q:"I ___ English yesterday. (study)",a:["study","studyed","studied"],c:2},{q:"He ___ to music. (listen)",a:["listen","listened","listens"],c:1}]],["Future: Will & Going To","Use 'will' for predictions. Use 'going to' for plans.",[{q:"I ___ call you tonight.",a:["am going to","will","going to"],c:1},{q:"She ___ visit family next week.",a:["will","is going to","goes to"],c:1},{q:"It looks dark. It ___ rain.",a:["will","is going to","goes to"],c:0}]]];const l=[];for(let i=0;i<40;i++){const idx=i%data.length;l.push({id:i+1,title:`Lesson ${i+1}: ${data[idx][0]}`,desc:data[idx][1],ex:data[idx][2]});}return l;}
-
-let user=null,level=null,qIdx=0,testScore=0,selected=-1,currentLesson=-1,countdown=null;
+let user=null,level=null,qIdx=0,testScore=0,selected=-1,currentLesson=-1;
 
 function toggleMenu(){document.getElementById('sidebar').classList.toggle('open');document.querySelector('.sidebar-overlay').classList.toggle('open');}
 function closeMenu(){document.getElementById('sidebar').classList.remove('open');document.querySelector('.sidebar-overlay').classList.remove('open');}
 
-function showScreen(id){document.querySelectorAll('[id^="screen-"]').forEach(s=>s.classList.add('hidden'));document.getElementById(`screen-${id}`).classList.remove('hidden');}
+function show(id){document.querySelectorAll('[id^="screen-"]').forEach(s=>s.classList.add('hidden'));document.getElementById(`screen-${id}`).classList.remove('hidden');}
 
-window.login=function(){const name=document.getElementById('name').value.trim();const email=document.getElementById('email').value.trim();if(!name||!email){alert('Enter name and email');return;}user={name,email};const saved=localStorage.getItem('atlas');if(saved){const d=JSON.parse(saved);user.level=d.level;user.completed=d.completed||[];user.points=d.points||0;user.lastLesson=d.lastLesson||0;}showScreen('dashboard');renderDashboard();};
+window.login=function(){const n=document.getElementById('name').value.trim();const e=document.getElementById('email').value.trim();if(!n||!e){alert('Enter name and email');return;}user={name:n,email:e};const saved=localStorage.getItem('atlas');if(saved){const d=JSON.parse(saved);user.level=d.level;user.levelIndex=d.levelIndex;user.completed=d.completed||[];user.failed=d.failed||[];user.points=d.points||0;user.lastLesson=d.lastLesson||0;}show('dashboard');renderDash();};
 
-function renderDashboard(){document.getElementById('user-name').textContent=user.name;if(user.level){document.getElementById('stat-level').textContent=user.level;document.getElementById('stat-points').textContent=user.points||0;const done=user.completed?.length||0;const total=LEVELS[user.level].end-LEVELS[user.level].start+1;const pct=Math.round(done/total*100);document.getElementById('stat-progress').textContent=pct+'%';document.getElementById('overall-progress').style.width=pct+'%';document.getElementById('progress-text').textContent=done+' of '+total+' lessons completed';document.getElementById('test-needed').style.display='none';document.getElementById('start-btn').style.display='none';if(user.lastLesson>0){document.getElementById('continue-btn').style.display='block';document.getElementById('resume-num').textContent=user.lastLesson+1;}else{document.getElementById('continue-btn').style.display='block';document.getElementById('resume-num').textContent=LEVELS[user.level].start;}}else{document.getElementById('stat-level').textContent='—';document.getElementById('stat-points').textContent='0';document.getElementById('stat-progress').textContent='0%';document.getElementById('test-needed').style.display='block';document.getElementById('continue-btn').style.display='none';document.getElementById('start-btn').style.display='none';}renderLessonsGrid();}
+function renderDash(){document.getElementById('user-name').textContent=user.name;if(user.level){document.getElementById('stat-level').textContent=user.level;document.getElementById('stat-points').textContent=user.points||0;const passed=(user.completed||[]).length;document.getElementById('stat-passed').textContent=passed;document.getElementById('test-msg').style.display='none';const next=user.lastLesson+1;if(next<=LEVELS[user.level].end){document.getElementById('continue-btn').style.display='block';document.getElementById('next-num').textContent=next;}}else{document.getElementById('stat-level').textContent='—';document.getElementById('stat-points').textContent='0';document.getElementById('stat-passed').textContent='0';document.getElementById('continue-btn').style.display='none';document.getElementById('test-msg').style.display='block';}renderLessons();}
 
-function renderLessonsGrid(){const container=document.getElementById('lessons-container');container.innerHTML='';if(!user.level){container.innerHTML='<p style="color:#9ca3af;grid-column:1/-1;text-align:center">Take the placement test to unlock lessons</p>';return;}const start=LEVELS[user.level].start;const end=LEVELS[user.level].end;const done=user.completed||[];for(let i=start;i<=end;i++){const btn=document.createElement('button');btn.className='lesson-btn';if(done.includes(i))btn.classList.add('done');btn.onclick=()=>openLesson(i);const num=document.createElement('div');num.className='lesson-num';num.textContent=i;btn.appendChild(num);let badge='';if(done.includes(i))badge='✔️';else if(i===(user.lastLesson+1))badge='▶️';const bdg=document.createElement('div');bdg.className='lesson-badge';bdg.textContent=badge;btn.appendChild(bdg);container.appendChild(btn);}}
+function renderLessons(){const c=document.getElementById('lessons-container');c.innerHTML='';if(!user.level){c.innerHTML='<p style="color:#9ca3af;grid-column:1/-1">Take test first</p>';return;}const start=LEVELS[user.level].start;const end=LEVELS[user.level].end;const done=user.completed||[];const failed=user.failed||[];for(let i=start;i<=end;i++){const btn=document.createElement('button');btn.className='lesson-btn';if(done.includes(i))btn.classList.add('done');else if(failed.includes(i))btn.classList.add('failed');btn.onclick=()=>openLess(i);const num=document.createElement('div');num.className='lesson-num';num.textContent=i;btn.appendChild(num);let badge='';if(done.includes(i))badge='✔️';else if(failed.includes(i))badge='✗';else if(i===(user.lastLesson+1))badge='▶️';const b=document.createElement('div');b.className='lesson-badge';b.textContent=badge;btn.appendChild(b);c.appendChild(btn);}}
 
-window.startTest=function(){qIdx=0;testScore=0;selected=-1;showScreen('test');renderTestQuestion();};
+window.startTest=function(){qIdx=0;testScore=0;selected=-1;show('test');renderQ();};
 
-function renderTestQuestion(){const q=QUESTIONS[qIdx];const total=QUESTIONS.length;document.getElementById('q-counter').textContent=`Q${qIdx+1}/${total}`;document.getElementById('test-progress').style.width=((qIdx/total)*100)+'%';document.getElementById('test-q').textContent=q.q;document.getElementById('test-next').disabled=true;selected=-1;const cont=document.getElementById('test-options');cont.innerHTML='';q.a.forEach((a,i)=>{const btn=document.createElement('button');btn.className='option';btn.textContent=a;btn.onclick=()=>{document.querySelectorAll('#test-options .option').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selected=i;document.getElementById('test-next').disabled=false;};cont.appendChild(btn);});}
+function renderQ(){const q=QUESTIONS[qIdx];document.getElementById('q-counter').textContent=`Q${qIdx+1}/30`;document.getElementById('test-progress').style.width=((qIdx/30)*100)+'%';document.getElementById('test-q').textContent=q.q;document.getElementById('test-next').disabled=true;selected=-1;const c=document.getElementById('test-options');c.innerHTML='';q.a.forEach((a,i)=>{const btn=document.createElement('button');btn.className='option';btn.textContent=a;btn.onclick=()=>{document.querySelectorAll('#test-options .option').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selected=i;document.getElementById('test-next').disabled=false;};c.appendChild(btn);});}
 
-window.nextQuestion=function(){if(selected===-1)return;const q=QUESTIONS[qIdx];const btns=document.querySelectorAll('#test-options .option');if(selected===q.c)testScore++;btns.forEach((b,i)=>{if(i===q.c)b.classList.add('correct');else if(i===selected)b.classList.add('wrong');});document.getElementById('test-next').disabled=true;setTimeout(()=>{qIdx++;if(qIdx<QUESTIONS.length)renderTestQuestion();else showTestResult();},600);};
+window.nextQuestion=function(){if(selected===-1)return;const q=QUESTIONS[qIdx];if(selected===q.c)testScore++;const btns=document.querySelectorAll('#test-options .option');btns.forEach((b,i)=>{if(i===q.c)b.classList.add('correct');else if(i===selected)b.classList.add('wrong');});document.getElementById('test-next').disabled=true;setTimeout(()=>{qIdx++;if(qIdx<30)renderQ();else finTest();},600);};
 
-function showTestResult(){const score=Math.floor(testScore/3);let lv='A1';if(score>=4&&score<=6)lv='A2';else if(score>=7&&score<=8)lv='B1';else if(score>=9)lv='B2';user.level=lv;user.completed=[];user.points=0;user.lastLesson=0;saveUser();document.getElementById('final-level').textContent=lv;const descs={'A1':'Beginner — just starting!','A2':'Elementary — good foundation!','B1':'Pre-Intermediate — getting strong!','B2':'Intermediate+ — advanced!'};document.getElementById('level-desc').textContent=descs[lv];document.getElementById('level-advice').textContent='Start with Lesson '+LEVELS[lv].start;showScreen('result');}
+function finTest(){const score=Math.floor(testScore/3);let lv='A1';if(score>=4&&score<=6)lv='A2';else if(score>=7&&score<=8)lv='B1';else if(score>=9)lv='B2';user.level=lv;user.levelIndex=score;user.completed=[];user.failed=[];user.points=0;user.lastLesson=0;save();document.getElementById('final-level').textContent=lv;const descs={'A1':'Beginner','A2':'Elementary','B1':'Pre-Intermediate','B2':'Intermediate+'};document.getElementById('level-desc').textContent=descs[lv];document.getElementById('level-advice').textContent='Start with Lesson '+LEVELS[lv].start;show('result');}
 
-window.startFirstLesson=function(){openLesson(LEVELS[user.level].start);};
+window.continueLesson=function(){const next=user.lastLesson+1;if(next<=LEVELS[user.level].end)openLess(next);};
 
-window.continueLesson=function(){const next=user.lastLesson+1;if(next<=LEVELS[user.level].end)openLesson(next);};
+window.openLess=function(id){if(!user.level||id<LEVELS[user.level].start||id>LEVELS[user.level].end){alert('Not available');return;}currentLesson=id;const idx=((id-1)%LESSON_BANK.length);const lesson=LESSON_BANK[idx];document.getElementById('lesson-title').textContent=`Lesson ${id}: ${lesson[0]}`;document.getElementById('lesson-desc').textContent=lesson[1];const c=document.getElementById('lesson-exercises');c.innerHTML='';document.getElementById('lesson-result').classList.add('hidden');document.getElementById('submit-btn').style.display='block';lesson[2].forEach((ex,i)=>{const div=document.createElement('div');div.className='exercise';const num=document.createElement('div');num.className='exercise-num';num.textContent=`Exercise ${i+1}`;div.appendChild(num);const q=document.createElement('div');q.className='exercise-q';q.textContent=ex.q;div.appendChild(q);let selected=-1;ex.a.forEach((ans,j)=>{const opt=document.createElement('button');opt.className='option';opt.textContent=ans;opt.onclick=()=>{document.querySelectorAll(`#ex-${i} .option`).forEach(o=>o.classList.remove('selected'));opt.classList.add('selected');selected=j;};if(j===ex.c)opt.setAttribute('data-correct','true');opt.id=`ex-${i}`;div.appendChild(opt);});div.id=`ex-${i}`;c.appendChild(div);});show('lesson');}
 
-window.openLesson=function(id){if(!user.level||id<LEVELS[user.level].start||id>LEVELS[user.level].end){alert('Lesson not available');return;}currentLesson=id;const lesson=LESSONS[id-1];document.getElementById('lesson-title').textContent=lesson.title;document.getElementById('lesson-desc').textContent=lesson.desc;const cont=document.getElementById('lesson-exercises');cont.innerHTML='';document.getElementById('lesson-complete').classList.add('hidden');let answered=0,correct=0;const total=lesson.ex.length;lesson.ex.forEach((ex,idx)=>{const div=document.createElement('div');div.className='exercise';const q=document.createElement('div');q.className='exercise-q';q.textContent=`Exercise ${idx+1}: ${ex.q}`;div.appendChild(q);let selected=-1;ex.a.forEach((ans,i)=>{const opt=document.createElement('button');opt.className='option';opt.textContent=ans;opt.onclick=()=>{document.querySelectorAll(`#ex-${idx} .option`).forEach(o=>o.classList.remove('selected'));opt.classList.add('selected');selected=i;if(i===ex.c){answered++;correct++;opt.classList.add('correct');opt.disabled=true;}else{answered++;opt.classList.add('wrong');opt.disabled=true;const c=document.querySelector(`#ex-${idx} [data-correct="true"]`);if(c)c.classList.add('correct');}if(answered===total)showReward(correct,total);};if(i===ex.c)opt.setAttribute('data-correct','true');opt.id=`ex-${idx}`;div.appendChild(opt);});div.id=`ex-${idx}`;cont.appendChild(div);});showScreen('lesson');}
+window.submitLesson=function(){const idx=((currentLesson-1)%LESSON_BANK.length);const lesson=LESSON_BANK[idx];let correct=0;lesson[2].forEach((ex,i)=>{const selected=document.querySelectorAll(`#ex-${i} .option`);selected.forEach((opt,j)=>{if(opt.classList.contains('selected')){if(j===ex.c)correct++;opt.classList.add(j===ex.c?'correct':'wrong');}});});const passed=correct>=15;document.getElementById('submit-btn').style.display='none';const res=document.getElementById('lesson-result');res.classList.remove('hidden');const content=document.getElementById('result-content');if(passed){const points=50+(correct*2);user.completed=user.completed||[];if(!user.completed.includes(currentLesson))user.completed.push(currentLesson);user.points=(user.points||0)+points;user.lastLesson=currentLesson;save();content.innerHTML=`<div class="result-emoji">🔥</div><div class="result-title">Lesson Passed!</div><div class="result-score">${correct}/20 Correct</div><div class="result-message">+${points} Points<br>Great work! You're making progress.</div>`;document.getElementById('continue-next').style.display='block';document.getElementById('retry-btn').style.display='none';}else{user.failed=user.failed||[];if(!user.failed.includes(currentLesson))user.failed.push(currentLesson);save();content.innerHTML=`<div class="result-emoji">💪</div><div class="result-title">Need More Practice</div><div class="result-score">${correct}/20 Correct</div><div class="result-message">You need at least 15 correct to pass.<br>Try again to improve your score!</div>`;document.getElementById('continue-next').style.display='none';document.getElementById('retry-btn').style.display='block';}};
 
-function showReward(correct,total){const pct=Math.round(correct/total*100);const msgs=['Excelente trabajo','Vas muy bien','Sigue así','Increíble progreso'];const msg=msgs[Math.floor(Math.random()*msgs.length)];document.getElementById('points-earned').textContent='+10 Points';document.getElementById('completion-msg').textContent=msg+' ('+correct+'/'+total+' correct)';document.getElementById('lesson-complete').classList.remove('hidden');completeLesson();startCountdown();}
+window.nextLesson=function(){const next=currentLesson+1;if(next<=LEVELS[user.level].end)openLess(next);else{show('dashboard');renderDash();}};
 
-function completeLesson(){const d=user.completed||[];if(!d.includes(currentLesson)){d.push(currentLesson);user.completed=d;user.points=(user.points||0)+10;}user.lastLesson=currentLesson;saveUser();}
+window.retryLesson=function(){openLess(currentLesson);};
 
-function startCountdown(){let count=3;const timer=document.getElementById('countdown-text');if(countdown)clearInterval(countdown);countdown=setInterval(()=>{timer.textContent=count>0?`Continuing in ${count}s...`:'';count--;if(count<0){clearInterval(countdown);nextLessonAuto();}},1000);}
+window.show=function(id){show(id);if(id==='progress')renderProg();};
 
-window.nextLesson=function(){if(countdown)clearInterval(countdown);nextLessonAuto();};
+function renderProg(){document.getElementById('prog-level').textContent=user.level||'—';document.getElementById('prog-score').textContent=user.levelIndex||'0';document.getElementById('prog-points').textContent=user.points||'0';const done=(user.completed||[]).length;const total=LEVELS[user.level]?LEVELS[user.level].end-LEVELS[user.level].start+1:0;const pct=total?Math.round((done/total)*100):0;document.getElementById('prog-bar').style.width=pct+'%';document.getElementById('prog-text').textContent=`${done} of ${total} lessons passed`;const last=user.lastLesson?`Lesson ${user.lastLesson}`:' None yet';document.getElementById('last-lesson').textContent=last;const next=user.level?`Lesson ${Math.min(user.lastLesson+1,LEVELS[user.level].end)}`:'Take placement test';document.getElementById('next-lesson').textContent=next;}
 
-function nextLessonAuto(){const next=currentLesson+1;if(next<=LEVELS[user.level].end)openLesson(next);else{showScreen('dashboard');renderDashboard();}}
+window.doLogout=function(){localStorage.removeItem('atlas');user=null;level=null;show('landing');document.getElementById('name').value='';document.getElementById('email').value='';};
 
-window.doLogout=function(){localStorage.removeItem('atlas');user=null;level=null;showScreen('landing');document.getElementById('name').value='';document.getElementById('email').value='';};
+function save(){const d={name:user.name,email:user.email,level:user.level,levelIndex:user.levelIndex,completed:user.completed,failed:user.failed,points:user.points,lastLesson:user.lastLesson};localStorage.setItem('atlas',JSON.stringify(d));}
 
-function saveUser(){const d={name:user.name,email:user.email,level:user.level,completed:user.completed,points:user.points,lastLesson:user.lastLesson};localStorage.setItem('atlas',JSON.stringify(d));}
-
-window.addEventListener('load',()=>{const saved=localStorage.getItem('atlas');if(saved){const d=JSON.parse(saved);user={name:d.name,email:d.email,level:d.level,completed:d.completed,points:d.points,lastLesson:d.lastLesson};showScreen('dashboard');renderDashboard();}else{showScreen('landing');}});
+window.addEventListener('load',()=>{const saved=localStorage.getItem('atlas');if(saved){const d=JSON.parse(saved);user={name:d.name,email:d.email,level:d.level,levelIndex:d.levelIndex,completed:d.completed,failed:d.failed,points:d.points,lastLesson:d.lastLesson};show('dashboard');renderDash();}else{show('landing');}});
 </script>
 </body>
 </html>
