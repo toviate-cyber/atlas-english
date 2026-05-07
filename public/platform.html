@@ -122,10 +122,10 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 <button class="sidebar-close" onclick="closeMenu()">✕</button>
 <div class="sidebar-header">Menu</div>
 <ul class="sidebar-nav">
-<li><a href="#" onclick="show('dashboard'); closeMenu()">📊 Dashboard</a></li>
-<li><a href="#" onclick="show('progress'); closeMenu()">📈 Progress</a></li>
+<li><a href="#" onclick="showScreen('dashboard'); closeMenu()">📊 Dashboard</a></li>
+<li><a href="#" onclick="showScreen('progress'); renderProg(); closeMenu()">📈 Progress</a></li>
 <li><a href="#" onclick="startTest(); closeMenu()">📋 Placement Test</a></li>
-<li><a href="#" onclick="show('calendar'); closeMenu()">📅 Calendar</a></li>
+<li><a href="#" onclick="showScreen('calendar'); closeMenu()">📅 Calendar</a></li>
 <li><a href="#" onclick="doLogout(); closeMenu()" style="border-top:1px solid #374151;margin-top:10px;padding-top:15px;color:#f87171">🚪 Sign Out</a></li>
 </ul>
 </div>
@@ -178,7 +178,7 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 
 <!-- PROGRESS -->
 <div id="screen-progress" class="card hidden">
-<button class="btn-ghost" onclick="show('dashboard')">← Back</button>
+<button class="btn-ghost" onclick="showScreen('dashboard')">← Back</button>
 <h2>📈 Your Progress</h2>
 
 <div class="stats-grid">
@@ -215,7 +215,7 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 
 <!-- PLACEMENT TEST -->
 <div id="screen-test" class="card hidden">
-<button class="btn-ghost" onclick="show('dashboard')">← Back</button>
+<button class="btn-ghost" onclick="showScreen('dashboard')">← Back</button>
 <h2>📋 English Level Test</h2>
 <p style="color:#6b7280;margin-bottom:20px">Answer 30 questions (5-10 min)</p>
 
@@ -240,13 +240,13 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 <p style="margin-top:12px;opacity:0.9" id="level-desc">Beginner</p>
 </div>
 <p style="color:#6b7280;margin:15px 0" id="level-advice">Start with Lesson 1</p>
-<button class="btn" onclick="show('dashboard')">View Lessons →</button>
+<button class="btn" onclick="showScreen('dashboard')">View Lessons →</button>
 </div>
 </div>
 
 <!-- LESSON -->
 <div id="screen-lesson" class="card hidden">
-<button class="btn-ghost" onclick="show('dashboard')">← Dashboard</button>
+<button class="btn-ghost" onclick="showScreen('dashboard')">← Dashboard</button>
 <h2 id="lesson-title"></h2>
 <p id="lesson-desc" style="color:#6b7280;margin-bottom:20px"></p>
 <p style="color:#1e40af;font-weight:600;margin-bottom:20px">Complete at least 15 of 20 exercises to pass this lesson.</p>
@@ -257,14 +257,14 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 <div style="display:flex;gap:10px;margin-top:20px">
 <button class="btn" id="continue-next" onclick="nextLesson()" style="display:none">▶️ Next Lesson</button>
 <button class="btn-secondary" id="retry-btn" onclick="retryLesson()" style="display:none">🔄 Try Again</button>
-<button class="btn-secondary" onclick="show('dashboard')">Dashboard</button>
+<button class="btn-secondary" onclick="showScreen('dashboard')">Dashboard</button>
 </div>
 </div>
 </div>
 
 <!-- CALENDAR -->
 <div id="screen-calendar" class="card hidden">
-<button class="btn-ghost" onclick="show('dashboard')">← Back</button>
+<button class="btn-ghost" onclick="showScreen('dashboard')">← Back</button>
 <h2>📅 Calendar</h2>
 <iframe src="https://calendar.google.com/calendar/embed?src=0953e03bc139064f6ebeeb639c8287a195f54377a83f9ddfb5f2af9659febed0%40group.calendar.google.com&ctz=America%2FPanama" style="width:100%;height:400px;border:none;border-radius:10px"></iframe>
 </div>
@@ -290,41 +290,41 @@ let user=null,level=null,qIdx=0,testScore=0,selected=-1,currentLesson=-1;
 function toggleMenu(){document.getElementById('sidebar').classList.toggle('open');document.querySelector('.sidebar-overlay').classList.toggle('open');}
 function closeMenu(){document.getElementById('sidebar').classList.remove('open');document.querySelector('.sidebar-overlay').classList.remove('open');}
 
-function show(id){document.querySelectorAll('[id^="screen-"]').forEach(s=>s.classList.add('hidden'));document.getElementById(`screen-${id}`).classList.remove('hidden');}
+function showScreen(id){document.querySelectorAll('[id^="screen-"]').forEach(s=>s.classList.add('hidden'));document.getElementById(`screen-${id}`).classList.remove('hidden');}
 
-window.login=function(){const n=document.getElementById('name').value.trim();const e=document.getElementById('email').value.trim();if(!n||!e){alert('Enter name and email');return;}user={name:n,email:e};const saved=localStorage.getItem('atlas');if(saved){const d=JSON.parse(saved);user.level=d.level;user.levelIndex=d.levelIndex;user.completed=d.completed||[];user.failed=d.failed||[];user.points=d.points||0;user.lastLesson=d.lastLesson||0;}show('dashboard');renderDash();};
+window.login=function(){const n=document.getElementById('name').value.trim();const e=document.getElementById('email').value.trim();if(!n||!e){alert('Enter name and email');return;}user={name:n,email:e};const saved=localStorage.getItem('atlas');if(saved){const d=JSON.parse(saved);user.level=d.level;user.levelIndex=d.levelIndex;user.completed=d.completed||[];user.failed=d.failed||[];user.points=d.points||0;user.lastLesson=d.lastLesson||0;}showScreen('dashboard');renderDash();};
 
 function renderDash(){document.getElementById('user-name').textContent=user.name;if(user.level){document.getElementById('stat-level').textContent=user.level;document.getElementById('stat-points').textContent=user.points||0;const passed=(user.completed||[]).length;document.getElementById('stat-passed').textContent=passed;document.getElementById('test-msg').style.display='none';const next=user.lastLesson+1;if(next<=LEVELS[user.level].end){document.getElementById('continue-btn').style.display='block';document.getElementById('next-num').textContent=next;}}else{document.getElementById('stat-level').textContent='—';document.getElementById('stat-points').textContent='0';document.getElementById('stat-passed').textContent='0';document.getElementById('continue-btn').style.display='none';document.getElementById('test-msg').style.display='block';}renderLessons();}
 
 function renderLessons(){const c=document.getElementById('lessons-container');c.innerHTML='';if(!user.level){c.innerHTML='<p style="color:#9ca3af;grid-column:1/-1">Take test first</p>';return;}const start=LEVELS[user.level].start;const end=LEVELS[user.level].end;const done=user.completed||[];const failed=user.failed||[];for(let i=start;i<=end;i++){const btn=document.createElement('button');btn.className='lesson-btn';if(done.includes(i))btn.classList.add('done');else if(failed.includes(i))btn.classList.add('failed');btn.onclick=()=>openLess(i);const num=document.createElement('div');num.className='lesson-num';num.textContent=i;btn.appendChild(num);let badge='';if(done.includes(i))badge='✔️';else if(failed.includes(i))badge='✗';else if(i===(user.lastLesson+1))badge='▶️';const b=document.createElement('div');b.className='lesson-badge';b.textContent=badge;btn.appendChild(b);c.appendChild(btn);}}
 
-window.startTest=function(){qIdx=0;testScore=0;selected=-1;show('test');renderQ();};
+window.startTest=function(){qIdx=0;testScore=0;selected=-1;showScreen('test');renderQ();};
 
 function renderQ(){const q=QUESTIONS[qIdx];document.getElementById('q-counter').textContent=`Q${qIdx+1}/30`;document.getElementById('test-progress').style.width=((qIdx/30)*100)+'%';document.getElementById('test-q').textContent=q.q;document.getElementById('test-next').disabled=true;selected=-1;const c=document.getElementById('test-options');c.innerHTML='';q.a.forEach((a,i)=>{const btn=document.createElement('button');btn.className='option';btn.textContent=a;btn.onclick=()=>{document.querySelectorAll('#test-options .option').forEach(b=>b.classList.remove('selected'));btn.classList.add('selected');selected=i;document.getElementById('test-next').disabled=false;};c.appendChild(btn);});}
 
 window.nextQuestion=function(){if(selected===-1)return;const q=QUESTIONS[qIdx];if(selected===q.c)testScore++;const btns=document.querySelectorAll('#test-options .option');btns.forEach((b,i)=>{if(i===q.c)b.classList.add('correct');else if(i===selected)b.classList.add('wrong');});document.getElementById('test-next').disabled=true;setTimeout(()=>{qIdx++;if(qIdx<30)renderQ();else finTest();},600);};
 
-function finTest(){const score=Math.floor(testScore/3);let lv='A1';if(score>=4&&score<=6)lv='A2';else if(score>=7&&score<=8)lv='B1';else if(score>=9)lv='B2';user.level=lv;user.levelIndex=score;user.completed=[];user.failed=[];user.points=0;user.lastLesson=0;save();document.getElementById('final-level').textContent=lv;const descs={'A1':'Beginner','A2':'Elementary','B1':'Pre-Intermediate','B2':'Intermediate+'};document.getElementById('level-desc').textContent=descs[lv];document.getElementById('level-advice').textContent='Start with Lesson '+LEVELS[lv].start;show('result');}
+function finTest(){const score=Math.floor(testScore/3);let lv='A1';if(score>=4&&score<=6)lv='A2';else if(score>=7&&score<=8)lv='B1';else if(score>=9)lv='B2';user.level=lv;user.levelIndex=score;user.completed=[];user.failed=[];user.points=0;user.lastLesson=0;save();document.getElementById('final-level').textContent=lv;const descs={'A1':'Beginner','A2':'Elementary','B1':'Pre-Intermediate','B2':'Intermediate+'};document.getElementById('level-desc').textContent=descs[lv];document.getElementById('level-advice').textContent='Start with Lesson '+LEVELS[lv].start;showScreen('result');}
 
 window.continueLesson=function(){const next=user.lastLesson+1;if(next<=LEVELS[user.level].end)openLess(next);};
 
-window.openLess=function(id){if(!user.level||id<LEVELS[user.level].start||id>LEVELS[user.level].end){alert('Not available');return;}currentLesson=id;const idx=((id-1)%LESSON_BANK.length);const lesson=LESSON_BANK[idx];document.getElementById('lesson-title').textContent=`Lesson ${id}: ${lesson[0]}`;document.getElementById('lesson-desc').textContent=lesson[1];const c=document.getElementById('lesson-exercises');c.innerHTML='';document.getElementById('lesson-result').classList.add('hidden');document.getElementById('submit-btn').style.display='block';lesson[2].forEach((ex,i)=>{const div=document.createElement('div');div.className='exercise';const num=document.createElement('div');num.className='exercise-num';num.textContent=`Exercise ${i+1}`;div.appendChild(num);const q=document.createElement('div');q.className='exercise-q';q.textContent=ex.q;div.appendChild(q);let selected=-1;ex.a.forEach((ans,j)=>{const opt=document.createElement('button');opt.className='option';opt.textContent=ans;opt.onclick=()=>{document.querySelectorAll(`#ex-${i} .option`).forEach(o=>o.classList.remove('selected'));opt.classList.add('selected');selected=j;};if(j===ex.c)opt.setAttribute('data-correct','true');opt.id=`ex-${i}`;div.appendChild(opt);});div.id=`ex-${i}`;c.appendChild(div);});show('lesson');}
+window.openLess=function(id){if(!user.level||id<LEVELS[user.level].start||id>LEVELS[user.level].end){alert('Not available');return;}currentLesson=id;const idx=((id-1)%LESSON_BANK.length);const lesson=LESSON_BANK[idx];document.getElementById('lesson-title').textContent=`Lesson ${id}: ${lesson[0]}`;document.getElementById('lesson-desc').textContent=lesson[1];const c=document.getElementById('lesson-exercises');c.innerHTML='';document.getElementById('lesson-result').classList.add('hidden');document.getElementById('submit-btn').style.display='block';lesson[2].forEach((ex,i)=>{const div=document.createElement('div');div.className='exercise';const num=document.createElement('div');num.className='exercise-num';num.textContent=`Exercise ${i+1}`;div.appendChild(num);const q=document.createElement('div');q.className='exercise-q';q.textContent=ex.q;div.appendChild(q);let selected=-1;ex.a.forEach((ans,j)=>{const opt=document.createElement('button');opt.className='option';opt.textContent=ans;opt.onclick=()=>{document.querySelectorAll(`#ex-${i} .option`).forEach(o=>o.classList.remove('selected'));opt.classList.add('selected');selected=j;};if(j===ex.c)opt.setAttribute('data-correct','true');opt.id=`ex-${i}`;div.appendChild(opt);});div.id=`ex-${i}`;c.appendChild(div);});showScreen('lesson');}
 
 window.submitLesson=function(){const idx=((currentLesson-1)%LESSON_BANK.length);const lesson=LESSON_BANK[idx];let correct=0;lesson[2].forEach((ex,i)=>{const selected=document.querySelectorAll(`#ex-${i} .option`);selected.forEach((opt,j)=>{if(opt.classList.contains('selected')){if(j===ex.c)correct++;opt.classList.add(j===ex.c?'correct':'wrong');}});});const passed=correct>=15;document.getElementById('submit-btn').style.display='none';const res=document.getElementById('lesson-result');res.classList.remove('hidden');const content=document.getElementById('result-content');if(passed){const points=50+(correct*2);user.completed=user.completed||[];if(!user.completed.includes(currentLesson))user.completed.push(currentLesson);user.points=(user.points||0)+points;user.lastLesson=currentLesson;save();content.innerHTML=`<div class="result-emoji">🔥</div><div class="result-title">Lesson Passed!</div><div class="result-score">${correct}/20 Correct</div><div class="result-message">+${points} Points<br>Great work! You're making progress.</div>`;document.getElementById('continue-next').style.display='block';document.getElementById('retry-btn').style.display='none';}else{user.failed=user.failed||[];if(!user.failed.includes(currentLesson))user.failed.push(currentLesson);save();content.innerHTML=`<div class="result-emoji">💪</div><div class="result-title">Need More Practice</div><div class="result-score">${correct}/20 Correct</div><div class="result-message">You need at least 15 correct to pass.<br>Try again to improve your score!</div>`;document.getElementById('continue-next').style.display='none';document.getElementById('retry-btn').style.display='block';}};
 
-window.nextLesson=function(){const next=currentLesson+1;if(next<=LEVELS[user.level].end)openLess(next);else{show('dashboard');renderDash();}};
+window.nextLesson=function(){const next=currentLesson+1;if(next<=LEVELS[user.level].end)openLess(next);else{showScreen('dashboard');renderDash();}};
 
 window.retryLesson=function(){openLess(currentLesson);};
 
-window.show=function(id){show(id);if(id==='progress')renderProg();};
+// Progress render handled separately
 
 function renderProg(){document.getElementById('prog-level').textContent=user.level||'—';document.getElementById('prog-score').textContent=user.levelIndex||'0';document.getElementById('prog-points').textContent=user.points||'0';const done=(user.completed||[]).length;const total=LEVELS[user.level]?LEVELS[user.level].end-LEVELS[user.level].start+1:0;const pct=total?Math.round((done/total)*100):0;document.getElementById('prog-bar').style.width=pct+'%';document.getElementById('prog-text').textContent=`${done} of ${total} lessons passed`;const last=user.lastLesson?`Lesson ${user.lastLesson}`:' None yet';document.getElementById('last-lesson').textContent=last;const next=user.level?`Lesson ${Math.min(user.lastLesson+1,LEVELS[user.level].end)}`:'Take placement test';document.getElementById('next-lesson').textContent=next;}
 
-window.doLogout=function(){localStorage.removeItem('atlas');user=null;level=null;show('landing');document.getElementById('name').value='';document.getElementById('email').value='';};
+window.doLogout=function(){localStorage.removeItem('atlas');user=null;level=null;showScreen('landing');document.getElementById('name').value='';document.getElementById('email').value='';};
 
 function save(){const d={name:user.name,email:user.email,level:user.level,levelIndex:user.levelIndex,completed:user.completed,failed:user.failed,points:user.points,lastLesson:user.lastLesson};localStorage.setItem('atlas',JSON.stringify(d));}
 
-window.addEventListener('load',()=>{const saved=localStorage.getItem('atlas');if(saved){const d=JSON.parse(saved);user={name:d.name,email:d.email,level:d.level,levelIndex:d.levelIndex,completed:d.completed,failed:d.failed,points:d.points,lastLesson:d.lastLesson};show('dashboard');renderDash();}else{show('landing');}});
+window.addEventListener('load',()=>{const saved=localStorage.getItem('atlas');if(saved){const d=JSON.parse(saved);user={name:d.name,email:d.email,level:d.level,levelIndex:d.levelIndex,completed:d.completed,failed:d.failed,points:d.points,lastLesson:d.lastLesson};showScreen('dashboard');renderDash();}else{showScreen('landing');}});
 </script>
 </body>
 </html>
