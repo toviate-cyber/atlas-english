@@ -137,9 +137,22 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 <div id="screen-landing" class="card hidden">
 <h2>Welcome to Atlas English Academy</h2>
 <p style="color:#6b7280;margin-bottom:20px">Learn English with real exercises and structured lessons.</p>
+<div style="margin-bottom:20px;display:flex;gap:10px;border-bottom:2px solid #e5e7eb;padding-bottom:15px">
+<button class="btn-ghost" id="student-tab" onclick="switchTab('student')" style="background:#eff6ff;border-color:#0ea5e9;color:#0ea5e9">📚 Student</button>
+<button class="btn-ghost" id="teacher-tab" onclick="switchTab('teacher')">👨‍🏫 Teacher</button>
+</div>
+
+<div id="student-form">
 <input id="name" placeholder="Full Name" autocomplete="name">
 <input id="email" type="email" placeholder="Email" autocomplete="email">
 <button class="btn" onclick="login()">Start Learning →</button>
+</div>
+
+<div id="teacher-form" class="hidden">
+<input id="teacher-email" type="email" placeholder="Teacher Email" autocomplete="email">
+<input id="teacher-password" type="password" placeholder="Password" autocomplete="current-password">
+<button class="btn" onclick="loginTeacher()">Teacher Access →</button>
+</div>
 </div>
 
 <!-- DASHBOARD -->
@@ -269,6 +282,50 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 <iframe src="https://calendar.google.com/calendar/embed?src=0953e03bc139064f6ebeeb639c8287a195f54377a83f9ddfb5f2af9659febed0%40group.calendar.google.com&ctz=America%2FPanama" style="width:100%;height:400px;border:none;border-radius:10px"></iframe>
 </div>
 
+<!-- TEACHER DASHBOARD -->
+<div id="screen-teacher-dash" class="card hidden">
+<div class="welcome-box">
+<div class="welcome-text">Welcome, <span id="teacher-name">Teacher</span>! 👨‍🏫</div>
+<div class="welcome-sub">Teacher Dashboard</div>
+</div>
+
+<div class="stats-grid">
+<div class="stat-card">
+<div class="stat-value" id="teacher-students">0</div>
+<div class="stat-label">Students</div>
+</div>
+<div class="stat-card">
+<div class="stat-value" id="teacher-meetings">0</div>
+<div class="stat-label">Meetings</div>
+</div>
+<div class="stat-card">
+<div class="stat-value" id="teacher-active">0</div>
+<div class="stat-label">Active</div>
+</div>
+</div>
+
+<div style="margin-bottom:24px">
+<h3 style="color:#1f2937;margin-bottom:12px">Quick Actions</h3>
+<button class="btn" onclick="showScreen('teacher-students')" style="margin-bottom:10px">👥 View Students</button>
+<button class="btn" onclick="showScreen('teacher-meetings')" style="margin-bottom:10px">📅 Manage Meetings</button>
+<button class="btn-secondary" onclick="doLogout()" style="margin-top:15px">Sign Out</button>
+</div>
+</div>
+
+<!-- TEACHER STUDENTS -->
+<div id="screen-teacher-students" class="card hidden">
+<button class="btn-ghost" onclick="showScreen('teacher-dash')">← Back</button>
+<h2>👥 Students</h2>
+<div id="students-list"></div>
+</div>
+
+<!-- TEACHER MEETINGS -->
+<div id="screen-teacher-meetings" class="card hidden">
+<button class="btn-ghost" onclick="showScreen('teacher-dash')">← Back</button>
+<h2>📅 Manage Meetings</h2>
+<div id="meetings-list"></div>
+</div>
+
 </div>
 
 <script>
@@ -286,13 +343,27 @@ const LESSON_BANK=[
 ];
 
 let user=null,level=null,qIdx=0,testScore=0,selected=-1,currentLesson=-1;
+let userRole=null;
+const TEACHER_CREDS={email:'victorjamesjordansgmail.com',password:'pansinqueso1'};
 
 function toggleMenu(){document.getElementById('sidebar').classList.toggle('open');document.querySelector('.sidebar-overlay').classList.toggle('open');}
 function closeMenu(){document.getElementById('sidebar').classList.remove('open');document.querySelector('.sidebar-overlay').classList.remove('open');}
 
 function showScreen(id){document.querySelectorAll('[id^="screen-"]').forEach(s=>s.classList.add('hidden'));document.getElementById(`screen-${id}`).classList.remove('hidden');}
 
-window.login=function(){const n=document.getElementById('name').value.trim();const e=document.getElementById('email').value.trim();if(!n||!e){alert('Enter name and email');return;}user={name:n,email:e};const saved=localStorage.getItem('atlas');if(saved){const d=JSON.parse(saved);user.level=d.level;user.levelIndex=d.levelIndex;user.completed=d.completed||[];user.failed=d.failed||[];user.points=d.points||0;user.lastLesson=d.lastLesson||0;}showScreen('dashboard');renderDash();};
+function switchTab(tab){if(tab==='student'){document.getElementById('student-tab').style.background='#eff6ff';document.getElementById('student-tab').style.borderColor='#0ea5e9';document.getElementById('student-tab').style.color='#0ea5e9';document.getElementById('teacher-tab').style.background='transparent';document.getElementById('teacher-tab').style.borderColor='#1e40af';document.getElementById('teacher-tab').style.color='#1e40af';document.getElementById('student-form').classList.remove('hidden');document.getElementById('teacher-form').classList.add('hidden');}else{document.getElementById('teacher-tab').style.background='#eff6ff';document.getElementById('teacher-tab').style.borderColor='#0ea5e9';document.getElementById('teacher-tab').style.color='#0ea5e9';document.getElementById('student-tab').style.background='transparent';document.getElementById('student-tab').style.borderColor='#1e40af';document.getElementById('student-tab').style.color='#1e40af';document.getElementById('teacher-form').classList.remove('hidden');document.getElementById('student-form').classList.add('hidden');}}
+
+window.login=function(){const n=document.getElementById('name').value.trim();const e=document.getElementById('email').value.trim();if(!n||!e){alert('Enter name and email');return;}userRole='student';user={name:n,email:e};const saved=localStorage.getItem('atlas');if(saved){const d=JSON.parse(saved);user.level=d.level;user.levelIndex=d.levelIndex;user.completed=d.completed||[];user.failed=d.failed||[];user.points=d.points||0;user.lastLesson=d.lastLesson||0;}showScreen('dashboard');renderDash();};
+
+window.loginTeacher=function(){const e=document.getElementById('teacher-email').value.trim();const p=document.getElementById('teacher-password').value;if(e!==TEACHER_CREDS.email||p!==TEACHER_CREDS.password){alert('Invalid teacher credentials');return;}userRole='teacher';user={name:'Teacher',email:e};showScreen('teacher-dash');renderTeacherDash();};
+
+function renderTeacherDash(){document.getElementById('teacher-name').textContent='Teacher';const mockStudents=5;const mockMeetings=3;const mockActive=4;document.getElementById('teacher-students').textContent=mockStudents;document.getElementById('teacher-meetings').textContent=mockMeetings;document.getElementById('teacher-active').textContent=mockActive;}
+
+function renderTeacherStudents(){const container=document.getElementById('students-list');container.innerHTML='<p style="color:#6b7280;padding:20px;text-align:center">Student management coming soon. Currently connected to Atlas English Academy database.</p>';}
+
+function renderTeacherMeetings(){const container=document.getElementById('meetings-list');container.innerHTML='<p style="color:#6b7280;padding:20px;text-align:center">Meeting management coming soon. Integration with Google Calendar & Meet in progress.</p>';}
+
+window.addEventListener('load',()=>{if(!user){showScreen('landing');}});
 
 function renderDash(){document.getElementById('user-name').textContent=user.name;if(user.level){document.getElementById('stat-level').textContent=user.level;document.getElementById('stat-points').textContent=user.points||0;const passed=(user.completed||[]).length;document.getElementById('stat-passed').textContent=passed;document.getElementById('test-msg').style.display='none';const next=user.lastLesson+1;if(next<=LEVELS[user.level].end){document.getElementById('continue-btn').style.display='block';document.getElementById('next-num').textContent=next;}}else{document.getElementById('stat-level').textContent='—';document.getElementById('stat-points').textContent='0';document.getElementById('stat-passed').textContent='0';document.getElementById('continue-btn').style.display='none';document.getElementById('test-msg').style.display='block';}renderLessons();}
 
