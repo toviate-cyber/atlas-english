@@ -306,8 +306,8 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 
 <div style="margin-bottom:24px">
 <h3 style="color:#1f2937;margin-bottom:12px">Quick Actions</h3>
-<button class="btn" onclick="showScreen('teacher-students')" style="margin-bottom:10px">👥 View Students</button>
-<button class="btn" onclick="showScreen('teacher-meetings')" style="margin-bottom:10px">📅 Manage Meetings</button>
+<button class="btn" onclick="goToTeacherStudents()" style="margin-bottom:10px">👥 View Students</button>
+<button class="btn" onclick="goToTeacherMeetings()" style="margin-bottom:10px">📅 Manage Meetings</button>
 <button class="btn-secondary" onclick="doLogout()" style="margin-top:15px">Sign Out</button>
 </div>
 </div>
@@ -315,8 +315,9 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 <!-- TEACHER STUDENTS -->
 <div id="screen-teacher-students" class="card hidden">
 <button class="btn-ghost" onclick="showScreen('teacher-dash')">← Back</button>
-<h2>👥 Students</h2>
-<div id="students-list"></div>
+<h2>👥 Students Overview</h2>
+<p style="color:#6b7280;margin-bottom:20px">Track your students' progress and performance</p>
+<div id="students-list" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px"></div>
 </div>
 
 <!-- TEACHER MEETINGS -->
@@ -353,15 +354,19 @@ function showScreen(id){document.querySelectorAll('[id^="screen-"]').forEach(s=>
 
 function switchTab(tab){if(tab==='student'){document.getElementById('student-tab').style.background='#eff6ff';document.getElementById('student-tab').style.borderColor='#0ea5e9';document.getElementById('student-tab').style.color='#0ea5e9';document.getElementById('teacher-tab').style.background='transparent';document.getElementById('teacher-tab').style.borderColor='#1e40af';document.getElementById('teacher-tab').style.color='#1e40af';document.getElementById('student-form').classList.remove('hidden');document.getElementById('teacher-form').classList.add('hidden');}else{document.getElementById('teacher-tab').style.background='#eff6ff';document.getElementById('teacher-tab').style.borderColor='#0ea5e9';document.getElementById('teacher-tab').style.color='#0ea5e9';document.getElementById('student-tab').style.background='transparent';document.getElementById('student-tab').style.borderColor='#1e40af';document.getElementById('student-tab').style.color='#1e40af';document.getElementById('teacher-form').classList.remove('hidden');document.getElementById('student-form').classList.add('hidden');}}
 
+function goToTeacherStudents(){showScreen('teacher-students');renderTeacherStudents();}
+
+function goToTeacherMeetings(){showScreen('teacher-meetings');renderTeacherMeetings();}
+
 window.login=function(){const n=document.getElementById('name').value.trim();const e=document.getElementById('email').value.trim();if(!n||!e){alert('Enter name and email');return;}userRole='student';user={name:n,email:e};const saved=localStorage.getItem('atlas');if(saved){const d=JSON.parse(saved);user.level=d.level;user.levelIndex=d.levelIndex;user.completed=d.completed||[];user.failed=d.failed||[];user.points=d.points||0;user.lastLesson=d.lastLesson||0;}showScreen('dashboard');renderDash();};
 
 window.loginTeacher=function(){const e=document.getElementById('teacher-email').value.trim();const p=document.getElementById('teacher-password').value;if(e!==TEACHER_CREDS.email||p!==TEACHER_CREDS.password){alert('Invalid teacher credentials');return;}userRole='teacher';user={name:'Teacher',email:e};showScreen('teacher-dash');renderTeacherDash();};
 
 function renderTeacherDash(){document.getElementById('teacher-name').textContent='Teacher';const mockStudents=5;const mockMeetings=3;const mockActive=4;document.getElementById('teacher-students').textContent=mockStudents;document.getElementById('teacher-meetings').textContent=mockMeetings;document.getElementById('teacher-active').textContent=mockActive;}
 
-function renderTeacherStudents(){const container=document.getElementById('students-list');container.innerHTML='<p style="color:#6b7280;padding:20px;text-align:center">Student management coming soon. Currently connected to Atlas English Academy database.</p>';}
+function renderTeacherStudents(){const mockStudents=[{id:1,name:'Carlos Rodríguez',email:'carlos@example.com',level:'A1',score:2,progress:35,points:280,lastActivity:'2h ago'},{id:2,name:'María López',email:'maria@example.com',level:'A2',score:5,progress:65,points:520,lastActivity:'1h ago'},{id:3,name:'Juan González',email:'juan@example.com',level:'B1',score:8,progress:82,points:680,lastActivity:'30m ago'},{id:4,name:'Sofia Martínez',email:'sofia@example.com',level:'A1',score:1,progress:20,points:160,lastActivity:'5h ago'},{id:5,name:'Diego Pérez',email:'diego@example.com',level:'A2',score:6,progress:72,points:600,lastActivity:'2h ago'}];const container=document.getElementById('students-list');container.innerHTML='';mockStudents.forEach(s=>{const card=document.createElement('div');card.style.cssText='background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,0.1)';card.innerHTML=`<div style="margin-bottom:12px"><div style="font-weight:700;color:#1f2937;font-size:1.1em">${s.name}</div><div style="color:#6b7280;font-size:0.85em">${s.email}</div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px"><div style="background:#f3f4f6;border-radius:8px;padding:8px;text-align:center"><div style="color:#1e40af;font-weight:700;font-size:1.2em">${s.level}</div><div style="color:#6b7280;font-size:0.75em">Level</div></div><div style="background:#f3f4f6;border-radius:8px;padding:8px;text-align:center"><div style="color:#1e40af;font-weight:700;font-size:1.2em">${s.progress}%</div><div style="color:#6b7280;font-size:0.75em">Progress</div></div></div><div style="margin-bottom:10px"><div style="color:#6b7280;font-size:0.85em;margin-bottom:4px">Points: <strong>${s.points}</strong></div><div class="progress-bar"><div class="progress-fill" style="width:${Math.min(s.points/700*100,100)}%"></div></div></div><div style="color:#6b7280;font-size:0.8em">Last active: ${s.lastActivity}</div>`;container.appendChild(card);});};
 
-function renderTeacherMeetings(){const container=document.getElementById('meetings-list');container.innerHTML='<p style="color:#6b7280;padding:20px;text-align:center">Meeting management coming soon. Integration with Google Calendar & Meet in progress.</p>';}
+function renderTeacherMeetings(){const mockMeetings=[{id:1,student:'Carlos Rodríguez',date:'2026-05-10',time:'14:00',status:'scheduled',meetLink:'https://meet.google.com/abc-defg-hij'},{id:2,student:'María López',date:'2026-05-09',time:'15:30',status:'completed',meetLink:'https://meet.google.com/klm-nopq-rst'},{id:3,student:'Juan González',date:'2026-05-11',time:'10:00',status:'scheduled',meetLink:'https://meet.google.com/uvw-xyz-abc'}];const container=document.getElementById('meetings-list');container.innerHTML='';mockMeetings.forEach(m=>{const card=document.createElement('div');card.style.cssText='background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,0.1)';const statusColor=m.status==='completed'?'#10b981':'#0ea5e9';card.innerHTML=`<div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px"><div><div style="font-weight:700;color:#1f2937;font-size:1.1em">${m.student}</div><div style="color:#6b7280;font-size:0.9em">${m.date} at ${m.time}</div></div><div style="background:${statusColor};color:#fff;padding:4px 12px;border-radius:20px;font-size:0.75em;font-weight:600;text-transform:uppercase">${m.status}</div></div><button class="btn" onclick="window.open('${m.meetLink}','_blank')" style="margin-top:10px;padding:10px;font-size:0.9em">Join Meeting</button>`;container.appendChild(card);});}
 
 window.addEventListener('load',()=>{if(!user){showScreen('landing');}});
 
