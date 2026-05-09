@@ -346,13 +346,10 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 <h3 style="color:#1f2937;margin-bottom:15px">Create New Meeting</h3>
 <select id="meet-student" style="width:100%;padding:12px;border:1px solid #d1d5db;border-radius:8px;margin-bottom:12px">
 <option value="">Select Student</option>
-<option value="Fabricio Veliz">Fabricio Veliz</option>
-<option value="Carlos Rodríguez">Carlos Rodríguez</option>
-<option value="María López">María López</option>
-<option value="Juan González">Juan González</option>
-<option value="Sofia Martínez">Sofia Martínez</option>
-<option value="Diego Pérez">Diego Pérez</option>
 </select>
+<script>
+fetch('/api/teacher-students').then(r=>r.json()).then(students=>{const sel=document.getElementById('meet-student');students.forEach(s=>{const opt=document.createElement('option');opt.value=s.name;opt.textContent=s.name;sel.appendChild(opt);});}).catch(e=>console.error('Error loading students:',e));
+</script>
 
 <input type="date" id="meet-date" style="width:100%;padding:12px;border:1px solid #d1d5db;border-radius:8px;margin-bottom:12px">
 
