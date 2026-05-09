@@ -225,20 +225,21 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 </div>
 </div>
 
-<div style="margin-top:20px;background:#f9fafb;border-radius:10px;padding:16px">
-<p style="color:#1f2937;font-weight:600;margin-bottom:10px">Lessons Passed</p>
+<div style="margin-top:20px;background:linear-gradient(135deg,#f3f4f6,#fff);border:1px solid #e5e7eb;border-radius:10px;padding:16px">
+<p style="color:#1f2937;font-weight:600;margin-bottom:10px">📚 Lessons Passed</p>
 <div class="progress-bar"><div class="progress-fill" id="prog-bar" style="width:0%"></div></div>
 <p style="color:#6b7280;font-size:0.9em;margin-top:8px" id="prog-text">0 of 10 lessons passed</p>
+<p style="color:#1e40af;font-size:0.85em;margin-top:8px;font-weight:600" id="prog-pct">0% Complete</p>
 </div>
 
-<div style="margin-top:20px;background:#f9fafb;border-radius:10px;padding:16px">
-<p style="color:#1f2937;font-weight:600;margin-bottom:10px">Last Completed</p>
-<p id="last-lesson" style="color:#6b7280">None yet</p>
+<div style="margin-top:20px;background:linear-gradient(135deg,#f0fdf4,#fff);border:1px solid #d1e7dd;border-radius:10px;padding:16px">
+<p style="color:#1f2937;font-weight:600;margin-bottom:10px">✅ Last Completed</p>
+<p id="last-lesson" style="color:#16a34a;font-weight:600;font-size:1.05em">None yet</p>
 </div>
 
-<div style="margin-top:20px;background:#f9fafb;border-radius:10px;padding:16px">
-<p style="color:#1f2937;font-weight:600;margin-bottom:10px">Next Recommended</p>
-<p id="next-lesson" style="color:#6b7280">Take placement test</p>
+<div style="margin-top:20px;background:linear-gradient(135deg,#eff6ff,#fff);border:1px solid #bfdbfe;border-radius:10px;padding:16px">
+<p style="color:#1f2937;font-weight:600;margin-bottom:10px">🎯 Next Recommended</p>
+<p id="next-lesson" style="color:#1e40af;font-weight:600;font-size:1.05em">Take placement test</p>
 </div>
 </div>
 
@@ -442,7 +443,7 @@ window.retryLesson=function(){openLess(currentLesson);};
 
 // Progress render handled separately
 
-function renderProg(){document.getElementById('prog-level').textContent=user.level||'—';document.getElementById('prog-score').textContent=user.levelIndex||'0';document.getElementById('prog-points').textContent=user.points||'0';const done=(user.completed||[]).length;const total=LEVELS[user.level]?LEVELS[user.level].end-LEVELS[user.level].start+1:0;const pct=total?Math.round((done/total)*100):0;document.getElementById('prog-bar').style.width=pct+'%';document.getElementById('prog-text').textContent=`${done} of ${total} lessons passed`;const last=user.lastLesson?`Lesson ${user.lastLesson}`:' None yet';document.getElementById('last-lesson').textContent=last;const next=user.level?`Lesson ${Math.min(user.lastLesson+1,LEVELS[user.level].end)}`:'Take placement test';document.getElementById('next-lesson').textContent=next;}
+function renderProg(){document.getElementById('prog-level').textContent=user.level||'—';document.getElementById('prog-score').textContent=user.levelIndex||'0';document.getElementById('prog-points').textContent=user.points||'0';const done=(user.completed||[]).length;const total=LEVELS[user.level]?LEVELS[user.level].end-LEVELS[user.level].start+1:0;const pct=total?Math.round((done/total)*100):0;document.getElementById('prog-bar').style.width=pct+'%';document.getElementById('prog-text').textContent=`${done} of ${total} lessons passed`;document.getElementById('prog-pct').textContent=pct+'% Complete';const last=user.lastLesson?`Lesson ${user.lastLesson}`:'None yet';document.getElementById('last-lesson').textContent=last;const next=user.level?`Lesson ${Math.min(user.lastLesson+1,LEVELS[user.level].end)}`:'Take placement test';document.getElementById('next-lesson').textContent=next;}
 
 window.doLogout=function(){localStorage.removeItem('atlas');user=null;level=null;showScreen('landing');document.getElementById('name').value='';document.getElementById('email').value='';};
 
