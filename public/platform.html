@@ -178,6 +178,22 @@ input:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
 </div>
 
 <div style="margin-bottom:24px">
+<h3 style="color:#1f2937;margin-bottom:12px">Upcoming Meetings</h3>
+<div id="student-meetings" style="display:none;background:linear-gradient(135deg,#f3f4f6,#fff);border:2px solid #e5e7eb;border-radius:12px;padding:16px;margin-bottom:15px">
+<div style="display:flex;justify-content:space-between;align-items:start">
+<div>
+<div style="font-weight:700;color:#1f2937;margin-bottom:4px" id="meet-student-name">Meeting with Teacher</div>
+<div style="color:#6b7280;font-size:0.9em;margin-bottom:8px"><span id="meet-student-date">Date: —</span> at <span id="meet-student-time">—</span></div>
+<p id="meet-student-notes" style="color:#6b7280;font-size:0.85em;margin-bottom:10px;font-style:italic"></p>
+</div>
+<div style="background:#0ea5e9;color:#fff;padding:4px 12px;border-radius:20px;font-size:0.75em;font-weight:600">UPCOMING</div>
+</div>
+<button class="btn" onclick="joinStudentMeeting()" style="margin-top:10px;padding:10px;font-size:0.9em">📞 Join Meeting</button>
+</div>
+<p id="no-meetings" style="color:#6b7280;text-align:center;padding:15px">No upcoming meetings scheduled</p>
+</div>
+
+<div style="margin-bottom:24px">
 <h3 style="color:#1f2937;margin-bottom:12px">Continue Learning</h3>
 <button class="btn" id="continue-btn" onclick="continueLesson()" style="display:none">▶️ Continue Lesson <span id="next-num">1</span></button>
 <p id="test-msg" style="color:#0ea5e9;display:none">👉 Take the placement test first</p>
@@ -398,7 +414,11 @@ function renderTeacherMeetings(){const meetings=JSON.parse(localStorage.getItem(
 
 window.addEventListener('load',()=>{if(!user){showScreen('landing');}});
 
-function renderDash(){document.getElementById('user-name').textContent=user.name;if(user.level){document.getElementById('stat-level').textContent=user.level;document.getElementById('stat-points').textContent=user.points||0;const passed=(user.completed||[]).length;document.getElementById('stat-passed').textContent=passed;document.getElementById('test-msg').style.display='none';const next=user.lastLesson+1;if(next<=LEVELS[user.level].end){document.getElementById('continue-btn').style.display='block';document.getElementById('next-num').textContent=next;}}else{document.getElementById('stat-level').textContent='—';document.getElementById('stat-points').textContent='0';document.getElementById('stat-passed').textContent='0';document.getElementById('continue-btn').style.display='none';document.getElementById('test-msg').style.display='block';}renderLessons();}
+function renderDash(){document.getElementById('user-name').textContent=user.name;if(user.level){document.getElementById('stat-level').textContent=user.level;document.getElementById('stat-points').textContent=user.points||0;const passed=(user.completed||[]).length;document.getElementById('stat-passed').textContent=passed;document.getElementById('test-msg').style.display='none';const next=user.lastLesson+1;if(next<=LEVELS[user.level].end){document.getElementById('continue-btn').style.display='block';document.getElementById('next-num').textContent=next;}}else{document.getElementById('stat-level').textContent='—';document.getElementById('stat-points').textContent='0';document.getElementById('stat-passed').textContent='0';document.getElementById('continue-btn').style.display='none';document.getElementById('test-msg').style.display='block';}renderLessons();renderStudentMeetings();}
+
+function renderStudentMeetings(){const meetings=JSON.parse(localStorage.getItem('teacherMeetings')||'[]');const studentMeetings=meetings.filter(m=>m.student===user.name&&m.status==='scheduled');if(studentMeetings.length>0){const m=studentMeetings[0];document.getElementById('student-meetings').style.display='block';document.getElementById('no-meetings').style.display='none';document.getElementById('meet-student-name').textContent='Meeting with Teacher';const dateObj=new Date(m.date);const dateStr=dateObj.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});document.getElementById('meet-student-date').textContent=`Date: ${dateStr}`;document.getElementById('meet-student-time').textContent=m.time;if(m.notes){document.getElementById('meet-student-notes').textContent=`Notes: ${m.notes}`;document.getElementById('meet-student-notes').style.display='block';}else{document.getElementById('meet-student-notes').style.display='none';}window.currentMeetingLink=m.meetLink;}else{document.getElementById('student-meetings').style.display='none';document.getElementById('no-meetings').style.display='block';}}
+
+function joinStudentMeeting(){if(window.currentMeetingLink){window.open(window.currentMeetingLink,'_blank');}else{alert('Meeting link not available');}}
 
 function renderLessons(){const c=document.getElementById('lessons-container');c.innerHTML='';if(!user.level){c.innerHTML='<p style="color:#9ca3af;grid-column:1/-1">Take test first</p>';return;}const start=LEVELS[user.level].start;const end=LEVELS[user.level].end;const done=user.completed||[];const failed=user.failed||[];for(let i=start;i<=end;i++){const btn=document.createElement('button');btn.className='lesson-btn';if(done.includes(i))btn.classList.add('done');else if(failed.includes(i))btn.classList.add('failed');btn.onclick=()=>openLess(i);const num=document.createElement('div');num.className='lesson-num';num.textContent=i;btn.appendChild(num);let badge='';if(done.includes(i))badge='✔️';else if(failed.includes(i))badge='✗';else if(i===(user.lastLesson+1))badge='▶️';const b=document.createElement('div');b.className='lesson-badge';b.textContent=badge;btn.appendChild(b);c.appendChild(btn);}}
 
