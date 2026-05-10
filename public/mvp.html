@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas English - MVP</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f3f4f6; color: #1f2937; }
+.container { max-width: 600px; margin: 0 auto; padding: 20px; }
+.card { background: white; border-radius: 12px; padding: 24px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+h1, h2 { margin-bottom: 16px; color: #1f2937; }
+h1 { font-size: 28px; background: linear-gradient(135deg, #1e40af, #0369a1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+h2 { font-size: 20px; }
+p { color: #6b7280; margin-bottom: 12px; line-height: 1.5; }
+input, textarea { width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 14px; margin-bottom: 12px; font-family: inherit; }
+input:focus, textarea:focus { outline: none; border-color: #0ea5e9; box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1); }
+button { width: 100%; padding: 12px; background: linear-gradient(135deg, #1e40af, #0369a1); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 14px; transition: all 0.3s; }
+button:hover { opacity: 0.9; transform: translateY(-1px); }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+.btn-secondary { background: #e5e7eb; color: #1f2937; }
+.btn-secondary:hover { background: #d1d5db; }
+.hidden { display: none; }
+.tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #e5e7eb; padding-bottom: 15px; }
+.tab-btn { padding: 10px 16px; background: transparent; border: 2px solid #1e40af; color: #1e40af; cursor: pointer; border-radius: 8px; font-weight: 600; width: auto; }
+.tab-btn.active { background: #eff6ff; border-color: #0ea5e9; color: #0ea5e9; }
+.code-box { background: #f3f4f6; border: 2px dashed #1e40af; border-radius: 10px; padding: 20px; text-align: center; margin: 20px 0; }
+.code-value { font-size: 32px; font-weight: 800; color: #1e40af; letter-spacing: 4px; font-family: 'Courier New', monospace; margin: 10px 0; }
+.success { background: #d1fae5; border: 1px solid #6ee7b7; color: #065f46; padding: 12px; border-radius: 8px; margin-bottom: 12px; }
+.error { background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b; padding: 12px; border-radius: 8px; margin-bottom: 12px; }
+.meeting { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 12px; margin-bottom: 10px; }
+.meeting strong { color: #1f2937; }
+.student-item { background: #f9fafb; border-left: 4px solid #0ea5e9; padding: 12px; margin-bottom: 10px; border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <div class="card" style="text-align: center;">
+    <h1>⚡ Atlas English</h1>
+    <p>Profesor y estudiante en la misma sesión</p>
+  </div>
+
+  <!-- ROLE SELECTION -->
+  <div id="role-screen" class="card">
+    <h2>Elige tu rol</h2>
+    <p>¿Eres profesor o estudiante?</p>
+    <button onclick="chooseRole('teacher')" style="margin-bottom: 10px;">👨‍🏫 Soy Profesor</button>
+    <button class="btn-secondary" onclick="chooseRole('student')">📚 Soy Estudiante</button>
+  </div>
+
+  <!-- TEACHER LOGIN -->
+  <div id="teacher-login" class="hidden">
+    <div class="card">
+      <h2>👨‍🏫 Crear Sesión</h2>
+      <input id="t-name" placeholder="Tu nombre" type="text">
+      <input id="t-email" placeholder="Tu email" type="email">
+      <button onclick="createSession()">Crear Sesión</button>
+      <button class="btn-secondary" onclick="backToRole()" style="margin-top: 10px;">← Atrás</button>
+    </div>
+  </div>
+
+  <!-- STUDENT LOGIN -->
+  <div id="student-login" class="hidden">
+    <div class="card">
+      <h2>📚 Unirse a Sesión</h2>
+      <input id="s-name" placeholder="Tu nombre" type="text">
+      <input id="s-email" placeholder="Tu email" type="email">
+      <input id="s-code" placeholder="Código (ej: ABC123)" type="text" style="text-transform: uppercase;">
+      <button onclick="joinSession()">Unirse</button>
+      <button class="btn-secondary" onclick="backToRole()" style="margin-top: 10px;">← Atrás</button>
+    </div>
+  </div>
+
+  <!-- TEACHER DASHBOARD -->
+  <div id="teacher-dash" class="hidden">
+    <div class="card">
+      <h2>👨‍🏫 Dashboard Profesor</h2>
+      <p>Bienvenido, <strong id="t-name-display">Profesor</strong></p>
+      
+      <div class="code-box">
+        <p style="color: #6b7280; font-size: 12px; margin: 0 0 10px 0;">Tu código de sesión</p>
+        <div class="code-value" id="code-display">—</div>
+        <button onclick="copyCode()" style="font-size: 12px; padding: 8px;">📋 Copiar</button>
+      </div>
+
+      <h3 style="margin-top: 24px; margin-bottom: 12px;">Estudiantes conectados</h3>
+      <div id="students-list" style="margin-bottom: 20px;">
+        <p style="color: #9ca3af; text-align: center;">Esperando estudiantes...</p>
+      </div>
+
+      <h3 style="margin-bottom: 12px;">Agendar Reunión</h3>
+      <input id="meet-title" placeholder="Tema" type="text">
+      <input id="meet-date" type="date">
+      <input id="meet-time" type="time">
+      <textarea id="meet-notes" placeholder="Notas (opcional)" style="min-height: 60px;"></textarea>
+      <button onclick="addMeeting()" style="margin-bottom: 20px;">Agendar</button>
+
+      <h3 style="margin-bottom: 12px;">Reuniones</h3>
+      <div id="meetings-list" style="margin-bottom: 20px;"></div>
+
+      <h3 style="margin-bottom: 12px;">Anuncio</h3>
+      <textarea id="t-message" placeholder="Escribe un anuncio..." style="min-height: 60px;"></textarea>
+      <button onclick="postAnnouncement()" style="margin-bottom: 20px;">Publicar</button>
+
+      <h3 style="margin-bottom: 12px;">Mensajes</h3>
+      <div id="t-messages"></div>
+
+      <button class="btn-secondary" onclick="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+
+  <!-- STUDENT DASHBOARD -->
+  <div id="student-dash" class="hidden">
+    <div class="card">
+      <h2>📚 Panel Estudiante</h2>
+      <p>Bienvenido, <strong id="s-name-display">Estudiante</strong></p>
+      
+      <div class="code-box">
+        <p style="color: #6b7280; font-size: 12px; margin: 0 0 10px 0;">Tu código de sesión</p>
+        <div class="code-value" id="s-code-display">—</div>
+      </div>
+
+      <h3 style="margin-bottom: 12px;">Reuniones</h3>
+      <div id="s-meetings" style="margin-bottom: 20px;">
+        <p style="color: #9ca3af; text-align: center;">Sin reuniones agendadas</p>
+      </div>
+
+      <h3 style="margin-bottom: 12px;">Anuncios</h3>
+      <div id="s-announcements" style="margin-bottom: 20px;">
+        <p style="color: #9ca3af; text-align: center;">Sin anuncios</p>
+      </div>
+
+      <h3 style="margin-bottom: 12px;">Mensaje para el profesor</h3>
+      <textarea id="s-message" placeholder="Escribe tu mensaje..." style="min-height: 60px;"></textarea>
+      <button onclick="sendMessage()" style="margin-bottom: 20px;">Enviar</button>
+
+      <button class="btn-secondary" onclick="logout()">Cerrar sesión</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let user = null;
+let sessionCode = null;
+
+function chooseRole(role) {
+  if (role === 'teacher') {
+    document.getElementById('role-screen').classList.add('hidden');
+    document.getElementById('teacher-login').classList.remove('hidden');
+  } else {
+    document.getElementById('role-screen').classList.add('hidden');
+    document.getElementById('student-login').classList.remove('hidden');
+  }
+}
+
+function backToRole() {
+  document.getElementById('role-screen').classList.remove('hidden');
+  document.getElementById('teacher-login').classList.add('hidden');
+  document.getElementById('student-login').classList.add('hidden');
+}
+
+function generateCode() {
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let code = '';
+  for (let i = 0; i < 6; i++) {
+    code += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return code;
+}
+
+function createSession() {
+  const name = document.getElementById('t-name').value.trim();
+  const email = document.getElementById('t-email').value.trim();
+  
+  if (!name || !email) {
+    alert('Completa todos los campos');
+    return;
+  }
+
+  sessionCode = generateCode();
+  user = { name, email, role: 'teacher' };
+
+  localStorage.setItem('atlasSession', JSON.stringify({ code: sessionCode, teacher: email }));
+  localStorage.setItem('atlasUser', JSON.stringify(user));
+
+  showTeacherDash();
+}
+
+function joinSession() {
+  const name = document.getElementById('s-name').value.trim();
+  const email = document.getElementById('s-email').value.trim();
+  const code = document.getElementById('s-code').value.trim().toUpperCase();
+  
+  if (!name || !email || !code) {
+    alert('Completa todos los campos');
+    return;
+  }
+
+  sessionCode = code;
+  user = { name, email, role: 'student' };
+
+  localStorage.setItem('atlasSession', JSON.stringify({ code: sessionCode }));
+  localStorage.setItem('atlasUser', JSON.stringify(user));
+
+  showStudentDash();
+  syncUpdates();
+}
+
+function showTeacherDash() {
+  document.getElementById('role-screen').classList.add('hidden');
+  document.getElementById('teacher-login').classList.add('hidden');
+  document.getElementById('student-login').classList.add('hidden');
+  document.getElementById('teacher-dash').classList.remove('hidden');
+  document.getElementById('student-dash').classList.add('hidden');
+
+  document.getElementById('t-name-display').textContent = user.name;
+  document.getElementById('code-display').textContent = sessionCode;
+
+  renderTeacher();
+  setInterval(renderTeacher, 3000);
+}
+
+function showStudentDash() {
+  document.getElementById('role-screen').classList.add('hidden');
+  document.getElementById('teacher-login').classList.add('hidden');
+  document.getElementById('student-login').classList.add('hidden');
+  document.getElementById('teacher-dash').classList.add('hidden');
+  document.getElementById('student-dash').classList.remove('hidden');
+
+  document.getElementById('s-name-display').textContent = user.name;
+  document.getElementById('s-code-display').textContent = sessionCode;
+
+  renderStudent();
+  setInterval(renderStudent, 3000);
+}
+
+function renderTeacher() {
+  // Students
+  let students = JSON.parse(localStorage.getItem(`students_${sessionCode}`) || '[]');
+  const studentsList = document.getElementById('students-list');
+  if (students.length === 0) {
+    studentsList.innerHTML = '<p style="color: #9ca3af; text-align: center;">Esperando estudiantes...</p>';
+  } else {
+    studentsList.innerHTML = students.map(s => 
+      `<div class="student-item"><strong>${s.name}</strong><br><small style="color: #6b7280;">${s.email}</small></div>`
+    ).join('');
+  }
+
+  // Meetings
+  let meetings = JSON.parse(localStorage.getItem(`meetings_${sessionCode}`) || '[]');
+  const meetingsList = document.getElementById('meetings-list');
+  if (meetings.length === 0) {
+    meetingsList.innerHTML = '<p style="color: #9ca3af; text-align: center;">Sin reuniones agendadas</p>';
+  } else {
+    meetingsList.innerHTML = meetings.map(m => 
+      `<div class="meeting"><strong>${m.title}</strong><br><small>${m.date} ${m.time}</small>${m.notes ? `<br><small style="color: #6b7280;">${m.notes}</small>` : ''}</div>`
+    ).join('');
+  }
+
+  // Messages
+  let messages = JSON.parse(localStorage.getItem(`messages_${sessionCode}`) || '[]');
+  const messagesList = document.getElementById('t-messages');
+  if (messages.length === 0) {
+    messagesList.innerHTML = '<p style="color: #9ca3af; text-align: center;">Sin mensajes</p>';
+  } else {
+    messagesList.innerHTML = messages.map(m => 
+      `<div style="background: #f9fafb; border-left: 4px solid #${m.role === 'student' ? '0ea5e9' : '10b981'}; padding: 12px; margin-bottom: 10px; border-radius: 4px;"><strong>${m.author}</strong><br><small style="color: #6b7280;">${m.text}</small></div>`
+    ).join('');
+  }
+}
+
+function renderStudent() {
+  // Meetings
+  let meetings = JSON.parse(localStorage.getItem(`meetings_${sessionCode}`) || '[]');
+  const meetingsList = document.getElementById('s-meetings');
+  if (meetings.length === 0) {
+    meetingsList.innerHTML = '<p style="color: #9ca3af; text-align: center;">Sin reuniones agendadas</p>';
+  } else {
+    meetingsList.innerHTML = meetings.map(m => 
+      `<div class="meeting"><strong>${m.title}</strong><br><small>${m.date} ${m.time}</small>${m.notes ? `<br><small style="color: #6b7280;">${m.notes}</small>` : ''}</div>`
+    ).join('');
+  }
+
+  // Messages (announcements)
+  let messages = JSON.parse(localStorage.getItem(`messages_${sessionCode}`) || '[]');
+  const announcementsList = document.getElementById('s-announcements');
+  let announcements = messages.filter(m => m.role === 'teacher');
+  if (announcements.length === 0) {
+    announcementsList.innerHTML = '<p style="color: #9ca3af; text-align: center;">Sin anuncios</p>';
+  } else {
+    announcementsList.innerHTML = announcements.map(m => 
+      `<div style="background: #eff6ff; border-left: 4px solid #0ea5e9; padding: 12px; margin-bottom: 10px; border-radius: 4px;"><strong>${m.author}</strong><br><small style="color: #6b7280;">${m.text}</small></div>`
+    ).join('');
+  }
+}
+
+function addMeeting() {
+  const title = document.getElementById('meet-title').value.trim();
+  const date = document.getElementById('meet-date').value;
+  const time = document.getElementById('meet-time').value;
+  const notes = document.getElementById('meet-notes').value.trim();
+
+  if (!title || !date || !time) {
+    alert('Completa campos requeridos');
+    return;
+  }
+
+  let meetings = JSON.parse(localStorage.getItem(`meetings_${sessionCode}`) || '[]');
+  meetings.push({ title, date, time, notes });
+  localStorage.setItem(`meetings_${sessionCode}`, JSON.stringify(meetings));
+
+  document.getElementById('meet-title').value = '';
+  document.getElementById('meet-date').value = '';
+  document.getElementById('meet-time').value = '';
+  document.getElementById('meet-notes').value = '';
+
+  renderTeacher();
+}
+
+function postAnnouncement() {
+  const text = document.getElementById('t-message').value.trim();
+  if (!text) {
+    alert('Escribe un anuncio');
+    return;
+  }
+
+  let messages = JSON.parse(localStorage.getItem(`messages_${sessionCode}`) || '[]');
+  messages.push({ author: user.name, role: 'teacher', text });
+  localStorage.setItem(`messages_${sessionCode}`, JSON.stringify(messages));
+
+  document.getElementById('t-message').value = '';
+  renderTeacher();
+}
+
+function sendMessage() {
+  const text = document.getElementById('s-message').value.trim();
+  if (!text) {
+    alert('Escribe un mensaje');
+    return;
+  }
+
+  let messages = JSON.parse(localStorage.getItem(`messages_${sessionCode}`) || '[]');
+  messages.push({ author: user.name, role: 'student', text });
+  localStorage.setItem(`messages_${sessionCode}`, JSON.stringify(messages));
+
+  // Register student
+  let students = JSON.parse(localStorage.getItem(`students_${sessionCode}`) || '[]');
+  if (!students.find(s => s.email === user.email)) {
+    students.push({ name: user.name, email: user.email });
+    localStorage.setItem(`students_${sessionCode}`, JSON.stringify(students));
+  }
+
+  document.getElementById('s-message').value = '';
+  renderStudent();
+}
+
+function copyCode() {
+  navigator.clipboard.writeText(sessionCode);
+  alert('Código copiado: ' + sessionCode);
+}
+
+function syncUpdates() {
+  // Register student when joining
+  let students = JSON.parse(localStorage.getItem(`students_${sessionCode}`) || '[]');
+  if (!students.find(s => s.email === user.email)) {
+    students.push({ name: user.name, email: user.email });
+    localStorage.setItem(`students_${sessionCode}`, JSON.stringify(students));
+  }
+}
+
+function logout() {
+  user = null;
+  sessionCode = null;
+  localStorage.removeItem('atlasSession');
+  localStorage.removeItem('atlasUser');
+  document.getElementById('role-screen').classList.remove('hidden');
+  document.getElementById('teacher-dash').classList.add('hidden');
+  document.getElementById('student-dash').classList.add('hidden');
+  document.getElementById('t-name').value = '';
+  document.getElementById('t-email').value = '';
+  document.getElementById('s-name').value = '';
+  document.getElementById('s-email').value = '';
+  document.getElementById('s-code').value = '';
+}
+
+// On load
+window.addEventListener('load', () => {
+  const savedSession = localStorage.getItem('atlasSession');
+  const savedUser = localStorage.getItem('atlasUser');
+  
+  if (savedSession && savedUser) {
+    const session = JSON.parse(savedSession);
+    const userData = JSON.parse(savedUser);
+    
+    user = userData;
+    sessionCode = session.code;
+
+    if (user.role === 'teacher') {
+      showTeacherDash();
+    } else {
+      showStudentDash();
+    }
+  }
+});
+</script>
+</body>
+</html>
