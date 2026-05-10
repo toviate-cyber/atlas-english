@@ -88,7 +88,7 @@ input:focus, select:focus, textarea:focus{border-color:#0ea5e9;box-shadow:0 0 0 
 <p style="color:#6b7280;margin-bottom:15px">Enter your details and ask your teacher for the access code</p>
 <input id="student-name" placeholder="Your Full Name" autocomplete="name">
 <input id="student-email" placeholder="Your Email" type="email" autocomplete="email">
-<input id="student-code" placeholder="Access Code (from teacher)" maxlength="6" style="text-transform:uppercase">
+<input id="student-code" placeholder="Access Code (from teacher)" maxlength="10" style="text-transform:uppercase">
 <button class="btn" onclick="loginAsStudent()">Join Session →</button>
 </div>
 
@@ -211,7 +211,7 @@ function switchTab(tab) {
 }
 
 function generateCode() {
-  return Math.random().toString(36).substr(2, 6).toUpperCase();
+  return Math.random().toString(36).substr(2, 4).toUpperCase();
 }
 
 async function loginAsTeacher() {
