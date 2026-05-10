@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atlas English Academy - MVP</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI','Helvetica Neue',sans-serif;background:#f9fafb;color:#1f2937;min-height:100vh}
+.container{max-width:1000px;margin:auto}
+
+.header{background:#fff;border-bottom:1px solid #e5e7eb;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.logo{font-size:1.3em;font-weight:800;background:linear-gradient(90deg,#1e40af,#0369a1);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.menu-btn{background:none;border:none;font-size:1.5em;cursor:pointer;padding:8px}
+
+.content{padding:30px 20px;max-width:900px;margin:auto}
+
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:24px;margin-bottom:20px;box-shadow:0 1px 3px rgba(0,0,0,0.1)}
+.card h2{font-size:1.4em;color:#1f2937;margin-bottom:15px}
+
+input, select, textarea{padding:12px 14px;width:100%;border:1px solid #d1d5db;border-radius:8px;font-size:1em;margin-bottom:12px;outline:none;font-family:inherit}
+input:focus, select:focus, textarea:focus{border-color:#0ea5e9;box-shadow:0 0 0 3px rgba(14,165,233,0.1)}
+
+.btn{background:linear-gradient(90deg,#1e40af,#0369a1);color:#fff;border:none;padding:12px 24px;border-radius:8px;cursor:pointer;font-size:1em;font-weight:600;transition:all 0.3s;width:100%}
+.btn:hover:not(:disabled){opacity:0.9;transform:translateY(-1px)}
+.btn:disabled{opacity:0.5;cursor:not-allowed}
+.btn-secondary{background:#e5e7eb;color:#1f2937}
+.btn-secondary:hover{background:#d1d5db}
+.btn-ghost{background:transparent;border:2px solid #1e40af;color:#1e40af;width:auto;padding:10px 18px;margin:5px}
+
+.badge{display:inline-block;background:#0ea5e9;color:#fff;padding:4px 12px;border-radius:20px;font-size:0.85em;font-weight:600}
+.badge-success{background:#10b981}
+.badge-error{background:#ef4444}
+
+.welcome-box{background:linear-gradient(135deg,#1e40af,#0369a1);border-radius:12px;padding:24px;color:#fff;margin-bottom:24px}
+.welcome-text{font-size:1.3em;font-weight:700;margin-bottom:8px}
+.welcome-sub{font-size:0.9em;opacity:0.9}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:16px;margin-bottom:24px}
+.stat-card{background:linear-gradient(135deg,#f3f4f6,#fff);border:1px solid #e5e7eb;border-radius:12px;padding:16px;text-align:center}
+.stat-value{font-size:2em;font-weight:800;color:#1e40af}
+.stat-label{color:#6b7280;font-size:0.9em;margin-top:8px}
+
+.hidden{display:none}
+
+.code-display{background:#f3f4f6;border:2px dashed #1e40af;border-radius:12px;padding:20px;text-align:center;margin:20px 0}
+.code-value{font-size:2.5em;font-weight:800;color:#1e40af;letter-spacing:4px;margin:10px 0;font-family:'Courier New',monospace}
+.code-copy-btn{background:#10b981;color:#fff;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-weight:600;margin-top:10px}
+.code-copy-btn:hover{background:#059669}
+
+.meeting-item{background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px;margin-bottom:12px}
+.meeting-time{color:#6b7280;font-size:0.9em;margin-bottom:8px}
+.meeting-title{color:#1f2937;font-weight:600;margin-bottom:8px;font-size:1.05em}
+.meeting-student{color:#0ea5e9;font-size:0.9em;margin-bottom:10px}
+
+.comment-box{background:#f9fafb;border-left:4px solid #0ea5e9;border-radius:6px;padding:12px;margin-bottom:12px}
+.comment-author{color:#1e40af;font-weight:600;font-size:0.85em}
+.comment-role{color:#6b7280;font-size:0.75em;margin-left:8px}
+.comment-text{color:#1f2937;margin-top:4px;font-size:0.95em}
+
+@media(max-width:600px){
+.stats-grid{grid-template-columns:1fr 1fr}
+.code-value{font-size:1.8em}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+<div class="logo">⚡ Atlas English MVP</div>
+<button class="menu-btn" onclick="toggleMenu()">☰</button>
+</div>
+
+<div class="content">
+
+<!-- LOGIN SCREEN -->
+<div id="screen-login" class="card">
+<h2>Welcome to Atlas English</h2>
+<p style="color:#6b7280;margin-bottom:20px">Shared learning between teacher and student</p>
+
+<div style="margin-bottom:20px;border-bottom:2px solid #e5e7eb;padding-bottom:15px;display:flex;gap:10px">
+<button class="btn-ghost" id="student-tab" onclick="switchTab('student')" style="background:#eff6ff;border-color:#0ea5e9;color:#0ea5e9">📚 Student</button>
+<button class="btn-ghost" id="teacher-tab" onclick="switchTab('teacher')">👨‍🏫 Teacher</button>
+</div>
+
+<!-- STUDENT LOGIN -->
+<div id="student-login">
+<p style="color:#6b7280;margin-bottom:15px">Enter your details and ask your teacher for the access code</p>
+<input id="student-name" placeholder="Your Full Name" autocomplete="name">
+<input id="student-email" placeholder="Your Email" type="email" autocomplete="email">
+<input id="student-code" placeholder="Access Code (from teacher)" maxlength="6" style="text-transform:uppercase">
+<button class="btn" onclick="loginAsStudent()">Join Session →</button>
+</div>
+
+<!-- TEACHER LOGIN -->
+<div id="teacher-login" class="hidden">
+<p style="color:#6b7280;margin-bottom:15px">Create a new session and share the code with your students</p>
+<input id="teacher-name" placeholder="Your Name" autocomplete="name">
+<input id="teacher-email" placeholder="Your Email (identifier)" type="email" autocomplete="email">
+<button class="btn" onclick="loginAsTeacher()">Create Session →</button>
+</div>
+</div>
+
+<!-- TEACHER DASHBOARD -->
+<div id="screen-teacher" class="hidden">
+<div class="welcome-box">
+<div class="welcome-text">Teacher Dashboard 👨‍🏫</div>
+<div class="welcome-sub" id="teacher-welcome">Welcome, Teacher!</div>
+</div>
+
+<div class="card">
+<h2>📌 Share This Code</h2>
+<p style="color:#6b7280;margin-bottom:15px">Give this code to your students so they can join your session</p>
+<div class="code-display">
+<div style="color:#6b7280;font-size:0.9em;margin-bottom:10px">Your Session Code</div>
+<div class="code-value" id="teacher-code">—</div>
+<button class="code-copy-btn" onclick="copyCode()">📋 Copy Code</button>
+</div>
+<p style="color:#6b7280;font-size:0.9em;margin-top:15px">⏰ Code expires in 24 hours</p>
+</div>
+
+<div class="card">
+<h2>👥 Students in Session</h2>
+<div id="students-list" style="margin-top:15px"></div>
+</div>
+
+<div class="card">
+<h2>📅 Schedule a Meeting</h2>
+<input id="meet-title" placeholder="Meeting Title (e.g., Grammar Review)">
+<input id="meet-date" type="date">
+<input id="meet-time" type="time">
+<textarea id="meet-notes" placeholder="Notes or agenda (optional)"></textarea>
+<button class="btn" onclick="createMeeting()">Schedule Meeting</button>
+</div>
+
+<div class="card">
+<h2>📋 Scheduled Meetings</h2>
+<div id="meetings-list" style="margin-top:15px"></div>
+</div>
+
+<div class="card">
+<h2>💬 Session Comments</h2>
+<textarea id="teacher-comment" placeholder="Write a message for your students..." style="min-height:80px"></textarea>
+<button class="btn" onclick="addTeacherComment()">Post Comment</button>
+<div id="teacher-comments" style="margin-top:20px"></div>
+</div>
+
+<button class="btn-secondary" onclick="doLogout()" style="margin-top:20px">Sign Out</button>
+</div>
+
+<!-- STUDENT DASHBOARD -->
+<div id="screen-student" class="hidden">
+<div class="welcome-box">
+<div class="welcome-text">Welcome, <span id="student-welcome">Student</span>! 📚</div>
+<div class="welcome-sub" id="session-code-display">Session Code: <strong id="session-code">—</strong></div>
+</div>
+
+<div class="card">
+<h2>📅 Your Meetings</h2>
+<div id="student-meetings" style="margin-top:15px"></div>
+</div>
+
+<div class="card">
+<h2>💬 Announcements & Comments</h2>
+<div id="student-comments" style="margin-top:15px"></div>
+</div>
+
+<div class="card">
+<h2>📝 Send Message to Teacher</h2>
+<textarea id="student-comment" placeholder="Write a message for your teacher..." style="min-height:80px"></textarea>
+<button class="btn" onclick="addStudentComment()">Send Message</button>
+</div>
+
+<button class="btn-secondary" onclick="doLogout()" style="margin-top:20px">Sign Out</button>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = 'https://uxpqtlppygdheimjtmkl.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_TKRzrwXWgWSlPKqN5UbS2g_q2chB7oo';
+
+const { createClient } = window.supabase;
+const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+let currentUser = null;
+let currentSession = null;
+let currentRole = null;
+
+function switchTab(tab) {
+  if (tab === 'student') {
+    document.getElementById('student-tab').style.background = '#eff6ff';
+    document.getElementById('student-tab').style.borderColor = '#0ea5e9';
+    document.getElementById('student-tab').style.color = '#0ea5e9';
+    document.getElementById('teacher-tab').style.background = 'transparent';
+    document.getElementById('teacher-tab').style.borderColor = '#1e40af';
+    document.getElementById('teacher-tab').style.color = '#1e40af';
+    document.getElementById('student-login').classList.remove('hidden');
+    document.getElementById('teacher-login').classList.add('hidden');
+  } else {
+    document.getElementById('teacher-tab').style.background = '#eff6ff';
+    document.getElementById('teacher-tab').style.borderColor = '#0ea5e9';
+    document.getElementById('teacher-tab').style.color = '#0ea5e9';
+    document.getElementById('student-tab').style.background = 'transparent';
+    document.getElementById('student-tab').style.borderColor = '#1e40af';
+    document.getElementById('student-tab').style.color = '#1e40af';
+    document.getElementById('teacher-login').classList.remove('hidden');
+    document.getElementById('student-login').classList.add('hidden');
+  }
+}
+
+function generateCode() {
+  return Math.random().toString(36).substr(2, 6).toUpperCase();
+}
+
+async function loginAsTeacher() {
+  const name = document.getElementById('teacher-name').value.trim();
+  const email = document.getElementById('teacher-email').value.trim();
+  
+  if (!name || !email) {
+    alert('Please fill in all fields');
+    return;
+  }
+
+  // Generate a 6-character code
+  const code = generateCode();
+
+  currentUser = { name, email, role: 'teacher' };
+  currentRole = 'teacher';
+  currentSession = { code, teacher_id: email, created_at: new Date() };
+
+  // Save to localStorage for now (Supabase integration later)
+  localStorage.setItem('atlasSession', JSON.stringify(currentSession));
+  localStorage.setItem('atlasUser', JSON.stringify(currentUser));
+
+  showScreen('teacher');
+  renderTeacherDash();
+}
+
+async function loginAsStudent() {
+  const name = document.getElementById('student-name').value.trim();
+  const email = document.getElementById('student-email').value.trim();
+  const code = document.getElementById('student-code').value.trim().toUpperCase();
+
+  if (!name || !email || !code) {
+    alert('Please fill in all fields');
+    return;
+  }
+
+  // In MVP: just validate code format (later: check Supabase)
+  if (code.length !== 6) {
+    alert('Invalid code format');
+    return;
+  }
+
+  currentUser = { name, email, role: 'student' };
+  currentRole = 'student';
+  currentSession = { code };
+
+  localStorage.setItem('atlasSession', JSON.stringify(currentSession));
+  localStorage.setItem('atlasUser', JSON.stringify(currentUser));
+
+  showScreen('student');
+  renderStudentDash();
+  startSync();
+}
+
+function showScreen(id) {
+  document.getElementById('screen-login').classList.add('hidden');
+  document.getElementById('screen-teacher').classList.add('hidden');
+  document.getElementById('screen-student').classList.add('hidden');
+  document.getElementById(`screen-${id}`).classList.remove('hidden');
+}
+
+function renderTeacherDash() {
+  document.getElementById('teacher-welcome').textContent = `Welcome, ${currentUser.name}!`;
+  document.getElementById('teacher-code').textContent = currentSession.code;
+  renderTeacherStudents();
+  renderTeacherMeetings();
+  renderTeacherComments();
+}
+
+function renderStudentDash() {
+  document.getElementById('student-welcome').textContent = currentUser.name;
+  document.getElementById('session-code').textContent = currentSession.code;
+  renderStudentMeetings();
+  renderStudentComments();
+}
+
+function renderTeacherStudents() {
+  const students = JSON.parse(localStorage.getItem('sessionStudents') || '[]');
+  const container = document.getElementById('students-list');
+  
+  if (students.length === 0) {
+    container.innerHTML = '<p style="color:#6b7280;padding:20px;text-align:center">No students have joined yet</p>';
+    return;
+  }
+
+  container.innerHTML = students.map(s => `
+    <div style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:10px;padding:16px;margin-bottom:12px">
+      <div style="font-weight:600;color:#1f2937">${s.name}</div>
+      <div style="color:#6b7280;font-size:0.9em">${s.email}</div>
+      <div style="color:#0ea5e9;font-size:0.85em;margin-top:8px">Joined ${new Date(s.joinedAt).toLocaleTimeString()}</div>
+    </div>
+  `).join('');
+}
+
+function renderTeacherMeetings() {
+  const meetings = JSON.parse(localStorage.getItem(`meetings_${currentSession.code}`) || '[]');
+  const container = document.getElementById('meetings-list');
+  
+  if (meetings.length === 0) {
+    container.innerHTML = '<p style="color:#6b7280;padding:20px;text-align:center">No meetings scheduled yet</p>';
+    return;
+  }
+
+  container.innerHTML = meetings.map(m => `
+    <div class="meeting-item">
+      <div class="meeting-title">${m.title}</div>
+      <div class="meeting-time">${m.date} at ${m.time}</div>
+      ${m.notes ? `<div style="color:#6b7280;font-size:0.85em;margin-bottom:8px">${m.notes}</div>` : ''}
+      <button class="btn-ghost" onclick="deleteMeeting('${m.id}')" style="font-size:0.85em">Delete</button>
+    </div>
+  `).join('');
+}
+
+function renderStudentMeetings() {
+  const meetings = JSON.parse(localStorage.getItem(`meetings_${currentSession.code}`) || '[]');
+  const container = document.getElementById('student-meetings');
+  
+  if (meetings.length === 0) {
+    container.innerHTML = '<p style="color:#6b7280;padding:20px;text-align:center">No upcoming meetings</p>';
+    return;
+  }
+
+  container.innerHTML = meetings.map(m => `
+    <div class="meeting-item">
+      <div class="meeting-title">${m.title}</div>
+      <div class="meeting-time">${m.date} at ${m.time}</div>
+      ${m.notes ? `<div style="color:#6b7280;font-size:0.85em;margin-bottom:8px">${m.notes}</div>` : ''}
+      <button class="btn" onclick="openMeeting('${m.id}')" style="font-size:0.85em;padding:8px">📞 Join Meeting</button>
+    </div>
+  `).join('');
+}
+
+function renderTeacherComments() {
+  const comments = JSON.parse(localStorage.getItem(`comments_${currentSession.code}`) || '[]');
+  const container = document.getElementById('teacher-comments');
+  
+  if (comments.length === 0) {
+    container.innerHTML = '<p style="color:#6b7280;padding:20px;text-align:center">No comments yet</p>';
+    return;
+  }
+
+  container.innerHTML = comments.map(c => `
+    <div class="comment-box">
+      <div class="comment-author">${c.author} <span class="comment-role">${c.role === 'teacher' ? '👨‍🏫 Teacher' : '📚 Student'}</span></div>
+      <div class="comment-text">${escapeHtml(c.text)}</div>
+      <div style="color:#9ca3af;font-size:0.75em;margin-top:4px">${new Date(c.timestamp).toLocaleString()}</div>
+    </div>
+  `).join('');
+}
+
+function renderStudentComments() {
+  const comments = JSON.parse(localStorage.getItem(`comments_${currentSession.code}`) || '[]');
+  const container = document.getElementById('student-comments');
+  
+  if (comments.length === 0) {
+    container.innerHTML = '<p style="color:#6b7280;padding:20px;text-align:center">No announcements yet</p>';
+    return;
+  }
+
+  container.innerHTML = comments.map(c => `
+    <div class="comment-box">
+      <div class="comment-author">${c.author} <span class="comment-role">${c.role === 'teacher' ? '👨‍🏫 Teacher' : '📚 Student'}</span></div>
+      <div class="comment-text">${escapeHtml(c.text)}</div>
+      <div style="color:#9ca3af;font-size:0.75em;margin-top:4px">${new Date(c.timestamp).toLocaleString()}</div>
+    </div>
+  `).join('');
+}
+
+function createMeeting() {
+  const title = document.getElementById('meet-title').value.trim();
+  const date = document.getElementById('meet-date').value;
+  const time = document.getElementById('meet-time').value;
+  const notes = document.getElementById('meet-notes').value.trim();
+
+  if (!title || !date || !time) {
+    alert('Please fill in required fields');
+    return;
+  }
+
+  const meetings = JSON.parse(localStorage.getItem(`meetings_${currentSession.code}`) || '[]');
+  meetings.push({
+    id: Date.now(),
+    title,
+    date,
+    time,
+    notes,
+    createdBy: currentUser.email,
+    timestamp: new Date().toISOString()
+  });
+
+  localStorage.setItem(`meetings_${currentSession.code}`, JSON.stringify(meetings));
+
+  document.getElementById('meet-title').value = '';
+  document.getElementById('meet-date').value = '';
+  document.getElementById('meet-time').value = '';
+  document.getElementById('meet-notes').value = '';
+
+  renderTeacherMeetings();
+  alert('Meeting scheduled!');
+}
+
+function deleteMeeting(id) {
+  const meetings = JSON.parse(localStorage.getItem(`meetings_${currentSession.code}`) || '[]');
+  const filtered = meetings.filter(m => m.id !== parseInt(id));
+  localStorage.setItem(`meetings_${currentSession.code}`, JSON.stringify(filtered));
+  renderTeacherMeetings();
+}
+
+function addTeacherComment() {
+  const text = document.getElementById('teacher-comment').value.trim();
+  if (!text) {
+    alert('Please write a comment');
+    return;
+  }
+
+  const comments = JSON.parse(localStorage.getItem(`comments_${currentSession.code}`) || '[]');
+  comments.push({
+    id: Date.now(),
+    author: currentUser.name,
+    role: 'teacher',
+    text,
+    timestamp: new Date().toISOString()
+  });
+
+  localStorage.setItem(`comments_${currentSession.code}`, JSON.stringify(comments));
+  document.getElementById('teacher-comment').value = '';
+  renderTeacherComments();
+}
+
+function addStudentComment() {
+  const text = document.getElementById('student-comment').value.trim();
+  if (!text) {
+    alert('Please write a message');
+    return;
+  }
+
+  const comments = JSON.parse(localStorage.getItem(`comments_${currentSession.code}`) || '[]');
+  comments.push({
+    id: Date.now(),
+    author: currentUser.name,
+    role: 'student',
+    text,
+    timestamp: new Date().toISOString()
+  });
+
+  localStorage.setItem(`comments_${currentSession.code}`, JSON.stringify(comments));
+  document.getElementById('student-comment').value = '';
+  renderStudentComments();
+}
+
+function copyCode() {
+  const code = document.getElementById('teacher-code').textContent;
+  navigator.clipboard.writeText(code).then(() => {
+    alert('Code copied to clipboard!');
+  });
+}
+
+function openMeeting(id) {
+  alert('Meeting opened! (In full version: integrate with Google Meet, Zoom, etc)');
+}
+
+function startSync() {
+  // Poll for updates every 5 seconds
+  setInterval(() => {
+    if (currentRole === 'student') {
+      renderStudentMeetings();
+      renderStudentComments();
+    }
+  }, 5000);
+
+  // Register student in the session
+  let students = JSON.parse(localStorage.getItem('sessionStudents') || '[]');
+  if (!students.find(s => s.email === currentUser.email)) {
+    students.push({
+      ...currentUser,
+      joinedAt: new Date().toISOString()
+    });
+    localStorage.setItem('sessionStudents', JSON.stringify(students));
+  }
+}
+
+function doLogout() {
+  currentUser = null;
+  currentSession = null;
+  currentRole = null;
+  localStorage.removeItem('atlasUser');
+  localStorage.removeItem('atlasSession');
+  document.getElementById('student-name').value = '';
+  document.getElementById('student-email').value = '';
+  document.getElementById('student-code').value = '';
+  document.getElementById('teacher-name').value = '';
+  document.getElementById('teacher-email').value = '';
+  document.getElementById('screen-login').classList.remove('hidden');
+  document.getElementById('screen-teacher').classList.add('hidden');
+  document.getElementById('screen-student').classList.add('hidden');
+}
+
+function escapeHtml(text) {
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
+
+function toggleMenu() {
+  // Simplified menu (full version would have sidebar)
+}
+
+// Check if user is already logged in
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('atlasUser');
+  const session = localStorage.getItem('atlasSession');
+  if (saved && session) {
+    currentUser = JSON.parse(saved);
+    currentSession = JSON.parse(session);
+    currentRole = currentUser.role;
+    
+    if (currentRole === 'teacher') {
+      showScreen('teacher');
+      renderTeacherDash();
+    } else {
+      showScreen('student');
+      renderStudentDash();
+      startSync();
+    }
+  }
+});
+</script>
+</body>
+</html>
