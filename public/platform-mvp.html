@@ -223,16 +223,19 @@ async function loginAsTeacher() {
     return;
   }
 
-  // Generate a 6-character code
+  // Generate a unique code
   const code = generateCode();
+  console.log('Generated code:', code);
 
   currentUser = { name, email, role: 'teacher' };
   currentRole = 'teacher';
-  currentSession = { code, teacher_id: email, created_at: new Date() };
+  currentSession = { code, teacher_id: email, created_at: new Date().toISOString() };
 
   // Save to localStorage for now (Supabase integration later)
   localStorage.setItem('atlasSession', JSON.stringify(currentSession));
   localStorage.setItem('atlasUser', JSON.stringify(currentUser));
+  
+  console.log('Teacher session created:', currentSession);
 
   showScreen('teacher');
   renderTeacherDash();
@@ -249,8 +252,8 @@ async function loginAsStudent() {
   }
 
   // In MVP: just validate code format (later: check Supabase)
-  if (code.length !== 6) {
-    alert('Invalid code format');
+  if (code.length < 3) {
+    alert('Code must be at least 3 characters');
     return;
   }
 
@@ -260,6 +263,8 @@ async function loginAsStudent() {
 
   localStorage.setItem('atlasSession', JSON.stringify(currentSession));
   localStorage.setItem('atlasUser', JSON.stringify(currentUser));
+  
+  console.log('Student joined with code:', code);
 
   showScreen('student');
   renderStudentDash();
