@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import styles from '../styles/Home.module.css';
 
 export default function TeacherDashboard() {
   const router = useRouter();
@@ -10,15 +9,14 @@ export default function TeacherDashboard() {
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('students');
   
-  // Form states
   const [sessionTitle, setSessionTitle] = useState('');
   const [sessionDate, setSessionDate] = useState('');
   const [sessionTime, setSessionTime] = useState('');
   const [sessionNotes, setSessionNotes] = useState('');
   const [sessionMeetLink, setSessionMeetLink] = useState('');
+  const [selectedStudents, setSelectedStudents] = useState([]);
 
   useEffect(() => {
-    // Check if teacher is logged in
     const savedTeacher = localStorage.getItem('teacher');
     if (!savedTeacher) {
       router.push('/teacher-login');
@@ -27,19 +25,15 @@ export default function TeacherDashboard() {
 
     const teacherData = JSON.parse(savedTeacher);
     setTeacher(teacherData);
-
-    // Fetch students and sessions
     fetchData(teacherData.id);
   }, [router]);
 
   const fetchData = async (teacherId) => {
     try {
-      // Fetch students
       const studentsRes = await fetch(`/api/students?teacher_id=${teacherId}`);
       const studentsData = await studentsRes.json();
       setStudents(studentsData.students || []);
 
-      // Fetch sessions
       const sessionsRes = await fetch(`/api/sessions?teacher_id=${teacherId}`);
       const sessionsData = await sessionsRes.json();
       setSessions(sessionsData.sessions || []);
@@ -49,6 +43,20 @@ export default function TeacherDashboard() {
       console.error('Error fetching data:', error);
       setLoading(false);
     }
+  };
+
+  const toggleStudent = (studentId) => {
+    setSelectedStudents(prev =>
+      prev.includes(studentId)
+        ? prev.filter(id => id !== studentId)
+        : [...prev, studentId]
+    );
+  };
+
+  const formatLink = (link) => {
+    if (!link) return '';
+    if (link.startsWith('http')) return link;
+    return 'https://' + link;
   };
 
   const handleCreateSession = async (e) => {
@@ -68,7 +76,8 @@ export default function TeacherDashboard() {
           fecha: sessionDate,
           hora: sessionTime,
           notas: sessionNotes,
-          meet_link: sessionMeetLink
+          meet_link: formatLink(sessionMeetLink),
+          student_ids: selectedStudents
         })
       });
 
@@ -77,14 +86,12 @@ export default function TeacherDashboard() {
         return;
       }
 
-      // Reset form and refresh
       setSessionTitle('');
       setSessionDate('');
       setSessionTime('');
       setSessionNotes('');
       setSessionMeetLink('');
 
-      // Refresh sessions
       fetchData(teacher.id);
       alert('Session created successfully!');
     } catch (error) {
@@ -99,32 +106,57 @@ export default function TeacherDashboard() {
   };
 
   if (!teacher) {
-    return <div style={styles.loading}>Loading...</div>;
+    return <div style={{ textAlign: 'center', marginTop: '50px' }}>Loading...</div>;
   }
 
   return (
-    <div style={styles.dashboardContainer}>
-      <header style={styles.header}>
-        <div style={styles.headerLeft}>
-          <h1 style={styles.logo}>⚡ Atlas English</h1>
-          <p style={styles.subtitle}>Teacher Dashboard</p>
+    <div style={{ minHeight: '100vh', background: '#f3f4f6', fontFamily: '-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif' }}>
+      <header style={{
+        background: 'white',
+        borderBottom: '1px solid #e5e7eb',
+        padding: '20px 40px',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+          <div>
+            <h1 style={{ fontSize: '28px', fontWeight: '800', background: 'linear-gradient(135deg, #1e40af, #0369a1)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', margin: 0 }}>⚡ Atlas English</h1>
+            <p style={{ color: '#6b7280', fontSize: '14px', margin: 0 }}>Teacher Dashboard</p>
+          </div>
         </div>
-        <div style={styles.headerRight}>
-          <span style={styles.teacherName}>👋 {teacher.nombre}</span>
-          <button onClick={handleLogout} style={styles.logoutBtn}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          <span style={{ color: '#1f2937', fontWeight: '600' }}>👋 {teacher.nombre}</span>
+          <button onClick={handleLogout} style={{
+            padding: '8px 16px',
+            background: '#ef4444',
+            color: 'white',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            transition: 'all 0.3s'
+          }}>
             Sign Out
           </button>
         </div>
       </header>
 
-      <div style={styles.dashboardContent}>
+      <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
         {/* TABS */}
-        <div style={styles.tabs}>
+        <div style={{ display: 'flex', gap: '10px', marginBottom: '30px', borderBottom: '2px solid #e5e7eb', paddingBottom: '15px' }}>
           <button
             onClick={() => setActiveTab('students')}
             style={{
-              ...styles.tabBtn,
-              ...(activeTab === 'students' ? styles.tabActive : {})
+              padding: '10px 20px',
+              background: activeTab === 'students' ? '#eff6ff' : 'transparent',
+              border: 'none',
+              color: activeTab === 'students' ? '#0ea5e9' : '#6b7280',
+              cursor: 'pointer',
+              fontWeight: '600',
+              transition: 'all 0.3s',
+              borderBottom: activeTab === 'students' ? '3px solid #0ea5e9' : 'none'
             }}
           >
             👥 Students
@@ -132,8 +164,14 @@ export default function TeacherDashboard() {
           <button
             onClick={() => setActiveTab('sessions')}
             style={{
-              ...styles.tabBtn,
-              ...(activeTab === 'sessions' ? styles.tabActive : {})
+              padding: '10px 20px',
+              background: activeTab === 'sessions' ? '#eff6ff' : 'transparent',
+              border: 'none',
+              color: activeTab === 'sessions' ? '#0ea5e9' : '#6b7280',
+              cursor: 'pointer',
+              fontWeight: '600',
+              transition: 'all 0.3s',
+              borderBottom: activeTab === 'sessions' ? '3px solid #0ea5e9' : 'none'
             }}
           >
             📅 Sessions
@@ -142,24 +180,39 @@ export default function TeacherDashboard() {
 
         {/* STUDENTS TAB */}
         {activeTab === 'students' && (
-          <div style={styles.tabContent}>
-            <h2>Students</h2>
+          <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
+            <h2 style={{ color: '#1f2937', marginBottom: '20px', fontSize: '20px' }}>Students</h2>
             {loading ? (
               <p>Loading...</p>
             ) : students.length === 0 ? (
-              <p style={styles.emptyState}>No students yet</p>
+              <p style={{ color: '#9ca3af', textAlign: 'center', padding: '40px 20px' }}>No students yet</p>
             ) : (
-              <div style={styles.studentsList}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '20px' }}>
                 {students.map((student) => (
-                  <div key={student.id} style={styles.studentCard}>
-                    <div style={styles.studentInfo}>
-                      <h3>{student.nombre}</h3>
-                      <p style={styles.studentEmail}>{student.email}</p>
-                      <p style={styles.studentLevel}>Level: <strong>{student.nivel}</strong></p>
-                      <p style={styles.studentPoints}>Points: <strong>{student.points}</strong></p>
+                  <div key={student.id} style={{
+                    background: '#f9fafb',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '10px',
+                    padding: '20px',
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'flex-start'
+                  }}>
+                    <div>
+                      <h3 style={{ color: '#1f2937', margin: '0 0 8px 0' }}>{student.nombre}</h3>
+                      <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 8px 0' }}>{student.email}</p>
+                      <p style={{ color: '#1f2937', margin: '0 0 4px 0', fontSize: '14px' }}>Level: <strong>{student.nivel}</strong></p>
+                      <p style={{ color: '#1f2937', margin: 0, fontSize: '14px' }}>Points: <strong>{student.points}</strong></p>
                     </div>
-                    <div style={styles.studentStatus}>
-                      <span style={styles.statusBadge}>{student.status}</span>
+                    <div>
+                      <span style={{
+                        background: '#10b981',
+                        color: 'white',
+                        padding: '4px 12px',
+                        borderRadius: '20px',
+                        fontSize: '12px',
+                        fontWeight: '600'
+                      }}>{student.status}</span>
                     </div>
                   </div>
                 ))}
@@ -170,67 +223,154 @@ export default function TeacherDashboard() {
 
         {/* SESSIONS TAB */}
         {activeTab === 'sessions' && (
-          <div style={styles.tabContent}>
-            <h2>Create Session</h2>
-            <form onSubmit={handleCreateSession} style={styles.form}>
+          <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
+            <h2 style={{ color: '#1f2937', marginBottom: '20px', fontSize: '20px' }}>Create Session</h2>
+            <form onSubmit={handleCreateSession} style={{ marginBottom: '40px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
               <input
                 type="text"
                 placeholder="Session Title (e.g., English-Class)"
                 value={sessionTitle}
                 onChange={(e) => setSessionTitle(e.target.value)}
-                style={styles.input}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  fontFamily: 'inherit',
+                  boxSizing: 'border-box'
+                }}
                 required
               />
               <input
                 type="date"
                 value={sessionDate}
                 onChange={(e) => setSessionDate(e.target.value)}
-                style={styles.input}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  fontFamily: 'inherit',
+                  boxSizing: 'border-box'
+                }}
                 required
               />
               <input
                 type="time"
                 value={sessionTime}
                 onChange={(e) => setSessionTime(e.target.value)}
-                style={styles.input}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  fontFamily: 'inherit',
+                  boxSizing: 'border-box'
+                }}
                 required
               />
               <textarea
                 placeholder="Notes (optional)"
                 value={sessionNotes}
                 onChange={(e) => setSessionNotes(e.target.value)}
-                style={styles.textarea}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '8px',
+                  fontFamily: 'inherit',
+                  minHeight: '80px',
+                  resize: 'vertical',
+                  boxSizing: 'border-box'
+                }}
               />
               <input
                 type="text"
                 placeholder="Google Meet Link (optional)"
                 value={sessionMeetLink}
                 onChange={(e) => setSessionMeetLink(e.target.value)}
-                style={styles.input}
+                style={{
+                  width: '100%',
+                  padding: '12px',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '8px',
+                  fontSize: '14px',
+                  fontFamily: 'inherit',
+                  boxSizing: 'border-box'
+                }}
               />
-              <button type="submit" style={styles.button}>
+              
+              <div style={{ marginTop: '20px', padding: '16px', background: '#f9fafb', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+                <h3 style={{ color: '#1f2937', marginTop: 0 }}>Select Students</h3>
+                {students.length === 0 ? (
+                  <p style={{ color: '#6b7280', margin: 0 }}>No students available</p>
+                ) : (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                    {students.map((student) => (
+                      <label key={student.id} style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', color: '#1f2937' }}>
+                        <input
+                          type="checkbox"
+                          checked={selectedStudents.includes(student.id)}
+                          onChange={() => toggleStudent(student.id)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <span>{student.nombre} ({student.email})</span>
+                      </label>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              <button type="submit" style={{
+                width: '100%',
+                padding: '12px',
+                background: 'linear-gradient(135deg, #1e40af, #0369a1)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                fontWeight: '600',
+                cursor: 'pointer',
+                transition: 'all 0.3s'
+              }}>
                 Create Session
               </button>
             </form>
 
-            <h2 style={styles.marginTop}>Scheduled Sessions</h2>
+            <h2 style={{ color: '#1f2937', marginBottom: '20px', fontSize: '20px', marginTop: '40px' }}>Scheduled Sessions</h2>
             {loading ? (
               <p>Loading...</p>
             ) : sessions.length === 0 ? (
-              <p style={styles.emptyState}>No sessions scheduled yet</p>
+              <p style={{ color: '#9ca3af', textAlign: 'center', padding: '40px 20px' }}>No sessions scheduled yet</p>
             ) : (
-              <div style={styles.sessionsList}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                 {sessions.map((session) => (
-                  <div key={session.id} style={styles.sessionCard}>
-                    <h3>{session.titulo}</h3>
-                    <p style={styles.sessionDate}>
+                  <div key={session.id} style={{
+                    background: '#f9fafb',
+                    border: '1px solid #e5e7eb',
+                    borderRadius: '10px',
+                    padding: '20px'
+                  }}>
+                    <h3 style={{ color: '#1f2937', margin: '0 0 12px 0' }}>{session.titulo}</h3>
+                    <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 8px 0' }}>
                       📅 {session.fecha} at {session.hora}
                     </p>
                     {session.notas && (
-                      <p style={styles.sessionNotes}>{session.notas}</p>
+                      <p style={{ color: '#6b7280', fontSize: '14px', margin: '0 0 12px 0' }}>{session.notas}</p>
                     )}
                     {session.meet_link && (
-                      <a href={session.meet_link} target="_blank" style={styles.meetLink}>
+                      <a href={session.meet_link} target="_blank" rel="noreferrer" style={{
+                        display: 'inline-block',
+                        background: '#0ea5e9',
+                        color: 'white',
+                        padding: '8px 16px',
+                        borderRadius: '6px',
+                        textDecoration: 'none',
+                        fontSize: '14px',
+                        transition: 'all 0.3s'
+                      }}>
                         📞 Join Meeting
                       </a>
                     )}
