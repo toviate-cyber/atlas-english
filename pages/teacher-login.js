@@ -139,32 +139,7 @@ export default function TeacherLogin() {
           </button>
         </form>
 
-        <div style={{
-          background: '#f0fdf4',
-          border: '1px solid #86efac',
-          borderRadius: '8px',
-          padding: '16px',
-          marginTop: '20px',
-          textAlign: 'center'
-        }}>
-          <p style={{
-            fontSize: '12px',
-            fontWeight: '600',
-            color: '#15803d',
-            margin: '0 0 8px 0'
-          }}>
-            📋 Demo Credentials
-          </p>
-          <p style={{
-            fontSize: '13px',
-            color: '#166534',
-            margin: '0',
-            fontFamily: 'monospace'
-          }}>
-            Email: victorjamesjordans@gmail.com<br/>
-            Password: 123456
-          </p>
-        </div>
+
       </div>
     </div>
   );
