@@ -1,16 +1,39 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 
-// Lesson bank (same as before)
+// Lesson bank por nivel
 const LESSON_BANK = [
-  ["To Be: Present Simple", "The verb 'to be' is the most basic in English. AM (I), IS (he/she/it), ARE (you/we/they).", [
+  // A1 Lessons (1-3)
+  ["To Be: Present Simple", "A1 - The verb 'to be' is the most basic in English. AM (I), IS (he/she/it), ARE (you/we/they).", [
     {q:"I ___ a student.",a:["am","is","are"],c:0},{q:"He ___ from Panama.",a:["am","is","are"],c:1},{q:"We ___ friends.",a:["am","is","are"],c:2}
   ]],
-  ["Present Simple – Habits", "Daily routines and habits. Add -s/-es with he/she/it.", [
-    {q:"She ___ coffee every morning.",a:["like","likes","liking"],c:1},{q:"I ___ English every day.",a:["study","studies","studying"],c:0}
+  ["Present Simple – Basic", "A1 - Learn about simple present tense for basic facts.", [
+    {q:"She ___ English.",a:["speak","speaks","speaking"],c:1},{q:"I ___ coffee.",a:["like","likes","liking"],c:0}
   ]],
-  ["Articles: A, An, The", "Use 'a' before consonants, 'an' before vowels, 'the' for specific things.", [
+  ["Personal Pronouns", "A1 - I, you, he, she, it, we, they.", [
+    {q:"___ is a teacher.",a:["I","He","We"],c:1},{q:"___ are students.",a:["They","He","She"],c:0}
+  ]],
+  
+  // A2 Lessons (4-6)
+  ["Present Simple – Habits", "A2 - Daily routines and habits with present simple.", [
+    {q:"She ___ coffee every morning.",a:["like","likes","liking"],c:1},{q:"I ___ English every day.",a:["study","studies","studying"],c:0},{q:"They ___ to school.",a:["go","goes","going"],c:0}
+  ]],
+  ["Articles: A, An, The", "A2 - Use 'a' before consonants, 'an' before vowels, 'the' for specific things.", [
     {q:"___ apple a day keeps the doctor away.",a:["A","An","The"],c:1},{q:"I want ___ sandwich.",a:["a","an","the"],c:0}
+  ]],
+  ["Past Simple Regular", "A2 - Worked, played, studied - regular verbs ending in -ed.", [
+    {q:"Yesterday, I ___ to the beach.",a:["go","went","goes"],c:1},{q:"She ___ the movie last night.",a:["watch","watched","watches"],c:1}
+  ]],
+  
+  // B1 Lessons (7-9)
+  ["Present Perfect", "B1 - Use 'have/has' + past participle for recent actions.", [
+    {q:"I ___ finished my homework.",a:["have","has","had"],c:0},{q:"She ___ lived here for 5 years.",a:["have","has","had"],c:1}
+  ]],
+  ["Past Continuous", "B1 - Was/were + -ing for actions in progress in the past.", [
+    {q:"When he arrived, I ___ TV.",a:["watch","was watching","watched"],c:1}
+  ]],
+  ["Conditionals: If", "B1 - If I have time, I will go. If I had time, I would go.", [
+    {q:"If I ___ rich, I would travel.",a:["am","was","were"],c:2}
   ]],
 ];
 
