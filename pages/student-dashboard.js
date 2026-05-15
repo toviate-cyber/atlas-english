@@ -450,10 +450,17 @@ export default function StudentDashboard() {
 
         {activeTab === 'lessons' && (
           <div style={{ background: 'white', padding: '30px', borderRadius: '12px', boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)' }}>
-            <h2 style={{ color: '#1f2937', marginBottom: '20px' }}>Available Lessons</h2>
-            {testResult ? (
+            <h2 style={{ color: '#1f2937', marginBottom: '20px' }}>Available Lessons for {student?.nivel}</h2>
+            {testResult || student?.nivel ? (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(150px, 1fr))', gap: '16px' }}>
                 {LESSON_BANK.map((lesson, i) => {
+                  // Filter lessons by student level
+                  let levelRange = { min: 0, max: 2 }; // A1 by default
+                  if (student?.nivel === 'A2') levelRange = { min: 3, max: 5 };
+                  else if (student?.nivel === 'B1') levelRange = { min: 6, max: 8 };
+                  
+                  if (i < levelRange.min || i > levelRange.max) return null;
+                  
                   const isPassed = progress.find(p => p.lesson_id === i + 1 && p.completed);
                   return (
                     <button
