@@ -9,6 +9,7 @@ export default function StudentDashboard() {
   const [progress, setProgress] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState('dashboard');
+  const [initialized, setInitialized] = useState(false);
   
   // Placement test
   const [showPlacementTest, setShowPlacementTest] = useState(false);
@@ -23,6 +24,8 @@ export default function StudentDashboard() {
   const [lessonQuestionIndex, setLessonQuestionIndex] = useState(0);
 
   useEffect(() => {
+    if (initialized) return; // Only run once
+    
     const savedStudent = localStorage.getItem('student');
     if (!savedStudent) {
       router.push('/student-login');
@@ -32,7 +35,8 @@ export default function StudentDashboard() {
     const studentData = JSON.parse(savedStudent);
     setStudent(studentData);
     fetchData(studentData.id);
-  }, [router]);
+    setInitialized(true);
+  }, []);
 
   const fetchData = async (studentId, silent = false) => {
     try {
