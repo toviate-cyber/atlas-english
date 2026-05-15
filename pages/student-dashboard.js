@@ -32,15 +32,9 @@ export default function StudentDashboard() {
     const studentData = JSON.parse(savedStudent);
     setStudent(studentData);
     fetchData(studentData.id);
-
-    const interval = setInterval(() => {
-      fetchData(studentData.id);
-    }, 10000);
-
-    return () => clearInterval(interval);
   }, [router]);
 
-  const fetchData = async (studentId) => {
+  const fetchData = async (studentId, silent = false) => {
     try {
       const sessionsRes = await fetch(`/api/sessions/for-student?student_id=${studentId}`);
       const sessionsData = await sessionsRes.json();
@@ -50,10 +44,10 @@ export default function StudentDashboard() {
       const progressData = await progressRes.json();
       setProgress(progressData.progress || []);
 
-      setLoading(false);
+      if (!silent) setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
   };
 
@@ -151,7 +145,7 @@ export default function StudentDashboard() {
         });
 
         setCurrentLesson(null);
-        fetchData(student.id);
+        fetchData(student.id, true);
       } catch (error) {
         console.error('Error saving progress:', error);
       }
